@@ -26,6 +26,25 @@ page 50100 SWAPISetup
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(PingConnection)
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                begin
+                    l_SWAPIMng.PingAPIConnection();
+                end;
+            }
+        }
+    }
+
+
     trigger OnInit()
     begin
         if Rec.IsEmpty then
