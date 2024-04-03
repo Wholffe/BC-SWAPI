@@ -33,6 +33,7 @@ page 50100 SWAPISetup
             action(PingConnection)
             {
                 ApplicationArea = All;
+                Promoted = true;
 
                 trigger OnAction()
                 var
@@ -41,13 +42,33 @@ page 50100 SWAPISetup
                     l_SWAPIMng.PingAPIConnection();
                 end;
             }
+            action(ShowNumberOfRequestEntries)
+            {
+                ApplicationArea = All;
+                Promoted = true;
+
+                trigger OnAction()
+                var
+                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                    l_OptionNumber: Integer;
+                    l_Url: Text;
+                    l_Count: Integer;
+                begin
+                    l_OptionNumber := Dialog.StrMenu('Films,People,Planets,Species,Starships,Vehicles', 1, g_RessourceTypeDialog);
+                    l_Url := l_SWAPIMng.GetUrlFromEnum(Enum::"SW Ressouce Types".FromInteger(l_OptionNumber));
+                    l_Count := l_SWAPIMng.GetCategoryCount(l_Url);
+                    Message('Url: %1, Count: %2', l_Url, l_Count);
+                end;
+            }
         }
     }
-
 
     trigger OnInit()
     begin
         if Rec.IsEmpty then
             Rec.Insert();
     end;
+
+    var
+        g_RessourceTypeDialog: Label 'Select a ressource type';
 }
