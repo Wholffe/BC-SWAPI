@@ -9,7 +9,7 @@ table 50100 SWAPISetup
         {
             Caption = 'PrimaryKey';
         }
-        field(2; endpoint; Text[100])
+        field(2; Endpoint; Text[100])
         {
             Caption = 'RequestURL';
             InitValue = 'https://swapi.dev/api/';

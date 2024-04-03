@@ -18,7 +18,7 @@ page 50100 SWAPISetup
             {
                 Caption = 'General Setup';
 
-                field(endpoint; Rec.endpoint)
+                field(endpoint; Rec.Endpoint)
                 {
                     Caption = 'endpoint';
                     ToolTip = 'Specifies the value of the endpoint URL field.';

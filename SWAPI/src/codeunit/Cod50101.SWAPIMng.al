@@ -8,7 +8,7 @@ codeunit 50101 "SWAPI Mng"
         l_Client: HttpClient;
         l_Response: HttpResponseMessage;
     begin
-        if not l_Client.Get(l_SWAPISetup.endpoint, l_Response) then
+        if not l_Client.Get(l_SWAPISetup.Endpoint, l_Response) then
             Error('Connection failed, %1', l_Response.HttpStatusCode);
 
         if not l_Response.IsSuccessStatusCode then
