@@ -47,11 +47,15 @@ table 50106 "SW Planets"
         }
         field(11; Residents; Integer)
         {
-            Caption = 'Residents';//array
+            Caption = 'Residents';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(planets), RessourceID = field(ID), AssociatedRessourceType = const(people)));
         }
         field(12; Films; Integer)
         {
-            Caption = 'Films';//array
+            Caption = 'Films';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(planets), RessourceID = field(ID), AssociatedRessourceType = const(films)));
         }
         field(13; Url; Text[50])
         {

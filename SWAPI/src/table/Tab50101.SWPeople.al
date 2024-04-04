@@ -48,19 +48,27 @@ table 50101 "SW People"
         }
         field(11; Films; Integer)
         {
-            Caption = 'Films';//array
+            Caption = 'Films';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(films)));
         }
         field(12; Species; Integer)
         {
-            Caption = 'Species';//array
+            Caption = 'Species';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(species)));
         }
         field(13; Starships; Integer)
         {
-            Caption = 'Starships';//array
+            Caption = 'Starships';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(starships)));
         }
         field(14; Vehicles; Integer)
         {
-            Caption = 'Vehicles';//array
+            Caption = 'Vehicles';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(vehicles)));
         }
         field(15; Url; Text[50])
         {

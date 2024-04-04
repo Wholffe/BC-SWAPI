@@ -51,11 +51,15 @@ table 50105 "SW Species"
         }
         field(12; People; Integer)
         {
-            Caption = 'People';//array
+            Caption = 'People';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(species), RessourceID = field(ID), AssociatedRessourceType = const(people)));
         }
         field(13; Films; Integer)
         {
-            Caption = 'Films';//array
+            Caption = 'Films';
+            FieldClass = FlowField;
+            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(species), RessourceID = field(ID), AssociatedRessourceType = const(films)));
         }
         field(14; Url; Text[50])
         {
