@@ -20,7 +20,7 @@ page 50100 SWAPISetup
 
                 field(endpoint; Rec.Endpoint)
                 {
-                    Caption = 'endpoint';
+                    Caption = 'Endpoint';
                     ToolTip = 'Specifies the value of the endpoint URL field.';
                 }
             }
@@ -42,6 +42,7 @@ page 50100 SWAPISetup
                     l_SWAPIMng.PingAPIConnection();
                 end;
             }
+
             action(ShowNumberOfRequestEntries)
             {
                 ApplicationArea = All;
@@ -50,14 +51,16 @@ page 50100 SWAPISetup
                 trigger OnAction()
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_OptionNumber: Integer;
+                    l_RessourceDialog: Page "SWAPI Ressource StandardDialog";
                     l_Url: Text;
                     l_Count: Integer;
                 begin
-                    l_OptionNumber := Dialog.StrMenu('Films,People,Planets,Species,Starships,Vehicles', 1, g_RessourceTypeDialog);
-                    l_Url := l_SWAPIMng.GetUrlFromEnum(Enum::"SW Ressouce Types".FromInteger(l_OptionNumber));
-                    l_Count := l_SWAPIMng.GetCategoryCount(l_Url);
-                    Message('Url: %1, Count: %2', l_Url, l_Count);
+                    l_RessourceDialog.Setup(Enum::"SW Ressouce Types"::films);
+                    if l_RessourceDialog.RunModal() = Action::OK then begin
+                        l_Url := l_SWAPIMng.GetUrlFromEnum(l_RessourceDialog.GetRessourceType());
+                        l_Count := l_SWAPIMng.GetCategoryCount(l_Url);
+                        Message('Url: %1, Count: %2', l_Url, l_Count);
+                    end;
                 end;
             }
         }
