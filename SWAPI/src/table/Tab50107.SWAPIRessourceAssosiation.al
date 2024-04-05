@@ -1,6 +1,6 @@
-table 50107 "SWAPI Ressource Assosiation"
+table 50107 "SW Ressource Assosiation"
 {
-    Caption = 'SWAPI Ressource Assosiation';
+    Caption = 'SW Ressource Assosiation';
     DataClassification = ToBeClassified;
 
     fields

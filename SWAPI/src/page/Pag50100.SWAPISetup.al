@@ -51,7 +51,7 @@ page 50100 SWAPISetup
                 trigger OnAction()
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_RessourceDialog: Page "SWAPI Ressource StandardDialog";
+                    l_RessourceDialog: Page "SW Ressource StandardDialog";
                     l_Url: Text;
                     l_Count: Integer;
                 begin

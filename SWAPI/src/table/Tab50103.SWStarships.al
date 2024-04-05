@@ -61,13 +61,13 @@ table 50103 "SW Starships"
         {
             Caption = 'Films';
             FieldClass = FlowField;
-            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(starships), RessourceID = field(ID), AssociatedRessourceType = const(films)));
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(starships), RessourceID = field(ID), AssociatedRessourceType = const(films)));
         }
         field(15; Pilots; Integer)
         {
             Caption = 'Pilots';
             FieldClass = FlowField;
-            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(starships), RessourceID = field(ID), AssociatedRessourceType = const(people)));
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(starships), RessourceID = field(ID), AssociatedRessourceType = const(people)));
         }
         field(16; Url; Text[50])
         {

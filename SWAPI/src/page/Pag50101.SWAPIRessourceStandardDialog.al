@@ -1,6 +1,6 @@
 namespace SWAPI.SWAPI;
 
-page 50101 "SWAPI Ressource StandardDialog"
+page 50101 "SW Ressource StandardDialog"
 {
     ApplicationArea = All;
     Caption = 'Select a ressource type';

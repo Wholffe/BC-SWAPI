@@ -50,25 +50,25 @@ table 50101 "SW People"
         {
             Caption = 'Films';
             FieldClass = FlowField;
-            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(films)));
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(films)));
         }
         field(12; Species; Integer)
         {
             Caption = 'Species';
             FieldClass = FlowField;
-            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(species)));
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(species)));
         }
         field(13; Starships; Integer)
         {
             Caption = 'Starships';
             FieldClass = FlowField;
-            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(starships)));
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(starships)));
         }
         field(14; Vehicles; Integer)
         {
             Caption = 'Vehicles';
             FieldClass = FlowField;
-            CalcFormula = count("SWAPI Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(vehicles)));
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(vehicles)));
         }
         field(15; Url; Text[50])
         {
