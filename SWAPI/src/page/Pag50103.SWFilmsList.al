@@ -7,7 +7,7 @@ page 50103 "SW Films List"
     PageType = List;
     SourceTable = "SW Films";
     UsageCategory = Lists;
-    
+
     layout
     {
         area(content)
@@ -74,6 +74,27 @@ page 50103 "SW Films List"
                 {
                     ToolTip = 'Specifies the value of the Edited field.';
                 }
+            }
+        }
+    }
+    actions
+    {
+        area(Processing)
+        {
+            action(FillSWFilms)
+            {
+                ApplicationArea = All;
+                Caption = 'Fill SW Films';
+
+                trigger OnAction()
+                var
+                    l_Url: Text;
+                    l_SWAPISetup: Record SWAPISetup;
+                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                begin
+                    l_Url := StrSubstNo('%1/films', l_SWAPISetup.Endpoint);
+                    l_SWAPIMng.FillSWFilms(l_Url);
+                end;
             }
         }
     }
