@@ -45,22 +45,28 @@ page 50103 "SW Films List"
                 field(Species; Rec.Species)
                 {
                     ToolTip = 'Specifies the value of the Species field.';
+                    DrillDownPageId = "SW Ressource Assosiation List";
                 }
                 field(Starships; Rec.Starships)
                 {
                     ToolTip = 'Specifies the value of the Starships field.';
+                    DrillDownPageId = "SW Ressource Assosiation List";
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
                     ToolTip = 'Specifies the value of the Vehicles field.';
+                    DrillDownPageId = "SW Ressource Assosiation List";
+
                 }
                 field(Characters; Rec.Characters)
                 {
                     ToolTip = 'Specifies the value of the Characters field.';
+                    DrillDownPageId = "SW Ressource Assosiation List";
                 }
                 field(Planets; Rec.Planets)
                 {
                     ToolTip = 'Specifies the value of the Planets field.';
+                    DrillDownPageId = "SW Ressource Assosiation List";
                 }
                 field(Url; Rec.Url)
                 {
