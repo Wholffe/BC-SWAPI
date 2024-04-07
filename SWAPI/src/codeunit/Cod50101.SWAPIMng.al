@@ -81,18 +81,34 @@ codeunit 50101 "SWAPI Mng"
                 l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                 l_Films.Insert();
             end;
+            FillFilmRessourceAssosiation(l_JObject, 'species', l_ID);
         end;
         exit(true);
+    end;
+
+    local procedure FillFilmRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_ID: Integer)
+    var
+        l_InnerJsonObject: JsonToken;
+        l_JToken: JsonToken;
+        l_AssValue: Text[50];
+    begin
+        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
+        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
+            l_AssValue := l_JToken.AsValue().AsText();
+            FillSingleRessourceAssosiation(Enum::"SW Ressouce Types"::films, p_ID, GetEnumFromText(p_Member), l_AssValue);
+        end;
     end;
 
     local procedure FillSingleRessourceAssosiation(p_Type: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50]): Boolean
     var
         l_RessourceAssosiation: Record "SW Ressource Assosiation";
     begin
+        l_RessourceAssosiation.Init();
         l_RessourceAssosiation.RessourceType := l_RessourceAssosiation.RessourceType::films;
         l_RessourceAssosiation.RessourceID := p_ID;
         l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
         l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
+        l_RessourceAssosiation.Insert();
         exit(true)
     end;
 
@@ -133,5 +149,33 @@ codeunit 50101 "SWAPI Mng"
     begin
         if p_JObject.Get(p_Member, l_Result) then
             exit(l_Result.AsValue().AsDateTime());
+    end;
+
+    local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
+    var
+        l_Result: JsonToken;
+    begin
+        if p_JObject.Get(p_Member, l_Result) then
+            exit(l_Result.AsArray().AsToken());
+    end;
+
+    procedure GetEnumFromText(p_Text: Text): Enum "SW Ressouce Types"
+    begin
+        case p_Text of
+            'films':
+                exit(Enum::"SW Ressouce Types"::films);
+            'people':
+                exit(Enum::"SW Ressouce Types"::people);
+            'planets':
+                exit(Enum::"SW Ressouce Types"::planets);
+            'species':
+                exit(Enum::"SW Ressouce Types"::species);
+            'starships':
+                exit(Enum::"SW Ressouce Types"::starships);
+            'vehicles':
+                exit(Enum::"SW Ressouce Types"::vehicles);
+            else
+                Error('%1 is not an Enum', p_Text);
+        end;
     end;
 }
