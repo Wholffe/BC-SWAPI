@@ -69,19 +69,16 @@ codeunit 50101 "SWAPI Mng"
                 l_Films.Director := GetJsonTextField(l_JObject, 'director');
                 l_Films.Producer := GetJsonTextField(l_JObject, 'producer');
                 l_Films.ReleaseDate := GetJsonDateField(l_JObject, 'release_date');
-
-                // l_Films.Species := GetJsonTextField(l_JObject, '');
-                // l_Films.Starships := GetJsonTextField(l_JObject, '');
-                // l_Films.Vehicles := GetJsonTextField(l_JObject, '');
-                // l_Films.Characters := GetJsonTextField(l_JObject, '');
-                // l_Films.Planets := GetJsonTextField(l_JObject, '');
-
                 l_Films.Url := GetJsonTextField(l_JObject, 'url');
                 l_Films.Created := GetJsonDateTimeField(l_JObject, 'created');
                 l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                 l_Films.Insert();
             end;
             FillFilmRessourceAssosiation(l_JObject, 'species', l_ID);
+            FillFilmRessourceAssosiation(l_JObject, 'starships', l_ID);
+            FillFilmRessourceAssosiation(l_JObject, 'vehicles', l_ID);
+            FillFilmRessourceAssosiation(l_JObject, 'characters', l_ID);
+            FillFilmRessourceAssosiation(l_JObject, 'planets', l_ID);
         end;
         exit(true);
     end;
@@ -103,12 +100,14 @@ codeunit 50101 "SWAPI Mng"
     var
         l_RessourceAssosiation: Record "SW Ressource Assosiation";
     begin
-        l_RessourceAssosiation.Init();
-        l_RessourceAssosiation.RessourceType := l_RessourceAssosiation.RessourceType::films;
-        l_RessourceAssosiation.RessourceID := p_ID;
-        l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
-        l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
-        l_RessourceAssosiation.Insert();
+        if not l_RessourceAssosiation.Get(p_Type, p_ID, p_AssType, p_AssValue) then begin
+            l_RessourceAssosiation.Init();
+            l_RessourceAssosiation.RessourceType := l_RessourceAssosiation.RessourceType::films;
+            l_RessourceAssosiation.RessourceID := p_ID;
+            l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
+            l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
+            l_RessourceAssosiation.Insert();
+        end;
         exit(true)
     end;
 
@@ -164,7 +163,7 @@ codeunit 50101 "SWAPI Mng"
         case p_Text of
             'films':
                 exit(Enum::"SW Ressouce Types"::films);
-            'people':
+            'people', 'characters', 'residents', 'pilots':
                 exit(Enum::"SW Ressouce Types"::people);
             'planets':
                 exit(Enum::"SW Ressouce Types"::planets);
