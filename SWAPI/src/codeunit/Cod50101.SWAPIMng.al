@@ -46,7 +46,7 @@ codeunit 50101 "SWAPI Mng"
         exit(GetJsonIntegerField(l_JObject, 'count'))
     end;
 
-    procedure FillSWFilms(p_Url: Text)
+    procedure FillSWFilms(p_Url: Text): Boolean
     var
         l_MaxCounter: Integer;
         l_CurrCounter: Integer;
@@ -68,20 +68,32 @@ codeunit 50101 "SWAPI Mng"
                 l_Films.OpeningCrawl := GetJsonTextField(l_JObject, 'opening_crawl');
                 l_Films.Director := GetJsonTextField(l_JObject, 'director');
                 l_Films.Producer := GetJsonTextField(l_JObject, 'producer');
-                // l_Films.ReleaseDate := GetJsonTextField(l_JObject, '');
-                // l_Films.Species := GetJsonTextField(l_JObject, '');
+                l_Films.ReleaseDate := GetJsonDateField(l_JObject, 'release_date');
 
+                // l_Films.Species := GetJsonTextField(l_JObject, '');
                 // l_Films.Starships := GetJsonTextField(l_JObject, '');
                 // l_Films.Vehicles := GetJsonTextField(l_JObject, '');
                 // l_Films.Characters := GetJsonTextField(l_JObject, '');
                 // l_Films.Planets := GetJsonTextField(l_JObject, '');
 
                 l_Films.Url := GetJsonTextField(l_JObject, 'url');
-                // l_Films.Created := GetJsonTextField(l_JObject, '');
-                // l_Films.Edited := GetJsonTextField(l_JObject, '');
+                l_Films.Created := GetJsonDateTimeField(l_JObject, 'created');
+                l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                 l_Films.Insert();
             end;
         end;
+        exit(true);
+    end;
+
+    local procedure FillSingleRessourceAssosiation(p_Type: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50]): Boolean
+    var
+        l_RessourceAssosiation: Record "SW Ressource Assosiation";
+    begin
+        l_RessourceAssosiation.RessourceType := l_RessourceAssosiation.RessourceType::films;
+        l_RessourceAssosiation.RessourceID := p_ID;
+        l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
+        l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
+        exit(true)
     end;
 
     procedure GetUrlFromEnum(p_RessourceType: Enum "SW Ressouce Types"): Text
@@ -107,4 +119,19 @@ codeunit 50101 "SWAPI Mng"
             exit(l_Result.AsValue().AsText());
     end;
 
+    local procedure GetJsonDateField(p_JObject: JsonObject; p_Member: Text): Date
+    var
+        l_Result: JsonToken;
+    begin
+        if p_JObject.Get(p_Member, l_Result) then
+            exit(l_Result.AsValue().AsDate());
+    end;
+
+    local procedure GetJsonDateTimeField(p_JObject: JsonObject; p_Member: Text): DateTime
+    var
+        l_Result: JsonToken;
+    begin
+        if p_JObject.Get(p_Member, l_Result) then
+            exit(l_Result.AsValue().AsDateTime());
+    end;
 }

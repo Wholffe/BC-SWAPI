@@ -93,9 +93,12 @@ page 50103 "SW Films List"
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
                     l_Url := StrSubstNo('%1/films', l_SWAPISetup.Endpoint);
-                    l_SWAPIMng.FillSWFilms(l_Url);
+                    if l_SWAPIMng.FillSWFilms(l_Url) then
+                        Message(g_ImportSuccess);
                 end;
             }
         }
     }
+    var
+        g_ImportSuccess: Label 'Data Imported Successfully';
 }
