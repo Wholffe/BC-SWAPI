@@ -74,16 +74,16 @@ codeunit 50101 "SWAPI Mng"
                 l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                 l_Films.Insert();
             end;
-            FillFilmRessourceAssosiation(l_JObject, 'species', l_ID);
-            FillFilmRessourceAssosiation(l_JObject, 'starships', l_ID);
-            FillFilmRessourceAssosiation(l_JObject, 'vehicles', l_ID);
-            FillFilmRessourceAssosiation(l_JObject, 'characters', l_ID);
-            FillFilmRessourceAssosiation(l_JObject, 'planets', l_ID);
+            FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::films, l_ID);
+            FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::films, l_ID);
+            FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::films, l_ID);
+            FillRessourceAssosiation(l_JObject, 'characters', Enum::"SW Ressouce Types"::films, l_ID);
+            FillRessourceAssosiation(l_JObject, 'planets', Enum::"SW Ressouce Types"::films, l_ID);
         end;
         exit(true);
     end;
 
-    local procedure FillFilmRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_ID: Integer)
+    local procedure FillRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer)
     var
         l_InnerJsonObject: JsonToken;
         l_JToken: JsonToken;
@@ -92,23 +92,22 @@ codeunit 50101 "SWAPI Mng"
         l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
         foreach l_JToken in l_InnerJsonObject.AsArray() do begin
             l_AssValue := l_JToken.AsValue().AsText();
-            FillSingleRessourceAssosiation(Enum::"SW Ressouce Types"::films, p_ID, GetEnumFromText(p_Member), l_AssValue);
+            FillSingleRessourceAssosiation(p_RessourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
         end;
     end;
 
-    local procedure FillSingleRessourceAssosiation(p_Type: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50]): Boolean
+    local procedure FillSingleRessourceAssosiation(p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50])
     var
         l_RessourceAssosiation: Record "SW Ressource Assosiation";
     begin
-        if not l_RessourceAssosiation.Get(p_Type, p_ID, p_AssType, p_AssValue) then begin
+        if not l_RessourceAssosiation.Get(p_RessourceType, p_ID, p_AssType, p_AssValue) then begin
             l_RessourceAssosiation.Init();
-            l_RessourceAssosiation.RessourceType := l_RessourceAssosiation.RessourceType::films;
+            l_RessourceAssosiation.RessourceType := p_RessourceType;
             l_RessourceAssosiation.RessourceID := p_ID;
             l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
             l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
             l_RessourceAssosiation.Insert();
         end;
-        exit(true)
     end;
 
     procedure GetUrlFromEnum(p_RessourceType: Enum "SW Ressouce Types"): Text
