@@ -30,7 +30,7 @@ codeunit 50101 "SWAPI Mng"
             Error('Connection failed, %1', l_Response.HttpStatusCode);
 
         if not l_Response.IsSuccessStatusCode then
-            Error('Status code result %1', l_Response.IsSuccessStatusCode);
+            exit;
 
         l_Content := l_Response.Content;
         l_Content.ReadAs(l_ResponseTxt);
@@ -59,26 +59,69 @@ codeunit 50101 "SWAPI Mng"
         for l_CurrCounter := 1 to l_MaxCounter do begin
             l_Url := StrSubstNo('%1/%2', p_Url, l_CurrCounter);
             l_JObject := GetJObjectFromUrl(l_Url);
-            l_ID := l_CurrCounter;
-            if not l_Films.Get(l_ID) then begin
-                l_Films.Init();
-                l_Films.ID := l_ID;
-                l_Films.Title := GetJsonTextField(l_JObject, 'title');
-                l_Films.EpisodeID := GetJsonIntegerField(l_JObject, 'episode_id');
-                l_Films.OpeningCrawl := GetJsonTextField(l_JObject, 'opening_crawl');
-                l_Films.Director := GetJsonTextField(l_JObject, 'director');
-                l_Films.Producer := GetJsonTextField(l_JObject, 'producer');
-                l_Films.ReleaseDate := GetJsonDateField(l_JObject, 'release_date');
-                l_Films.Url := GetJsonTextField(l_JObject, 'url');
-                l_Films.Created := GetJsonDateTimeField(l_JObject, 'created');
-                l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
-                l_Films.Insert();
+            if l_JObject.Keys().Count <> 0 then begin
+                l_ID := l_CurrCounter;
+                if not l_Films.Get(l_ID) then begin
+                    l_Films.Init();
+                    l_Films.ID := l_ID;
+                    l_Films.Title := GetJsonTextField(l_JObject, 'title');
+                    l_Films.EpisodeID := GetJsonIntegerField(l_JObject, 'episode_id');
+                    l_Films.OpeningCrawl := GetJsonTextField(l_JObject, 'opening_crawl');
+                    l_Films.Director := GetJsonTextField(l_JObject, 'director');
+                    l_Films.Producer := GetJsonTextField(l_JObject, 'producer');
+                    l_Films.ReleaseDate := GetJsonDateField(l_JObject, 'release_date');
+                    l_Films.Url := GetJsonTextField(l_JObject, 'url');
+                    l_Films.Created := GetJsonDateTimeField(l_JObject, 'created');
+                    l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
+                    l_Films.Insert();
+                end;
+                FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'characters', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'planets', Enum::"SW Ressouce Types"::films, l_ID);
             end;
-            FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::films, l_ID);
-            FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::films, l_ID);
-            FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::films, l_ID);
-            FillRessourceAssosiation(l_JObject, 'characters', Enum::"SW Ressouce Types"::films, l_ID);
-            FillRessourceAssosiation(l_JObject, 'planets', Enum::"SW Ressouce Types"::films, l_ID);
+        end;
+        exit(true);
+    end;
+
+    procedure FillSWPeople(p_Url: Text): Boolean
+    var
+        l_MaxCounter: Integer;
+        l_CurrCounter: Integer;
+        l_Url: Text;
+        l_JObject: JsonObject;
+        l_ID: Integer;
+        l_People: Record "SW People";
+    begin
+        l_MaxCounter := GetCategoryCount(p_Url);
+        for l_CurrCounter := 1 to l_MaxCounter do begin
+            l_Url := StrSubstNo('%1/%2', p_Url, l_CurrCounter);
+            l_JObject := GetJObjectFromUrl(l_Url);
+            if l_JObject.Keys().Count <> 0 then begin
+                l_ID := l_CurrCounter;
+                if not l_People.Get(l_ID) then begin
+                    l_People.Init();
+                    l_People.ID := l_ID;
+                    l_People.Name := GetJsonTextField(l_JObject, 'name');
+                    l_People.BirthYear := GetJsonTextField(l_JObject, 'birth_year');
+                    l_People.EyeColor := GetJsonTextField(l_JObject, 'eye_color');
+                    l_People.Gender := GetJsonTextField(l_JObject, 'gender');
+                    l_People.HairColor := GetJsonTextField(l_JObject, 'hair_color');
+                    l_People.Height := GetJsonTextField(l_JObject, 'height');
+                    l_People.Mass := GetJsonTextField(l_JObject, 'mass');
+                    l_People.SkinColor := GetJsonTextField(l_JObject, 'skin_color');
+                    l_People.Homeworld := GetJsonTextField(l_JObject, 'homeworld');
+                    l_People.Url := GetJsonTextField(l_JObject, 'url');
+                    l_People.Created := GetJsonDateTimeField(l_JObject, 'created');
+                    l_People.Edited := GetJsonDateTimeField(l_JObject, 'edited');
+                    l_People.Insert();
+                end;
+                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::people, l_ID);
+                FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::people, l_ID);
+                FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::people, l_ID);
+                FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::people, l_ID);
+            end;
         end;
         exit(true);
     end;
