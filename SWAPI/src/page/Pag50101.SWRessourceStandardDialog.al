@@ -21,9 +21,9 @@ page 50101 "SW Ressource StandardDialog"
     var
         g_RessouceType: Enum "SW Ressouce Types";
 
-    procedure Setup(p_RessourceType: Enum "SW Ressouce Types")
+    procedure GetRessourceType(): Enum "SW Ressouce Types"
     begin
-        g_RessouceType := p_RessourceType;
+        exit(g_RessouceType)
     end;
 
     procedure GetRessourceTypeNumber(): Integer
@@ -31,8 +31,8 @@ page 50101 "SW Ressource StandardDialog"
         exit(g_RessouceType.AsInteger());
     end;
 
-    procedure GetRessourceType(): Enum "SW Ressouce Types"
+    procedure Setup(p_RessourceType: Enum "SW Ressouce Types")
     begin
-        exit(g_RessouceType)
+        g_RessouceType := p_RessourceType;
     end;
 }

@@ -33,6 +33,7 @@ page 50100 SWAPISetup
             action(PingConnection)
             {
                 ApplicationArea = All;
+                Image = Web;
                 Promoted = true;
 
                 trigger OnAction()
@@ -61,6 +62,69 @@ page 50100 SWAPISetup
                         l_Count := l_SWAPIMng.GetCategoryCount(l_Url);
                         Message('Url: %1, Count: %2', l_Url, l_Count);
                     end;
+                end;
+            }
+        }
+        area(Navigation)
+        {
+            action(Films)
+            {
+                ApplicationArea = All;
+                Caption = 'Films';
+
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"SW Films List");
+                end;
+            }
+            action(People)
+            {
+                ApplicationArea = All;
+                Caption = 'People';
+
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"SW People List");
+                end;
+            }
+            action(Planets)
+            {
+                ApplicationArea = All;
+                Caption = 'Planets';
+
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"SW Planets List");
+                end;
+            }
+            action(Species)
+            {
+                ApplicationArea = All;
+                Caption = 'Species';
+
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"SW Species List");
+                end;
+            }
+            action(Starships)
+            {
+                ApplicationArea = All;
+                Caption = 'Starships';
+
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"SW Starships List");
+                end;
+            }
+            action(Vehicles)
+            {
+                ApplicationArea = All;
+                Caption = 'Vehicles';
+
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"SW Vehicles List");
                 end;
             }
         }
