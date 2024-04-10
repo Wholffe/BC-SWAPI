@@ -7,21 +7,23 @@ table 50106 "SW Planets"
     {
         field(1; ID; Integer)
         {
+            AutoIncrement = true;
             Caption = 'ID';
+            Editable = false;
         }
         field(2; Name; Text[50])
         {
             Caption = 'Name';
         }
-        field(3; Diameter; Integer)
+        field(3; Diameter; Text[50])
         {
             Caption = 'Diameter';
         }
-        field(4; RotationPeriod; Integer)
+        field(4; RotationPeriod; Text[50])
         {
             Caption = 'Rotation period';
         }
-        field(5; OrbitalPeriod; Integer)
+        field(5; OrbitalPeriod; Text[50])
         {
             Caption = 'Orbital period';
         }
@@ -29,7 +31,7 @@ table 50106 "SW Planets"
         {
             Caption = 'Gravity';
         }
-        field(7; Population; Integer)
+        field(7; Population; Text[50])
         {
             Caption = 'Population';
         }
@@ -49,12 +51,14 @@ table 50106 "SW Planets"
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(planets), RessourceID = field(ID), AssociatedRessourceType = const(people)));
             Caption = 'Residents';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(12; Films; Integer)
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(planets), RessourceID = field(ID), AssociatedRessourceType = const(films)));
             Caption = 'Films';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(13; Url; Text[50])

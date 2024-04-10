@@ -56,10 +56,12 @@ page 50107 "SW Planets List"
                 }
                 field(Residents; Rec.Residents)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Residents field.';
                 }
                 field(Films; Rec.Films)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
                 }
                 field(Url; Rec.Url)
