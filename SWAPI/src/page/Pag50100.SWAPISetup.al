@@ -3,12 +3,12 @@ namespace SWAPI.SWAPI;
 page 50100 SWAPISetup
 {
     ApplicationArea = All;
-    UsageCategory = Administration;
     Caption = 'SW API Setup';
+    DeleteAllowed = false;
+    InsertAllowed = false;
     PageType = Card;
     SourceTable = SWAPISetup;
-    InsertAllowed = false;
-    DeleteAllowed = false;
+    UsageCategory = Administration;
 
     layout
     {
@@ -52,8 +52,8 @@ page 50100 SWAPISetup
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                     l_RessourceDialog: Page "SW Ressource StandardDialog";
-                    l_Url: Text;
                     l_Count: Integer;
+                    l_Url: Text;
                 begin
                     l_RessourceDialog.Setup(Enum::"SW Ressouce Types"::films);
                     if l_RessourceDialog.RunModal() = Action::OK then begin
@@ -66,12 +66,12 @@ page 50100 SWAPISetup
         }
     }
 
+    var
+        g_RessourceTypeDialog: Label 'Select a ressource type';
+
     trigger OnInit()
     begin
         if Rec.IsEmpty then
             Rec.Insert();
     end;
-
-    var
-        g_RessourceTypeDialog: Label 'Select a ressource type';
 }

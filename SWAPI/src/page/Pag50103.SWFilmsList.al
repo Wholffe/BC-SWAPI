@@ -44,29 +44,29 @@ page 50103 "SW Films List"
                 }
                 field(Species; Rec.Species)
                 {
-                    ToolTip = 'Specifies the value of the Species field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Species field.';
                 }
                 field(Starships; Rec.Starships)
                 {
-                    ToolTip = 'Specifies the value of the Starships field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Starships field.';
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
-                    ToolTip = 'Specifies the value of the Vehicles field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Vehicles field.';
 
                 }
                 field(Characters; Rec.Characters)
                 {
-                    ToolTip = 'Specifies the value of the Characters field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Characters field.';
                 }
                 field(Planets; Rec.Planets)
                 {
-                    ToolTip = 'Specifies the value of the Planets field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Planets field.';
                 }
                 field(Url; Rec.Url)
                 {
@@ -94,9 +94,9 @@ page 50103 "SW Films List"
 
                 trigger OnAction()
                 var
-                    l_Url: Text;
                     l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
+                    l_Url: Text;
                 begin
                     l_Url := StrSubstNo('%1/films', l_SWAPISetup.Endpoint);
                     if l_SWAPIMng.FillSWFilms(l_Url) then

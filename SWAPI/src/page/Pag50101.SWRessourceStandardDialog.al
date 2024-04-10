@@ -18,6 +18,9 @@ page 50101 "SW Ressource StandardDialog"
         }
     }
 
+    var
+        g_RessouceType: Enum "SW Ressouce Types";
+
     procedure Setup(p_RessourceType: Enum "SW Ressouce Types")
     begin
         g_RessouceType := p_RessourceType;
@@ -32,7 +35,4 @@ page 50101 "SW Ressource StandardDialog"
     begin
         exit(g_RessouceType)
     end;
-
-    var
-        g_RessouceType: Enum "SW Ressouce Types";
 }

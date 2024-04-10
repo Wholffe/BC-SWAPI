@@ -7,7 +7,7 @@ page 50106 "SW Species List"
     PageType = List;
     SourceTable = "SW Species";
     UsageCategory = Lists;
-    
+
     layout
     {
         area(content)

@@ -7,9 +7,9 @@ table 50101 "SW People"
     {
         field(1; ID; Integer)
         {
+            AutoIncrement = true;
             Caption = 'ID';
             Editable = false;
-            AutoIncrement = true;
         }
         field(2; Name; Text[50])
         {
@@ -49,31 +49,31 @@ table 50101 "SW People"
         }
         field(11; Films; Integer)
         {
-            Caption = 'Films';
-            FieldClass = FlowField;
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(films)));
+            Caption = 'Films';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(12; Species; Integer)
         {
-            Caption = 'Species';
-            FieldClass = FlowField;
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(species)));
+            Caption = 'Species';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(13; Starships; Integer)
         {
-            Caption = 'Starships';
-            FieldClass = FlowField;
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(starships)));
+            Caption = 'Starships';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(14; Vehicles; Integer)
         {
-            Caption = 'Vehicles';
-            FieldClass = FlowField;
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(people), RessourceID = field(ID), AssociatedRessourceType = const(vehicles)));
+            Caption = 'Vehicles';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(15; Url; Text[50])
         {

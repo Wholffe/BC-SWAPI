@@ -12,8 +12,8 @@ table 50100 SWAPISetup
         field(2; Endpoint; Text[100])
         {
             Caption = 'RequestURL';
-            InitValue = 'https://swapi.dev/api/';
             Editable = false;
+            InitValue = 'https://swapi.dev/api/';
         }
     }
     keys

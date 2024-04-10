@@ -55,15 +55,15 @@ table 50104 "SW Vehicles"
         }
         field(13; Film; Integer)
         {
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(vehicles), RessourceID = field(ID), AssociatedRessourceType = const(films)));
             Caption = 'Film';
             FieldClass = FlowField;
-            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(vehicles), RessourceID = field(ID), AssociatedRessourceType = const(films)));
         }
         field(14; Pilots; Integer)
         {
+            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(vehicles), RessourceID = field(ID), AssociatedRessourceType = const(people)));
             Caption = 'Pilots';
             FieldClass = FlowField;
-            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(vehicles), RessourceID = field(ID), AssociatedRessourceType = const(people)));
         }
         field(15; Url; Text[50])
         {

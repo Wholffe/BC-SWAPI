@@ -19,12 +19,12 @@ codeunit 50101 "SWAPI Mng"
 
     procedure GetJObjectFromUrl(p_Url: Text): JsonObject
     var
-        l_Url: Text;
         l_Client: HttpClient;
-        l_Response: HttpResponseMessage;
         l_Content: HttpContent;
-        l_ResponseTxt: Text;
+        l_Response: HttpResponseMessage;
         l_JObject: JsonObject;
+        l_ResponseTxt: Text;
+        l_Url: Text;
     begin
         if not l_Client.Get(p_Url, l_Response) then
             Error('Connection failed, %1', l_Response.HttpStatusCode);
@@ -48,12 +48,12 @@ codeunit 50101 "SWAPI Mng"
 
     procedure FillSWFilms(p_Url: Text): Boolean
     var
-        l_MaxCounter: Integer;
-        l_CurrCounter: Integer;
-        l_Url: Text;
-        l_JObject: JsonObject;
-        l_ID: Integer;
         l_Films: Record "SW Films";
+        l_CurrCounter: Integer;
+        l_ID: Integer;
+        l_MaxCounter: Integer;
+        l_JObject: JsonObject;
+        l_Url: Text;
     begin
         l_MaxCounter := GetCategoryCount(p_Url);
         for l_CurrCounter := 1 to l_MaxCounter do begin
@@ -87,12 +87,12 @@ codeunit 50101 "SWAPI Mng"
 
     procedure FillSWPeople(p_Url: Text): Boolean
     var
-        l_MaxCounter: Integer;
-        l_CurrCounter: Integer;
-        l_Url: Text;
-        l_JObject: JsonObject;
-        l_ID: Integer;
         l_People: Record "SW People";
+        l_CurrCounter: Integer;
+        l_ID: Integer;
+        l_MaxCounter: Integer;
+        l_JObject: JsonObject;
+        l_Url: Text;
     begin
         l_MaxCounter := GetCategoryCount(p_Url);
         for l_CurrCounter := 1 to l_MaxCounter do begin

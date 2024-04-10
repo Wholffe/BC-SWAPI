@@ -56,23 +56,23 @@ page 50102 "SW People List"
                 }
                 field(Films; Rec.Films)
                 {
-                    ToolTip = 'Specifies the value of the Films field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Films field.';
                 }
                 field(Species; Rec.Species)
                 {
-                    ToolTip = 'Specifies the value of the Species field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Species field.';
                 }
                 field(Starships; Rec.Starships)
                 {
-                    ToolTip = 'Specifies the value of the Starships field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Starships field.';
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
-                    ToolTip = 'Specifies the value of the Vehicles field.';
                     DrillDownPageId = "SW Ressource Assosiation List";
+                    ToolTip = 'Specifies the value of the Vehicles field.';
                 }
                 field(Url; Rec.Url)
                 {
@@ -100,9 +100,9 @@ page 50102 "SW People List"
 
                 trigger OnAction()
                 var
-                    l_Url: Text;
                     l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
+                    l_Url: Text;
                 begin
                     l_Url := StrSubstNo('%1/people', l_SWAPISetup.Endpoint);
                     if l_SWAPIMng.FillSWPeople(l_Url) then
