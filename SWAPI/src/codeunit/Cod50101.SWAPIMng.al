@@ -110,6 +110,45 @@ codeunit 50101 "SWAPI Mng"
         exit(true);
     end;
 
+    procedure FillSWPlanets(p_Url: Text): Boolean
+    var
+        l_Planets: Record "SW Planets";
+        l_CurrCounter: Integer;
+        l_ID: Integer;
+        l_MaxCounter: Integer;
+        l_JObject: JsonObject;
+        l_Url: Text;
+    begin
+        l_MaxCounter := GetCategoryCount(p_Url);
+        for l_CurrCounter := 1 to l_MaxCounter do begin
+            l_Url := StrSubstNo('%1/%2', p_Url, l_CurrCounter);
+            l_JObject := GetJObjectFromUrl(l_Url);
+            if l_JObject.Keys().Count <> 0 then begin
+                l_ID := l_CurrCounter;
+                if not l_Planets.Get(l_ID) then begin
+                    l_Planets.Init();
+                    l_Planets.ID := l_ID;
+                    l_Planets.Name := GetJsonTextField(l_JObject, 'name');
+                    l_Planets.Diameter := GetJsonIntegerField(l_JObject, 'birth_year');
+                    l_Planets.RotationPeriod := GetJsonIntegerField(l_JObject, 'eye_color');
+                    l_Planets.OrbitalPeriod := GetJsonIntegerField(l_JObject, 'gender');
+                    l_Planets.Gravity := GetJsonTextField(l_JObject, 'hair_color');
+                    l_Planets.Population := GetJsonIntegerField(l_JObject, 'height');
+                    l_Planets.Climate := GetJsonTextField(l_JObject, 'mass');
+                    l_Planets.Terrain := GetJsonTextField(l_JObject, 'skin_color');
+                    l_Planets.SurfaceWater := GetJsonTextField(l_JObject, 'homeworld');
+                    l_Planets.Url := GetJsonTextField(l_JObject, 'url');
+                    l_Planets.Created := GetJsonDateTimeField(l_JObject, 'created');
+                    l_Planets.Edited := GetJsonDateTimeField(l_JObject, 'edited');
+                    l_Planets.Insert();
+                end;
+                FillRessourceAssosiation(l_JObject, 'residents', Enum::"SW Ressouce Types"::planets, l_ID);
+                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::planets, l_ID);
+            end;
+        end;
+        exit(true);
+    end;
+
     procedure GetCategoryCount(p_Url: Text): Integer
     var
         l_JObject: JsonObject;
