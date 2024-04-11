@@ -7,7 +7,9 @@ table 50105 "SW Species"
     {
         field(1; ID; Integer)
         {
+            AutoIncrement = true;
             Caption = 'ID';
+            Editable = false;
         }
         field(2; Name; Text[50])
         {
@@ -21,7 +23,7 @@ table 50105 "SW Species"
         {
             Caption = 'Designation';
         }
-        field(5; AverageHeight; Integer)
+        field(5; AverageHeight; Text[50])
         {
             Caption = 'Average height';
         }
@@ -48,17 +50,22 @@ table 50105 "SW Species"
         field(11; Homeworld; Text[50])
         {
             Caption = 'Homeworld';
+            CalcFormula = lookup("SW Ressource Assosiation".AssociatedRessourceValue where(RessourceType = const(species), RessourceID = field(ID), AssociatedRessourceType = const(planets)));
+            Editable = false;
+            FieldClass = FlowField;
         }
         field(12; People; Integer)
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(species), RessourceID = field(ID), AssociatedRessourceType = const(people)));
             Caption = 'People';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(13; Films; Integer)
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(species), RessourceID = field(ID), AssociatedRessourceType = const(films)));
             Caption = 'Films';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(14; Url; Text[50])

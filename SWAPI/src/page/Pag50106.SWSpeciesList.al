@@ -56,14 +56,17 @@ page 50106 "SW Species List"
                 }
                 field(Homeworld; Rec.Homeworld)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Homeworld field.';
                 }
                 field(People; Rec.People)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the People field.';
                 }
                 field(Films; Rec.Films)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
                 }
                 field(Url; Rec.Url)
@@ -81,4 +84,28 @@ page 50106 "SW Species List"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(FillSWSpecies)
+            {
+                ApplicationArea = All;
+                Caption = 'Fill SW Species';
+
+                trigger OnAction()
+                var
+                    l_SWAPISetup: Record SWAPISetup;
+                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                    l_Url: Text;
+                begin
+                    l_Url := StrSubstNo('%1/species', l_SWAPISetup.Endpoint);
+                    if l_SWAPIMng.FillSWSpecies(l_Url) then
+                        Message(g_ImportSuccess);
+                end;
+            }
+        }
+    }
+    var
+        g_ImportSuccess: Label 'Data Imported Successfully';
 }
