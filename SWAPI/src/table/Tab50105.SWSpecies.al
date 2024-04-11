@@ -50,9 +50,6 @@ table 50105 "SW Species"
         field(11; Homeworld; Text[50])
         {
             Caption = 'Homeworld';
-            CalcFormula = lookup("SW Ressource Assosiation".AssociatedRessourceValue where(RessourceType = const(species), RessourceID = field(ID), AssociatedRessourceType = const(planets)));
-            Editable = false;
-            FieldClass = FlowField;
         }
         field(12; People; Integer)
         {

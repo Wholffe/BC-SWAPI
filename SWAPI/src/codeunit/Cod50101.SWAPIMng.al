@@ -3,7 +3,7 @@ namespace SWAPI.SWAPI;
 codeunit 50101 "SWAPI Mng"
 {
 
-    local procedure FillRessourceAssosiationFromArray(p_JObject: JsonObject; p_Member: Text; p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer)
+    local procedure FillRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer)
     var
         l_InnerJsonObject: JsonToken;
         l_JToken: JsonToken;
@@ -14,15 +14,6 @@ codeunit 50101 "SWAPI Mng"
             l_AssValue := l_JToken.AsValue().AsText();
             FillSingleRessourceAssosiation(p_RessourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
         end;
-    end;
-
-    local procedure FillRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer)
-    var
-        l_JToken: JsonToken;
-        l_AssValue: Text[50];
-    begin
-        l_AssValue := GetJsonTextField(p_JObject, p_Member);
-        FillSingleRessourceAssosiation(p_RessourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
     end;
 
     local procedure FillSingleRessourceAssosiation(p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50])
@@ -68,11 +59,11 @@ codeunit 50101 "SWAPI Mng"
                     l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Films.Insert();
                 end;
-                FillRessourceAssosiationFromArray(l_JObject, 'species', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'starships', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'characters', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'planets', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'characters', Enum::"SW Ressouce Types"::films, l_ID);
+                FillRessourceAssosiation(l_JObject, 'planets', Enum::"SW Ressouce Types"::films, l_ID);
             end;
             Commit();
         end;
@@ -111,10 +102,10 @@ codeunit 50101 "SWAPI Mng"
                     l_People.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_People.Insert();
                 end;
-                FillRessourceAssosiationFromArray(l_JObject, 'films', Enum::"SW Ressouce Types"::people, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'species', Enum::"SW Ressouce Types"::people, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'starships', Enum::"SW Ressouce Types"::people, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::people, l_ID);
+                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::people, l_ID);
+                FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::people, l_ID);
+                FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::people, l_ID);
+                FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::people, l_ID);
             end;
             Commit();
         end;
@@ -153,8 +144,8 @@ codeunit 50101 "SWAPI Mng"
                     l_Planets.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Planets.Insert();
                 end;
-                FillRessourceAssosiationFromArray(l_JObject, 'residents', Enum::"SW Ressouce Types"::planets, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'films', Enum::"SW Ressouce Types"::planets, l_ID);
+                FillRessourceAssosiation(l_JObject, 'residents', Enum::"SW Ressouce Types"::planets, l_ID);
+                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::planets, l_ID);
             end;
             Commit();
         end;
@@ -188,14 +179,14 @@ codeunit 50101 "SWAPI Mng"
                     l_Species.HairColors := GetJsonTextField(l_JObject, 'hair_colors');
                     l_Species.SkinColors := GetJsonTextField(l_JObject, 'skin_colors');
                     l_Species.Language := GetJsonTextField(l_JObject, 'language');
+                    l_Species.Homeworld := GetJsonTextField(l_JObject, 'homeworld');
                     l_Species.Url := GetJsonTextField(l_JObject, 'url');
                     l_Species.Created := GetJsonDateTimeField(l_JObject, 'created');
                     l_Species.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Species.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'homeworld', Enum::"SW Ressouce Types"::species, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'people', Enum::"SW Ressouce Types"::species, l_ID);
-                FillRessourceAssosiationFromArray(l_JObject, 'films', Enum::"SW Ressouce Types"::species, l_ID);
+                FillRessourceAssosiation(l_JObject, 'people', Enum::"SW Ressouce Types"::species, l_ID);
+                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::species, l_ID);
             end;
             Commit();
         end;

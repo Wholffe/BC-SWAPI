@@ -56,7 +56,6 @@ page 50106 "SW Species List"
                 }
                 field(Homeworld; Rec.Homeworld)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Homeworld field.';
                 }
                 field(People; Rec.People)
