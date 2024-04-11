@@ -25,6 +25,13 @@ page 50100 SWAPISetup
                 }
             }
         }
+        area(FactBoxes)
+        {
+            part(SWRessourceFactbox; SWRessourceFactbox)
+            {
+                ApplicationArea = All;
+            }
+        }
     }
     actions
     {

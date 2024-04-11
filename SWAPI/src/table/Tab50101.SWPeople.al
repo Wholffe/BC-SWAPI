@@ -17,7 +17,7 @@ table 50101 "SW People"
         }
         field(3; BirthYear; Text[50])
         {
-            Caption = 'Birth year ';
+            Caption = 'Birth year';
         }
         field(4; EyeColor; Text[50])
         {
@@ -29,7 +29,7 @@ table 50101 "SW People"
         }
         field(6; HairColor; Text[50])
         {
-            Caption = 'Hair color ';
+            Caption = 'Hair color';
         }
         field(7; Height; Text[50])
         {
