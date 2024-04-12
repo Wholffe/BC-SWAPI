@@ -178,6 +178,52 @@ codeunit 50101 "SWAPI Mng"
         exit(true);
     end;
 
+    procedure FillSWStarships(): Boolean
+    var
+        l_APISetup: Record SWAPISetup;
+        l_Starships: Record "SW Starships";
+        l_CurrCounter: Integer;
+        l_ID: Integer;
+        l_MaxCounter: Integer;
+        l_JObject: JsonObject;
+        l_ResourceRouteUrl: Text;
+        l_Url: Text;
+    begin
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::starships);
+        l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
+        for l_CurrCounter := 1 to l_MaxCounter do begin
+            l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
+            l_JObject := GetJObjectFromUrl(l_Url);
+            if l_JObject.Keys().Count <> 0 then begin
+                l_ID := l_CurrCounter;
+                if not l_Starships.Get(l_ID) then begin
+                    l_Starships.Init();
+                    l_Starships.ID := l_ID;
+                    l_Starships.Name := GetJsonTextField(l_JObject, 'name');
+                    l_Starships.Model := GetJsonTextField(l_JObject, 'model');
+                    l_Starships.StarshipClass := GetJsonTextField(l_JObject, 'starship_class');
+                    l_Starships.Manufacturer := GetJsonTextField(l_JObject, 'manufacturer');
+                    l_Starships.CostInCredits := GetJsonTextField(l_JObject, 'cost_in_credits');
+                    l_Starships.Crew := GetJsonTextField(l_JObject, 'crew');
+                    l_Starships.Passengers := GetJsonTextField(l_JObject, 'passengers');
+                    l_Starships.MaxAtmospheringSpeed := GetJsonTextField(l_JObject, 'max_atmosphering_speed');
+                    l_Starships."HyperdriveRating " := GetJsonTextField(l_JObject, 'hyperdrive_rating');
+                    l_Starships.MGLT := GetJsonTextField(l_JObject, 'MGLT');
+                    l_Starships.CargoCapacity := GetJsonTextField(l_JObject, 'cargo_capacity');
+                    l_Starships.Consumables := GetJsonTextField(l_JObject, 'consumables');
+                    l_Starships.Url := GetJsonTextField(l_JObject, 'url');
+                    l_Starships.Created := GetJsonDateTimeField(l_JObject, 'created');
+                    l_Starships.Edited := GetJsonDateTimeField(l_JObject, 'edited');
+                    l_Starships.Insert();
+                end;
+                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::species, l_ID);
+                FillRessourceAssosiation(l_JObject, 'pilots', Enum::"SW Ressouce Types"::species, l_ID);
+            end;
+            Commit();
+        end;
+        exit(true);
+    end;
+
     procedure GetCategoryCount(p_Url: Text): Integer
     var
         l_JObject: JsonObject;

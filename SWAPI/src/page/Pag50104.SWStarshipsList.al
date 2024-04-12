@@ -89,4 +89,26 @@ page 50104 "SW Starships List"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(FillSWStarships)
+            {
+                ApplicationArea = All;
+                Caption = 'Fill SW Starships';
+
+                trigger OnAction()
+                var
+                    l_SWAPISetup: Record SWAPISetup;
+                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                begin
+                    if l_SWAPIMng.FillSWStarships() then
+                        Message(g_ImportSuccess);
+                end;
+            }
+        }
+    }
+    var
+        g_ImportSuccess: Label 'Data Imported Successfully';
 }
