@@ -92,10 +92,8 @@ page 50107 "SW Planets List"
                 var
                     l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_Url: Text;
                 begin
-                    l_Url := StrSubstNo('%1/planets', l_SWAPISetup.Endpoint);
-                    if l_SWAPIMng.FillSWPlanets(l_Url) then
+                    if l_SWAPIMng.FillSWPlanets() then
                         Message(g_ImportSuccess);
                 end;
             }

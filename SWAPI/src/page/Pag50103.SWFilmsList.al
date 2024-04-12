@@ -96,10 +96,8 @@ page 50103 "SW Films List"
                 var
                     l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_Url: Text;
                 begin
-                    l_Url := StrSubstNo('%1/films', l_SWAPISetup.Endpoint);
-                    if l_SWAPIMng.FillSWFilms(l_Url) then
+                    if l_SWAPIMng.FillSWFilms() then
                         Message(g_ImportSuccess);
                 end;
             }

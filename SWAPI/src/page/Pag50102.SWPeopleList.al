@@ -102,10 +102,8 @@ page 50102 "SW People List"
                 var
                     l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_Url: Text;
                 begin
-                    l_Url := StrSubstNo('%1/people', l_SWAPISetup.Endpoint);
-                    if l_SWAPIMng.FillSWPeople(l_Url) then
+                    if l_SWAPIMng.FillSWPeople() then
                         Message(g_ImportSuccess);
                 end;
             }

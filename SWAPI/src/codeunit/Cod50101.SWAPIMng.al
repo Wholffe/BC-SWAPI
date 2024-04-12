@@ -3,45 +3,21 @@ namespace SWAPI.SWAPI;
 codeunit 50101 "SWAPI Mng"
 {
 
-    local procedure FillRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer)
+    procedure FillSWFilms(): Boolean
     var
-        l_InnerJsonObject: JsonToken;
-        l_JToken: JsonToken;
-        l_AssValue: Text[50];
-    begin
-        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
-        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
-            l_AssValue := l_JToken.AsValue().AsText();
-            FillSingleRessourceAssosiation(p_RessourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
-        end;
-    end;
-
-    local procedure FillSingleRessourceAssosiation(p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50])
-    var
-        l_RessourceAssosiation: Record "SW Ressource Assosiation";
-    begin
-        if not l_RessourceAssosiation.Get(p_RessourceType, p_ID, p_AssType, p_AssValue) then begin
-            l_RessourceAssosiation.Init();
-            l_RessourceAssosiation.RessourceType := p_RessourceType;
-            l_RessourceAssosiation.RessourceID := p_ID;
-            l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
-            l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
-            l_RessourceAssosiation.Insert();
-        end;
-    end;
-
-    procedure FillSWFilms(p_Url: Text): Boolean
-    var
+        l_APISetup: Record SWAPISetup;
         l_Films: Record "SW Films";
         l_CurrCounter: Integer;
         l_ID: Integer;
         l_MaxCounter: Integer;
         l_JObject: JsonObject;
+        l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_MaxCounter := GetCategoryCount(p_Url);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::films);
+        l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
-            l_Url := StrSubstNo('%1/%2', p_Url, l_CurrCounter);
+            l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
             l_JObject := GetJObjectFromUrl(l_Url);
             if l_JObject.Keys().Count <> 0 then begin
                 l_ID := l_CurrCounter;
@@ -70,18 +46,21 @@ codeunit 50101 "SWAPI Mng"
         exit(true);
     end;
 
-    procedure FillSWPeople(p_Url: Text): Boolean
+    procedure FillSWPeople(): Boolean
     var
+        l_APISetup: Record SWAPISetup;
         l_People: Record "SW People";
         l_CurrCounter: Integer;
         l_ID: Integer;
         l_MaxCounter: Integer;
         l_JObject: JsonObject;
+        l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_MaxCounter := GetCategoryCount(p_Url);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::people);
+        l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
-            l_Url := StrSubstNo('%1/%2', p_Url, l_CurrCounter);
+            l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
             l_JObject := GetJObjectFromUrl(l_Url);
             if l_JObject.Keys().Count <> 0 then begin
                 l_ID := l_CurrCounter;
@@ -112,18 +91,21 @@ codeunit 50101 "SWAPI Mng"
         exit(true);
     end;
 
-    procedure FillSWPlanets(p_Url: Text): Boolean
+    procedure FillSWPlanets(): Boolean
     var
+        l_APISetup: Record SWAPISetup;
         l_Planets: Record "SW Planets";
         l_CurrCounter: Integer;
         l_ID: Integer;
         l_MaxCounter: Integer;
         l_JObject: JsonObject;
+        l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_MaxCounter := GetCategoryCount(p_Url);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::planets);
+        l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
-            l_Url := StrSubstNo('%1/%2', p_Url, l_CurrCounter);
+            l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
             l_JObject := GetJObjectFromUrl(l_Url);
             if l_JObject.Keys().Count <> 0 then begin
                 l_ID := l_CurrCounter;
@@ -152,18 +134,21 @@ codeunit 50101 "SWAPI Mng"
         exit(true);
     end;
 
-    procedure FillSWSpecies(p_Url: Text): Boolean
+    procedure FillSWSpecies(): Boolean
     var
+        l_APISetup: Record SWAPISetup;
         l_Species: Record "SW Species";
         l_CurrCounter: Integer;
         l_ID: Integer;
         l_MaxCounter: Integer;
         l_JObject: JsonObject;
+        l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_MaxCounter := GetCategoryCount(p_Url);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::species);
+        l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
-            l_Url := StrSubstNo('%1/%2', p_Url, l_CurrCounter);
+            l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
             l_JObject := GetJObjectFromUrl(l_Url);
             if l_JObject.Keys().Count <> 0 then begin
                 l_ID := l_CurrCounter;
@@ -221,14 +206,6 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
-    local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
-    var
-        l_Result: JsonToken;
-    begin
-        if p_JObject.Get(p_Member, l_Result) then
-            exit(l_Result.AsArray().AsToken());
-    end;
-
     procedure GetJObjectFromUrl(p_Url: Text): JsonObject
     var
         l_Client: HttpClient;
@@ -248,6 +225,63 @@ codeunit 50101 "SWAPI Mng"
         l_Content.ReadAs(l_ResponseTxt);
         l_JObject.ReadFrom(l_ResponseTxt);
         exit(l_JObject)
+    end;
+
+    procedure GetUrlFromEnum(p_RessourceType: Enum "SW Ressouce Types"): Text
+    var
+        l_SWAPISetup: Record SWAPISetup;
+    begin
+        exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_RessourceType))
+    end;
+
+    procedure PingAPIConnection()
+    var
+        l_SWAPISetup: Record SWAPISetup;
+        l_Client: HttpClient;
+        l_Response: HttpResponseMessage;
+    begin
+        if not l_Client.Get(l_SWAPISetup.Endpoint, l_Response) then
+            Error('Connection failed, %1', l_Response.HttpStatusCode);
+
+        if not l_Response.IsSuccessStatusCode then
+            Error('Status code result %1', l_Response.IsSuccessStatusCode);
+
+        Message('Pong');
+    end;
+
+    local procedure FillRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer)
+    var
+        l_InnerJsonObject: JsonToken;
+        l_JToken: JsonToken;
+        l_AssValue: Text[50];
+    begin
+        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
+        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
+            l_AssValue := l_JToken.AsValue().AsText();
+            FillSingleRessourceAssosiation(p_RessourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
+        end;
+    end;
+
+    local procedure FillSingleRessourceAssosiation(p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50])
+    var
+        l_RessourceAssosiation: Record "SW Ressource Assosiation";
+    begin
+        if not l_RessourceAssosiation.Get(p_RessourceType, p_ID, p_AssType, p_AssValue) then begin
+            l_RessourceAssosiation.Init();
+            l_RessourceAssosiation.RessourceType := p_RessourceType;
+            l_RessourceAssosiation.RessourceID := p_ID;
+            l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
+            l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
+            l_RessourceAssosiation.Insert();
+        end;
+    end;
+
+    local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
+    var
+        l_Result: JsonToken;
+    begin
+        if p_JObject.Get(p_Member, l_Result) then
+            exit(l_Result.AsArray().AsToken());
     end;
 
     local procedure GetJsonDateField(p_JObject: JsonObject; p_Member: Text): Date
@@ -301,27 +335,5 @@ codeunit 50101 "SWAPI Mng"
         if l_Result.AsValue().IsNull() then
             exit('');
         exit(l_Result.AsValue().AsText());
-    end;
-
-    procedure GetUrlFromEnum(p_RessourceType: Enum "SW Ressouce Types"): Text
-    var
-        l_SWAPISetup: Record SWAPISetup;
-    begin
-        exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_RessourceType))
-    end;
-
-    procedure PingAPIConnection()
-    var
-        l_SWAPISetup: Record SWAPISetup;
-        l_Client: HttpClient;
-        l_Response: HttpResponseMessage;
-    begin
-        if not l_Client.Get(l_SWAPISetup.Endpoint, l_Response) then
-            Error('Connection failed, %1', l_Response.HttpStatusCode);
-
-        if not l_Response.IsSuccessStatusCode then
-            Error('Status code result %1', l_Response.IsSuccessStatusCode);
-
-        Message('Pong');
     end;
 }

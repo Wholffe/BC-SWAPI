@@ -96,10 +96,8 @@ page 50106 "SW Species List"
                 var
                     l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_Url: Text;
                 begin
-                    l_Url := StrSubstNo('%1/species', l_SWAPISetup.Endpoint);
-                    if l_SWAPIMng.FillSWSpecies(l_Url) then
+                    if l_SWAPIMng.FillSWSpecies() then
                         Message(g_ImportSuccess);
                 end;
             }
