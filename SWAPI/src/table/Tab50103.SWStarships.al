@@ -7,7 +7,9 @@ table 50103 "SW Starships"
     {
         field(1; ID; Integer)
         {
+            AutoIncrement = true;
             Caption = 'ID';
+            Editable = false;
         }
         field(2; Name; Text[100])
         {
@@ -65,12 +67,14 @@ table 50103 "SW Starships"
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(starships), RessourceID = field(ID), AssociatedRessourceType = const(films)));
             Caption = 'Films';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(16; Pilots; Integer)
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(starships), RessourceID = field(ID), AssociatedRessourceType = const(people)));
             Caption = 'Pilots';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(17; Url; Text[100])

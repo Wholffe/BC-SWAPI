@@ -68,10 +68,12 @@ page 50104 "SW Starships List"
                 }
                 field(Films; Rec.Films)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
                 }
                 field(Pilots; Rec.Pilots)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Pilots field.';
                 }
                 field(Url; Rec.Url)

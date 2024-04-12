@@ -216,8 +216,8 @@ codeunit 50101 "SWAPI Mng"
                     l_Starships.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Starships.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::species, l_ID);
-                FillRessourceAssosiation(l_JObject, 'pilots', Enum::"SW Ressouce Types"::species, l_ID);
+                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::starships, l_ID);
+                FillRessourceAssosiation(l_JObject, 'pilots', Enum::"SW Ressouce Types"::starships, l_ID);
             end;
             Commit();
         end;
