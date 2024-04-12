@@ -64,10 +64,12 @@ page 50105 "SW Vehicles List"
                 }
                 field(Film; Rec.Film)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Film field.';
                 }
                 field(Pilots; Rec.Pilots)
                 {
+                    DrillDownPageId = "SW Ressource Assosiation List";
                     ToolTip = 'Specifies the value of the Pilots field.';
                 }
                 field(Url; Rec.Url)
@@ -85,4 +87,26 @@ page 50105 "SW Vehicles List"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(FillSWVehicles)
+            {
+                ApplicationArea = All;
+                Caption = 'Fill SW Vehicles';
+
+                trigger OnAction()
+                var
+                    l_SWAPISetup: Record SWAPISetup;
+                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                begin
+                    if l_SWAPIMng.FillSWVehicles() then
+                        Message(g_ImportSuccess);
+                end;
+            }
+        }
+    }
+    var
+        g_ImportSuccess: Label 'Data Imported Successfully';
 }

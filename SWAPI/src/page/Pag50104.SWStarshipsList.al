@@ -50,7 +50,7 @@ page 50104 "SW Starships List"
                 {
                     ToolTip = 'Specifies the value of the Max atmosphering speed field.';
                 }
-                field("HyperdriveRating "; Rec."HyperdriveRating ")
+                field("HyperdriveRating "; Rec.HyperdriveRating)
                 {
                     ToolTip = 'Specifies the value of the Hyperdrive rating  field.';
                 }

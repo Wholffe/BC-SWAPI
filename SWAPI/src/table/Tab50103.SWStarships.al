@@ -47,7 +47,7 @@ table 50103 "SW Starships"
         {
             Caption = 'Max atmosphering speed';
         }
-        field(11; "HyperdriveRating "; Text[100])
+        field(11; HyperdriveRating; Text[100])
         {
             Caption = 'Hyperdrive rating ';
         }

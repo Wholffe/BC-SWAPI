@@ -7,7 +7,9 @@ table 50104 "SW Vehicles"
     {
         field(1; ID; Integer)
         {
+            AutoIncrement = true;
             Caption = 'ID';
+            Editable = false;
         }
         field(2; Name; Text[100])
         {
@@ -25,11 +27,11 @@ table 50104 "SW Vehicles"
         {
             Caption = 'Manufacturer';
         }
-        field(6; Lenght; Integer)
+        field(6; Lenght; Text[100])
         {
             Caption = 'Lenght';
         }
-        field(7; CostInCredits; Integer)
+        field(7; CostInCredits; Text[100])
         {
             Caption = 'Cost in credits';
         }
@@ -41,11 +43,11 @@ table 50104 "SW Vehicles"
         {
             Caption = 'Passengers';
         }
-        field(10; MaxAtmospheringSpeed; Integer)
+        field(10; MaxAtmospheringSpeed; Text[100])
         {
             Caption = 'Max atmosphering speed';
         }
-        field(11; CargoCapacity; Integer)
+        field(11; CargoCapacity; Text[100])
         {
             Caption = 'CargoCapacity';
         }
@@ -57,12 +59,14 @@ table 50104 "SW Vehicles"
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(vehicles), RessourceID = field(ID), AssociatedRessourceType = const(films)));
             Caption = 'Film';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(14; Pilots; Integer)
         {
             CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(vehicles), RessourceID = field(ID), AssociatedRessourceType = const(people)));
             Caption = 'Pilots';
+            Editable = false;
             FieldClass = FlowField;
         }
         field(15; Url; Text[100])
