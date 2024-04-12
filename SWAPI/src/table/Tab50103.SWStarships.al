@@ -9,55 +9,55 @@ table 50103 "SW Starships"
         {
             Caption = 'ID';
         }
-        field(2; Name; Text[50])
+        field(2; Name; Text[100])
         {
             Caption = 'Name';
         }
-        field(3; Model; Text[50])
+        field(3; Model; Text[100])
         {
             Caption = 'Model';
         }
-        field(4; StarshipClass; Text[50])
+        field(4; StarshipClass; Text[100])
         {
             Caption = 'Starship Class';
         }
-        field(5; Manufacturer; Text[50])
+        field(5; Manufacturer; Text[100])
         {
             Caption = 'Manufacturer';
         }
-        field(6; CostInCredits; Text[50])
+        field(6; CostInCredits; Text[100])
         {
             Caption = 'Cost in credits';
         }
-        field(7; Length; Text[50])
+        field(7; Length; Text[100])
         {
             Caption = 'Length';
         }
-        field(8; Crew; Text[50])
+        field(8; Crew; Text[100])
         {
             Caption = 'Crew';
         }
-        field(9; Passengers; Text[50])
+        field(9; Passengers; Text[100])
         {
             Caption = 'Passengers';
         }
-        field(10; MaxAtmospheringSpeed; Text[50])
+        field(10; MaxAtmospheringSpeed; Text[100])
         {
             Caption = 'Max atmosphering speed';
         }
-        field(11; "HyperdriveRating "; Text[50])
+        field(11; "HyperdriveRating "; Text[100])
         {
             Caption = 'Hyperdrive rating ';
         }
-        field(12; MGLT; Text[50])
+        field(12; MGLT; Text[100])
         {
             Caption = 'MGLT';
         }
-        field(13; CargoCapacity; Text[50])
+        field(13; CargoCapacity; Text[100])
         {
             Caption = 'Cargo capacity';
         }
-        field(14; Consumables; Text[50])
+        field(14; Consumables; Text[100])
         {
             Caption = 'Consumables';
         }
@@ -73,7 +73,7 @@ table 50103 "SW Starships"
             Caption = 'Pilots';
             FieldClass = FlowField;
         }
-        field(17; Url; Text[50])
+        field(17; Url; Text[100])
         {
             Caption = 'Url';
         }

@@ -9,19 +9,19 @@ table 50104 "SW Vehicles"
         {
             Caption = 'ID';
         }
-        field(2; Name; Text[50])
+        field(2; Name; Text[100])
         {
             Caption = 'Name';
         }
-        field(3; Model; Text[50])
+        field(3; Model; Text[100])
         {
             Caption = 'Model';
         }
-        field(4; VehicleClass; Text[50])
+        field(4; VehicleClass; Text[100])
         {
             Caption = 'Vehicle class';
         }
-        field(5; Manufacturer; Text[50])
+        field(5; Manufacturer; Text[100])
         {
             Caption = 'Manufacturer';
         }
@@ -33,11 +33,11 @@ table 50104 "SW Vehicles"
         {
             Caption = 'Cost in credits';
         }
-        field(8; Crew; Text[50])
+        field(8; Crew; Text[100])
         {
             Caption = 'Crew';
         }
-        field(9; Passengers; Text[50])
+        field(9; Passengers; Text[100])
         {
             Caption = 'Passengers';
         }
@@ -49,7 +49,7 @@ table 50104 "SW Vehicles"
         {
             Caption = 'CargoCapacity';
         }
-        field(12; Consumables; Text[50])
+        field(12; Consumables; Text[100])
         {
             Caption = 'Consumables';
         }
@@ -65,7 +65,7 @@ table 50104 "SW Vehicles"
             Caption = 'Pilots';
             FieldClass = FlowField;
         }
-        field(15; Url; Text[50])
+        field(15; Url; Text[100])
         {
             Caption = 'Url';
         }

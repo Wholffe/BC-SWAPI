@@ -11,39 +11,39 @@ table 50101 "SW People"
             Caption = 'ID';
             Editable = false;
         }
-        field(2; Name; Text[50])
+        field(2; Name; Text[100])
         {
             Caption = 'Name';
         }
-        field(3; BirthYear; Text[50])
+        field(3; BirthYear; Text[100])
         {
             Caption = 'Birth year';
         }
-        field(4; EyeColor; Text[50])
+        field(4; EyeColor; Text[100])
         {
             Caption = 'Eye color';
         }
-        field(5; Gender; Text[50])
+        field(5; Gender; Text[100])
         {
             Caption = 'Gender';
         }
-        field(6; HairColor; Text[50])
+        field(6; HairColor; Text[100])
         {
             Caption = 'Hair color';
         }
-        field(7; Height; Text[50])
+        field(7; Height; Text[100])
         {
             Caption = 'Height';
         }
-        field(8; Mass; Text[50])
+        field(8; Mass; Text[100])
         {
             Caption = 'Mass';
         }
-        field(9; SkinColor; Text[50])
+        field(9; SkinColor; Text[100])
         {
             Caption = 'Skin color ';
         }
-        field(10; Homeworld; Text[50])
+        field(10; Homeworld; Text[100])
         {
             Caption = 'Homeworld';
         }
@@ -75,7 +75,7 @@ table 50101 "SW People"
             Editable = false;
             FieldClass = FlowField;
         }
-        field(15; Url; Text[50])
+        field(15; Url; Text[100])
         {
             Caption = 'Url';
         }

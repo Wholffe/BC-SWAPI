@@ -11,7 +11,7 @@ table 50102 "SW Films"
             Caption = 'ID';
             Editable = false;
         }
-        field(2; Title; Text[50])
+        field(2; Title; Text[100])
         {
             Caption = 'Title';
         }
@@ -23,11 +23,11 @@ table 50102 "SW Films"
         {
             Caption = 'Opening crawl';
         }
-        field(5; Director; Text[50])
+        field(5; Director; Text[100])
         {
             Caption = 'Director';
         }
-        field(6; Producer; Text[50])
+        field(6; Producer; Text[100])
         {
             Caption = 'Producer';
         }

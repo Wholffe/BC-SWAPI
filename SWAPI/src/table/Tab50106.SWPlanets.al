@@ -11,39 +11,39 @@ table 50106 "SW Planets"
             Caption = 'ID';
             Editable = false;
         }
-        field(2; Name; Text[50])
+        field(2; Name; Text[100])
         {
             Caption = 'Name';
         }
-        field(3; Diameter; Text[50])
+        field(3; Diameter; Text[100])
         {
             Caption = 'Diameter';
         }
-        field(4; RotationPeriod; Text[50])
+        field(4; RotationPeriod; Text[100])
         {
             Caption = 'Rotation period';
         }
-        field(5; OrbitalPeriod; Text[50])
+        field(5; OrbitalPeriod; Text[100])
         {
             Caption = 'Orbital period';
         }
-        field(6; Gravity; Text[50])
+        field(6; Gravity; Text[100])
         {
             Caption = 'Gravity';
         }
-        field(7; Population; Text[50])
+        field(7; Population; Text[100])
         {
             Caption = 'Population';
         }
-        field(8; Climate; Text[50])
+        field(8; Climate; Text[100])
         {
             Caption = 'Climate';
         }
-        field(9; Terrain; Text[50])
+        field(9; Terrain; Text[100])
         {
             Caption = 'Terrain';
         }
-        field(10; SurfaceWater; Text[50])
+        field(10; SurfaceWater; Text[100])
         {
             Caption = 'Surface water';
         }
@@ -61,7 +61,7 @@ table 50106 "SW Planets"
             Editable = false;
             FieldClass = FlowField;
         }
-        field(13; Url; Text[50])
+        field(13; Url; Text[100])
         {
             Caption = 'Url';
         }

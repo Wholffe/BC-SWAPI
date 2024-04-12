@@ -17,7 +17,7 @@ table 50107 "SW Ressource Assosiation"
         {
             Caption = 'AssociatedRessourceType';
         }
-        field(4; AssociatedRessourceValue; Text[50])
+        field(4; AssociatedRessourceValue; Text[100])
         {
             Caption = 'AssociatedRessourceValue';
         }

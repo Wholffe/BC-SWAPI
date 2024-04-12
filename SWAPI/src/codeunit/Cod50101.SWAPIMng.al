@@ -299,7 +299,7 @@ codeunit 50101 "SWAPI Mng"
     var
         l_InnerJsonObject: JsonToken;
         l_JToken: JsonToken;
-        l_AssValue: Text[50];
+        l_AssValue: Text[100];
     begin
         l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
         foreach l_JToken in l_InnerJsonObject.AsArray() do begin
@@ -308,7 +308,7 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
-    local procedure FillSingleRessourceAssosiation(p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[50])
+    local procedure FillSingleRessourceAssosiation(p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[100])
     var
         l_RessourceAssosiation: Record "SW Ressource Assosiation";
     begin

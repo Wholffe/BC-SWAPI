@@ -11,43 +11,43 @@ table 50105 "SW Species"
             Caption = 'ID';
             Editable = false;
         }
-        field(2; Name; Text[50])
+        field(2; Name; Text[100])
         {
             Caption = 'Name';
         }
-        field(3; Classification; Text[50])
+        field(3; Classification; Text[100])
         {
             Caption = 'Classification';
         }
-        field(4; Designation; Text[50])
+        field(4; Designation; Text[100])
         {
             Caption = 'Designation';
         }
-        field(5; AverageHeight; Text[50])
+        field(5; AverageHeight; Text[100])
         {
             Caption = 'Average height';
         }
-        field(6; AverageLifeSpan; Text[50])
+        field(6; AverageLifeSpan; Text[100])
         {
             Caption = 'Average life span';
         }
-        field(7; EyeColor; Text[50])
+        field(7; EyeColor; Text[100])
         {
             Caption = 'Eye color';
         }
-        field(8; HairColors; Text[50])
+        field(8; HairColors; Text[100])
         {
             Caption = 'Hair colors';
         }
-        field(9; SkinColors; Text[50])
+        field(9; SkinColors; Text[100])
         {
             Caption = 'Skin colors';
         }
-        field(10; Language; Text[50])
+        field(10; Language; Text[100])
         {
             Caption = 'Language';
         }
-        field(11; Homeworld; Text[50])
+        field(11; Homeworld; Text[100])
         {
             Caption = 'Homeworld';
         }
@@ -65,7 +65,7 @@ table 50105 "SW Species"
             Editable = false;
             FieldClass = FlowField;
         }
-        field(14; Url; Text[50])
+        field(14; Url; Text[100])
         {
             Caption = 'Url';
         }
