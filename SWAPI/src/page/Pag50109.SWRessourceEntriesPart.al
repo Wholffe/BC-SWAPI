@@ -1,9 +1,9 @@
 namespace SWAPI.SWAPI;
 
-page 50109 SWRessourceFactbox
+page 50109 SWRessourceEntriesPart
 {
     ApplicationArea = All;
-    Caption = 'Ressources';
+    Caption = 'SW Ressource Entries';
     DeleteAllowed = false;
     Editable = false;
     InsertAllowed = false;
@@ -12,9 +12,9 @@ page 50109 SWRessourceFactbox
 
     layout
     {
-        area(content)
+        area(Content)
         {
-            group(RessourceEntries)
+            cuegroup(RessourceEntries)
             {
                 Caption = 'Ressource Entries';
 

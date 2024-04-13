@@ -27,7 +27,7 @@ page 50100 SWAPISetup
         }
         area(FactBoxes)
         {
-            part(SWRessourceFactbox; SWRessourceFactbox)
+            part(SWRessourceFactbox; SWRessourceEntriesPart)
             {
                 ApplicationArea = All;
             }
