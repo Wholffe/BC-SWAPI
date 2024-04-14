@@ -56,22 +56,22 @@ page 50102 "SW People List"
                 }
                 field(Films; Rec.Films)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
                 }
                 field(Species; Rec.Species)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Species field.';
                 }
                 field(Starships; Rec.Starships)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Starships field.';
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Vehicles field.';
                 }
                 field(Url; Rec.Url)

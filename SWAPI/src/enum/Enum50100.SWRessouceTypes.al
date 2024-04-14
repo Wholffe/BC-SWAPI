@@ -1,6 +1,6 @@
 namespace SWAPI.SWAPI;
 
-enum 50100 "SW Ressouce Types"
+enum 50100 "SW Resource Types"
 {
     Extensible = false;
 

@@ -1,11 +1,11 @@
 namespace SWAPI.SWAPI;
 
-page 50108 "SW Ressource Assosiation List"
+page 50108 "SW Resource Assosiation List"
 {
     ApplicationArea = All;
-    Caption = 'SW Ressource Assosiation List';
+    Caption = 'SW Resource Assosiation List';
     PageType = List;
-    SourceTable = "SW Ressource Assosiation";
+    SourceTable = "SW Resource Assosiation";
     UsageCategory = Lists;
 
     layout
@@ -14,21 +14,21 @@ page 50108 "SW Ressource Assosiation List"
         {
             repeater(General)
             {
-                field(RessourceType; Rec.RessourceType)
+                field(ResourceType; Rec.ResourceType)
                 {
-                    ToolTip = 'Specifies the value of the RessourceType field.';
+                    ToolTip = 'Specifies the value of the ResourceType field.';
                 }
-                field(RessourceID; Rec.RessourceID)
+                field(ResourceID; Rec.ResourceID)
                 {
-                    ToolTip = 'Specifies the value of the RessourceID field.';
+                    ToolTip = 'Specifies the value of the ResourceID field.';
                 }
-                field(AssociatedRessourceType; Rec.AssociatedRessourceType)
+                field(AssociatedResourceType; Rec.AssociatedResourceType)
                 {
-                    ToolTip = 'Specifies the value of the AssociatedRessourceType field.';
+                    ToolTip = 'Specifies the value of the AssociatedResourceType field.';
                 }
-                field(AssociatedRessourceValue; Rec.AssociatedRessourceValue)
+                field(AssociatedResourceValue; Rec.AssociatedResourceValue)
                 {
-                    ToolTip = 'Specifies the value of the AssociatedRessourceValue field.';
+                    ToolTip = 'Specifies the value of the AssociatedResourceValue field.';
                 }
             }
         }

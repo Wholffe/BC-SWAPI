@@ -60,12 +60,12 @@ page 50106 "SW Species List"
                 }
                 field(People; Rec.People)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the People field.';
                 }
                 field(Films; Rec.Films)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
                 }
                 field(Url; Rec.Url)

@@ -1,38 +1,38 @@
 namespace SWAPI.SWAPI;
 
-page 50101 "SW Ressource StandardDialog"
+page 50101 "SW Resource StandardDialog"
 {
     ApplicationArea = All;
-    Caption = 'Select a ressource type';
+    Caption = 'Select a Resource type';
     PageType = StandardDialog;
 
     layout
     {
         area(content)
         {
-            field(RessourceType; g_RessouceType)
+            field(ResourceType; g_ResourceType)
             {
                 ApplicationArea = All;
-                Caption = 'Ressource type';
+                Caption = 'Resource type';
             }
         }
     }
 
     var
-        g_RessouceType: Enum "SW Ressouce Types";
+        g_ResourceType: Enum "SW Resource Types";
 
-    procedure GetRessourceType(): Enum "SW Ressouce Types"
+    procedure GetResourceType(): Enum "SW Resource Types"
     begin
-        exit(g_RessouceType)
+        exit(g_ResourceType)
     end;
 
-    procedure GetRessourceTypeNumber(): Integer
+    procedure GetResourceTypeNumber(): Integer
     begin
-        exit(g_RessouceType.AsInteger());
+        exit(g_ResourceType.AsInteger());
     end;
 
-    procedure Setup(p_RessourceType: Enum "SW Ressouce Types")
+    procedure Setup(p_ResourceType: Enum "SW Resource Types")
     begin
-        g_RessouceType := p_RessourceType;
+        g_ResourceType := p_ResourceType;
     end;
 }

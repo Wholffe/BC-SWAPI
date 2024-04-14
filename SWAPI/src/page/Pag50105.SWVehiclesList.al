@@ -64,12 +64,12 @@ page 50105 "SW Vehicles List"
                 }
                 field(Film; Rec.Film)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Film field.';
                 }
                 field(Pilots; Rec.Pilots)
                 {
-                    DrillDownPageId = "SW Ressource Assosiation List";
+                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Pilots field.';
                 }
                 field(Url; Rec.Url)

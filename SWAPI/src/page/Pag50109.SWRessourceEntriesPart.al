@@ -1,9 +1,9 @@
 namespace SWAPI.SWAPI;
 
-page 50109 SWRessourceEntriesPart
+page 50109 SWResourceEntriesPart
 {
     ApplicationArea = All;
-    Caption = 'SW Ressource Entries';
+    Caption = 'SW Resource Entries';
     DeleteAllowed = false;
     Editable = false;
     InsertAllowed = false;
@@ -14,9 +14,9 @@ page 50109 SWRessourceEntriesPart
     {
         area(Content)
         {
-            cuegroup(RessourceEntries)
+            cuegroup(ResourceEntries)
             {
-                Caption = 'Ressource Entries';
+                Caption = 'Resource Entries';
 
                 field(SWFilmsEntries; g_SWFilmsEntries)
                 {
@@ -86,10 +86,10 @@ page 50109 SWRessourceEntriesPart
 
     trigger OnOpenPage()
     begin
-        SetRessourceEntries();
+        SetResourceEntries();
     end;
 
-    local procedure SetRessourceEntries()
+    local procedure SetResourceEntries()
     var
         l_Films: Record "SW Films";
         l_People: Record "SW People";

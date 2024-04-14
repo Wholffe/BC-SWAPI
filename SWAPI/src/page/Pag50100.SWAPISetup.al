@@ -27,7 +27,7 @@ page 50100 SWAPISetup
         }
         area(FactBoxes)
         {
-            part(SWRessourceFactbox; SWRessourceEntriesPart)
+            part(SWResourceFactbox; SWResourceEntriesPart)
             {
                 ApplicationArea = All;
             }
@@ -57,13 +57,13 @@ page 50100 SWAPISetup
                 trigger OnAction()
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_RessourceDialog: Page "SW Ressource StandardDialog";
+                    l_ResourceDialog: Page "SW Resource StandardDialog";
                     l_Count: Integer;
                     l_Url: Text;
                 begin
-                    l_RessourceDialog.Setup(Enum::"SW Ressouce Types"::films);
-                    if l_RessourceDialog.RunModal() = Action::OK then begin
-                        l_Url := l_SWAPIMng.GetUrlFromEnum(l_RessourceDialog.GetRessourceType());
+                    l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
+                    if l_ResourceDialog.RunModal() = Action::OK then begin
+                        l_Url := l_SWAPIMng.GetUrlFromEnum(l_ResourceDialog.GetResourceType());
                         l_Count := l_SWAPIMng.GetCategoryCount(l_Url);
                         Message('Url: %1, Count: %2', l_Url, l_Count);
                     end;
@@ -137,7 +137,7 @@ page 50100 SWAPISetup
 
     var
         g_APISetupMng: Codeunit "SWAPI Setup Mng";
-        g_RessourceTypeDialog: Label 'Select a ressource type';
+        g_ResourceTypeDialog: Label 'Select a Resource type';
 
     trigger OnInit()
     begin

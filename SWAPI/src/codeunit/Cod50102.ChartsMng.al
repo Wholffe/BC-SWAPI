@@ -2,13 +2,13 @@ namespace SWAPI.SWAPI;
 
 codeunit 50102 ChartsMng
 {
-    procedure GetRessourceEntriesChartParam(): JsonArray
+    procedure GetResourceEntriesChartParam(): JsonArray
     var
         l_JArray: JsonArray;
         l_InnerJArray: JsonArray;
     begin
-        SetRessourceEntries();
-        l_InnerJArray.Add('Ressource');
+        SetResourceEntries();
+        l_InnerJArray.Add('Resource');
         l_InnerJArray.Add('Entries');
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
@@ -53,7 +53,7 @@ codeunit 50102 ChartsMng
         g_SWStarshipEntries: Integer;
         g_SWVehicleEntries: Integer;
 
-    procedure SetRessourceEntries()
+    procedure SetResourceEntries()
     var
         l_Films: Record "SW Films";
         l_People: Record "SW People";

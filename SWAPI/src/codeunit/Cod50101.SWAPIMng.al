@@ -14,7 +14,7 @@ codeunit 50101 "SWAPI Mng"
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::films);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Resource Types"::films);
         l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
             l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
@@ -35,11 +35,11 @@ codeunit 50101 "SWAPI Mng"
                     l_Films.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Films.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiation(l_JObject, 'characters', Enum::"SW Ressouce Types"::films, l_ID);
-                FillRessourceAssosiation(l_JObject, 'planets', Enum::"SW Ressouce Types"::films, l_ID);
+                FillResourceAssosiation(l_JObject, 'species', Enum::"SW Resource Types"::films, l_ID);
+                FillResourceAssosiation(l_JObject, 'starships', Enum::"SW Resource Types"::films, l_ID);
+                FillResourceAssosiation(l_JObject, 'vehicles', Enum::"SW Resource Types"::films, l_ID);
+                FillResourceAssosiation(l_JObject, 'characters', Enum::"SW Resource Types"::films, l_ID);
+                FillResourceAssosiation(l_JObject, 'planets', Enum::"SW Resource Types"::films, l_ID);
             end;
             Commit();
         end;
@@ -57,7 +57,7 @@ codeunit 50101 "SWAPI Mng"
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::people);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Resource Types"::people);
         l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
             l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
@@ -81,10 +81,10 @@ codeunit 50101 "SWAPI Mng"
                     l_People.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_People.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::people, l_ID);
-                FillRessourceAssosiation(l_JObject, 'species', Enum::"SW Ressouce Types"::people, l_ID);
-                FillRessourceAssosiation(l_JObject, 'starships', Enum::"SW Ressouce Types"::people, l_ID);
-                FillRessourceAssosiation(l_JObject, 'vehicles', Enum::"SW Ressouce Types"::people, l_ID);
+                FillResourceAssosiation(l_JObject, 'films', Enum::"SW Resource Types"::people, l_ID);
+                FillResourceAssosiation(l_JObject, 'species', Enum::"SW Resource Types"::people, l_ID);
+                FillResourceAssosiation(l_JObject, 'starships', Enum::"SW Resource Types"::people, l_ID);
+                FillResourceAssosiation(l_JObject, 'vehicles', Enum::"SW Resource Types"::people, l_ID);
             end;
             Commit();
         end;
@@ -102,7 +102,7 @@ codeunit 50101 "SWAPI Mng"
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::planets);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Resource Types"::planets);
         l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
             l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
@@ -126,8 +126,8 @@ codeunit 50101 "SWAPI Mng"
                     l_Planets.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Planets.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'residents', Enum::"SW Ressouce Types"::planets, l_ID);
-                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::planets, l_ID);
+                FillResourceAssosiation(l_JObject, 'residents', Enum::"SW Resource Types"::planets, l_ID);
+                FillResourceAssosiation(l_JObject, 'films', Enum::"SW Resource Types"::planets, l_ID);
             end;
             Commit();
         end;
@@ -145,7 +145,7 @@ codeunit 50101 "SWAPI Mng"
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::species);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Resource Types"::species);
         l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
             l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
@@ -170,8 +170,8 @@ codeunit 50101 "SWAPI Mng"
                     l_Species.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Species.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'people', Enum::"SW Ressouce Types"::species, l_ID);
-                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::species, l_ID);
+                FillResourceAssosiation(l_JObject, 'people', Enum::"SW Resource Types"::species, l_ID);
+                FillResourceAssosiation(l_JObject, 'films', Enum::"SW Resource Types"::species, l_ID);
             end;
             Commit();
         end;
@@ -189,7 +189,7 @@ codeunit 50101 "SWAPI Mng"
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::starships);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Resource Types"::starships);
         l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
             l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
@@ -216,8 +216,8 @@ codeunit 50101 "SWAPI Mng"
                     l_Starships.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Starships.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::starships, l_ID);
-                FillRessourceAssosiation(l_JObject, 'pilots', Enum::"SW Ressouce Types"::starships, l_ID);
+                FillResourceAssosiation(l_JObject, 'films', Enum::"SW Resource Types"::starships, l_ID);
+                FillResourceAssosiation(l_JObject, 'pilots', Enum::"SW Resource Types"::starships, l_ID);
             end;
             Commit();
         end;
@@ -235,7 +235,7 @@ codeunit 50101 "SWAPI Mng"
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Ressouce Types"::vehicles);
+        l_ResourceRouteUrl := StrSubstNo('%1%2', l_APISetup.Endpoint, Enum::"SW Resource Types"::vehicles);
         l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
         for l_CurrCounter := 1 to l_MaxCounter do begin
             l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
@@ -261,8 +261,8 @@ codeunit 50101 "SWAPI Mng"
                     l_Vehicles.Edited := GetJsonDateTimeField(l_JObject, 'edited');
                     l_Vehicles.Insert();
                 end;
-                FillRessourceAssosiation(l_JObject, 'films', Enum::"SW Ressouce Types"::vehicles, l_ID);
-                FillRessourceAssosiation(l_JObject, 'pilots', Enum::"SW Ressouce Types"::vehicles, l_ID);
+                FillResourceAssosiation(l_JObject, 'films', Enum::"SW Resource Types"::vehicles, l_ID);
+                FillResourceAssosiation(l_JObject, 'pilots', Enum::"SW Resource Types"::vehicles, l_ID);
             end;
             Commit();
         end;
@@ -277,21 +277,21 @@ codeunit 50101 "SWAPI Mng"
         exit(GetJsonIntegerField(l_JObject, 'count'))
     end;
 
-    procedure GetEnumFromText(p_Text: Text): Enum "SW Ressouce Types"
+    procedure GetEnumFromText(p_Text: Text): Enum "SW Resource Types"
     begin
         case p_Text of
             'films':
-                exit(Enum::"SW Ressouce Types"::films);
+                exit(Enum::"SW Resource Types"::films);
             'people', 'characters', 'residents', 'pilots':
-                exit(Enum::"SW Ressouce Types"::people);
+                exit(Enum::"SW Resource Types"::people);
             'planets', 'homeworld':
-                exit(Enum::"SW Ressouce Types"::planets);
+                exit(Enum::"SW Resource Types"::planets);
             'species':
-                exit(Enum::"SW Ressouce Types"::species);
+                exit(Enum::"SW Resource Types"::species);
             'starships':
-                exit(Enum::"SW Ressouce Types"::starships);
+                exit(Enum::"SW Resource Types"::starships);
             'vehicles':
-                exit(Enum::"SW Ressouce Types"::vehicles);
+                exit(Enum::"SW Resource Types"::vehicles);
             else
                 Error('%1 is not an Enum', p_Text);
         end;
@@ -318,14 +318,14 @@ codeunit 50101 "SWAPI Mng"
         exit(l_JObject)
     end;
 
-    procedure GetUrlFromEnum(p_RessourceType: Enum "SW Ressouce Types"): Text
+    procedure GetUrlFromEnum(p_ResourceType: Enum "SW Resource Types"): Text
     var
         l_SWAPISetup: Record SWAPISetup;
     begin
-        exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_RessourceType))
+        exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_ResourceType))
     end;
 
-    local procedure FillRessourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer)
+    local procedure FillResourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
     var
         l_InnerJsonObject: JsonToken;
         l_JToken: JsonToken;
@@ -334,21 +334,21 @@ codeunit 50101 "SWAPI Mng"
         l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
         foreach l_JToken in l_InnerJsonObject.AsArray() do begin
             l_AssValue := l_JToken.AsValue().AsText();
-            FillSingleRessourceAssosiation(p_RessourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
+            FillSingleResourceAssosiation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
         end;
     end;
 
-    local procedure FillSingleRessourceAssosiation(p_RessourceType: Enum "SW Ressouce Types"; p_ID: Integer; p_AssType: Enum "SW Ressouce Types"; p_AssValue: Text[100])
+    local procedure FillSingleResourceAssosiation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
     var
-        l_RessourceAssosiation: Record "SW Ressource Assosiation";
+        l_ResourceAssosiation: Record "SW Resource Assosiation";
     begin
-        if not l_RessourceAssosiation.Get(p_RessourceType, p_ID, p_AssType, p_AssValue) then begin
-            l_RessourceAssosiation.Init();
-            l_RessourceAssosiation.RessourceType := p_RessourceType;
-            l_RessourceAssosiation.RessourceID := p_ID;
-            l_RessourceAssosiation.AssociatedRessourceType := p_AssType;
-            l_RessourceAssosiation.AssociatedRessourceValue := p_AssValue;
-            l_RessourceAssosiation.Insert();
+        if not l_ResourceAssosiation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
+            l_ResourceAssosiation.Init();
+            l_ResourceAssosiation.ResourceType := p_ResourceType;
+            l_ResourceAssosiation.ResourceID := p_ID;
+            l_ResourceAssosiation.AssociatedResourceType := p_AssType;
+            l_ResourceAssosiation.AssociatedResourceValue := p_AssValue;
+            l_ResourceAssosiation.Insert();
         end;
     end;
 

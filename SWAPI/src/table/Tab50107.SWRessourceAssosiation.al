@@ -1,30 +1,30 @@
-table 50107 "SW Ressource Assosiation"
+table 50107 "SW Resource Assosiation"
 {
-    Caption = 'SW Ressource Assosiation';
+    Caption = 'SW Resource Assosiation';
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(1; RessourceType; Enum "SW Ressouce Types")
+        field(1; ResourceType; Enum "SW Resource Types")
         {
-            Caption = 'RessourceType';
+            Caption = 'ResourceType';
         }
-        field(2; RessourceID; Integer)
+        field(2; ResourceID; Integer)
         {
-            Caption = 'RessourceID';
+            Caption = 'ResourceID';
         }
-        field(3; AssociatedRessourceType; Enum "SW Ressouce Types")
+        field(3; AssociatedResourceType; Enum "SW Resource Types")
         {
-            Caption = 'AssociatedRessourceType';
+            Caption = 'AssociatedResourceType';
         }
-        field(4; AssociatedRessourceValue; Text[100])
+        field(4; AssociatedResourceValue; Text[100])
         {
-            Caption = 'AssociatedRessourceValue';
+            Caption = 'AssociatedResourceValue';
         }
     }
     keys
     {
-        key(PK; RessourceType, RessourceID, AssociatedRessourceType, AssociatedRessourceValue)
+        key(PK; ResourceType, ResourceID, AssociatedResourceType, AssociatedResourceValue)
         {
             Clustered = true;
         }

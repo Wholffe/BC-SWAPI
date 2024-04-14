@@ -49,14 +49,14 @@ table 50106 "SW Planets"
         }
         field(11; Residents; Integer)
         {
-            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(planets), RessourceID = field(ID), AssociatedRessourceType = const(people)));
+            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(planets), ResourceID = field(ID), AssociatedResourceType = const(people)));
             Caption = 'Residents';
             Editable = false;
             FieldClass = FlowField;
         }
         field(12; Films; Integer)
         {
-            CalcFormula = count("SW Ressource Assosiation" where(RessourceType = const(planets), RessourceID = field(ID), AssociatedRessourceType = const(films)));
+            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(planets), ResourceID = field(ID), AssociatedResourceType = const(films)));
             Caption = 'Films';
             Editable = false;
             FieldClass = FlowField;

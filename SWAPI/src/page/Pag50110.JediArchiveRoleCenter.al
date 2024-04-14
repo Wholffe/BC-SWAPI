@@ -16,10 +16,10 @@ page 50110 JediArchiveRoleCenter
                 {
                     ApplicationArea = All;
                 }
-                part(Part2; SWRessourceEntriesPart)
+                part(Part2; SWResourceEntriesPart)
                 {
                     ApplicationArea = All;
-                    Caption = 'Ressources';
+                    Caption = 'Resources';
                 }
                 part(Part3; ResourceEntriesChart)
                 {
@@ -39,11 +39,11 @@ page 50110 JediArchiveRoleCenter
                 Caption = 'API Setup';
                 RunObject = page SWAPISetup;
             }
-            action(RessourceAssosiation)
+            action(ResourceAssosiation)
             {
                 ApplicationArea = All;
-                Caption = 'Ressource Assosiation';
-                RunObject = page "SW Ressource Assosiation List";
+                Caption = 'Resource Assosiation';
+                RunObject = page "SW Resource Assosiation List";
             }
         }
     }
