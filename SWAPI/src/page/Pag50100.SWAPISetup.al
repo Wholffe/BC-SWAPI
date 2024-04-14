@@ -44,10 +44,8 @@ page 50100 SWAPISetup
                 Promoted = true;
 
                 trigger OnAction()
-                var
-                    l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    l_SWAPIMng.PingAPIConnection();
+                    g_APISetupMng.PingAPIConnection();
                 end;
             }
 
@@ -138,6 +136,7 @@ page 50100 SWAPISetup
     }
 
     var
+        g_APISetupMng: Codeunit "SWAPI Setup Mng";
         g_RessourceTypeDialog: Label 'Select a ressource type';
 
     trigger OnInit()

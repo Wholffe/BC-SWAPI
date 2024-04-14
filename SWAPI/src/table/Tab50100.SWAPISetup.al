@@ -12,8 +12,13 @@ table 50100 SWAPISetup
         field(2; Endpoint; Text[100])
         {
             Caption = 'RequestURL';
-            Editable = false;
             InitValue = 'https://swapi.dev/api/';
+
+            trigger OnValidate()
+            begin
+                if not g_APISetupMng.IsValidEndpointRoot(Rec) then
+                    Error(g_EndpointErrorMsg);
+            end;
         }
     }
     keys
@@ -23,4 +28,8 @@ table 50100 SWAPISetup
             Clustered = true;
         }
     }
+
+    var
+        g_APISetupMng: Codeunit "SWAPI Setup Mng";
+        g_EndpointErrorMsg: Label 'Not a valid Endpoint. Use the SWAPI Root';
 }

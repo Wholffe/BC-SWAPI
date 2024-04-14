@@ -31,14 +31,14 @@ page 50110 JediArchiveRoleCenter
             action(SWAPISetup)
             {
                 ApplicationArea = All;
-                RunObject = page SWAPISetup;
                 Caption = 'API Setup';
+                RunObject = page SWAPISetup;
             }
             action(RessourceAssosiation)
             {
                 ApplicationArea = All;
-                RunObject = page "SW Ressource Assosiation List";
                 Caption = 'Ressource Assosiation';
+                RunObject = page "SW Ressource Assosiation List";
             }
         }
     }
@@ -48,7 +48,7 @@ page 50110 JediArchiveRoleCenter
 
 profile JediProfile
 {
+    Caption = 'Jedi';
     ProfileDescription = 'Unlock all knowledge of the Jedi Archives.';
     RoleCenter = JediArchiveRoleCenter;
-    Caption = 'Jedi';
 }
