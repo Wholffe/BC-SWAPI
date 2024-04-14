@@ -100,15 +100,12 @@ page 50102 "SW People List"
 
                 trigger OnAction()
                 var
-                    l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
                     if l_SWAPIMng.FillSWPeople() then
-                        Message(g_ImportSuccess);
+                        l_SWAPIMng.SendStatusNotification();
                 end;
             }
         }
     }
-    var
-        g_ImportSuccess: Label 'Data Imported Successfully';
 }

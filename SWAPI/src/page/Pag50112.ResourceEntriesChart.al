@@ -25,5 +25,5 @@ page 50112 ResourceEntriesChart
         }
     }
     var
-        g_ChartsMng: Codeunit ChartsMng;
+        g_ChartsMng: Codeunit SWChartsMng;
 }

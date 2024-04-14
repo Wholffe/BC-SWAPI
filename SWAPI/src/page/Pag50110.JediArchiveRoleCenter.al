@@ -47,8 +47,6 @@ page 50110 JediArchiveRoleCenter
             }
         }
     }
-    var
-
 }
 
 profile JediProfile

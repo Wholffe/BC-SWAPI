@@ -3,6 +3,9 @@ namespace SWAPI.SWAPI;
 codeunit 50101 "SWAPI Mng"
 {
 
+    var
+        g_ImportSuccessfullL: Label 'Data imported successfully.';
+
     procedure FillSWFilms(): Boolean
     var
         l_APISetup: Record SWAPISetup;
@@ -323,6 +326,14 @@ codeunit 50101 "SWAPI Mng"
         l_SWAPISetup: Record SWAPISetup;
     begin
         exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_ResourceType))
+    end;
+
+    procedure SendStatusNotification()
+    var
+        l_StatusNotification: Notification;
+    begin
+        l_StatusNotification.Message(g_ImportSuccessfullL);
+        l_StatusNotification.Send();
     end;
 
     local procedure FillResourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)

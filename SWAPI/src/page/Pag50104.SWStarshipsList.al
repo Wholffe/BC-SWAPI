@@ -102,15 +102,12 @@ page 50104 "SW Starships List"
 
                 trigger OnAction()
                 var
-                    l_SWAPISetup: Record SWAPISetup;
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
                     if l_SWAPIMng.FillSWStarships() then
-                        Message(g_ImportSuccess);
+                        l_SWAPIMng.SendStatusNotification();
                 end;
             }
         }
     }
-    var
-        g_ImportSuccess: Label 'Data Imported Successfully';
 }

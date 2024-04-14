@@ -23,7 +23,6 @@ page 50111 SWHeadlineRCJedi
                     ApplicationArea = All;
                     Editable = false;
                 }
-
             }
         }
     }

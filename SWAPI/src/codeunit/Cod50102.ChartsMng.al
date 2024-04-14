@@ -1,72 +1,99 @@
 namespace SWAPI.SWAPI;
 
-codeunit 50102 ChartsMng
+codeunit 50102 SWChartsMng
 {
+
+    var
+        g_EntriesL: Label 'Entries';
+        g_FilmsL: Label 'Films';
+        g_PeopleL: Label 'People';
+        g_PlanetsL: Label 'Planets';
+        g_ResourceL: Label 'Resource';
+        g_SpeciesL: Label 'Species';
+        g_StarshipsL: Label 'Starships';
+        g_VehiclesL: Label 'Vehicles';
+
     procedure GetResourceEntriesChartParam(): JsonArray
     var
-        l_JArray: JsonArray;
         l_InnerJArray: JsonArray;
+        l_JArray: JsonArray;
     begin
-        SetResourceEntries();
-        l_InnerJArray.Add('Resource');
-        l_InnerJArray.Add('Entries');
+        l_InnerJArray.Add(g_ResourceL);
+        l_InnerJArray.Add(g_EntriesL);
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add('films');
-        l_InnerJArray.Add(g_SWFilmsEntries);
+        l_InnerJArray.Add(g_FilmsL);
+        l_InnerJArray.Add(GetSWFilmCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add('people');
-        l_InnerJArray.Add(g_SWPeopleEntries);
+        l_InnerJArray.Add(g_PeopleL);
+        l_InnerJArray.Add(GetSWPeopleCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add('planets');
-        l_InnerJArray.Add(g_SWPlanetEntries);
+        l_InnerJArray.Add(g_PlanetsL);
+        l_InnerJArray.Add(GetSWPlanetCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add('species');
-        l_InnerJArray.Add(g_SWSpeciesEntries);
+        l_InnerJArray.Add(g_SpeciesL);
+        l_InnerJArray.Add(GetSWSpeciesCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add('starships');
-        l_InnerJArray.Add(g_SWStarshipEntries);
+        l_InnerJArray.Add(g_StarshipsL);
+        l_InnerJArray.Add(GetSWStarshipCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add('vehicles');
-        l_InnerJArray.Add(g_SWVehicleEntries);
+        l_InnerJArray.Add(g_VehiclesL);
+        l_InnerJArray.Add(GetSWVehicleCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
         exit(l_JArray)
     end;
 
-    var
-        g_SWFilmsEntries: Integer;
-        g_SWPeopleEntries: Integer;
-        g_SWPlanetEntries: Integer;
-        g_SWSpeciesEntries: Integer;
-        g_SWStarshipEntries: Integer;
-        g_SWVehicleEntries: Integer;
-
-    procedure SetResourceEntries()
+    procedure GetSWFilmCount(): Integer
     var
         l_Films: Record "SW Films";
+    begin
+        exit(l_Films.Count);
+    end;
+
+    procedure GetSWPeopleCount(): Integer
+    var
         l_People: Record "SW People";
+    begin
+        exit(l_People.Count);
+    end;
+
+    procedure GetSWPlanetCount(): Integer
+    var
         l_Planets: Record "SW Planets";
+    begin
+        exit(l_Planets.Count);
+    end;
+
+    procedure GetSWSpeciesCount(): Integer
+    var
         l_Species: Record "SW Species";
+    begin
+        exit(l_Species.Count)
+    end;
+
+    procedure GetSWStarshipCount(): Integer
+    var
         l_Starships: Record "SW Starships";
+    begin
+        exit(l_Starships.Count)
+    end;
+
+    procedure GetSWVehicleCount(): Integer
+    var
         l_Vehicles: Record "SW Vehicles";
     begin
-        g_SWFilmsEntries := l_Films.Count;
-        g_SWPeopleEntries := l_People.Count;
-        g_SWPlanetEntries := l_Planets.Count;
-        g_SWSpeciesEntries := l_Species.Count;
-        g_SWStarshipEntries := l_Starships.Count;
-        g_SWVehicleEntries := l_Vehicles.Count;
+        exit(l_Vehicles.Count)
     end;
 }

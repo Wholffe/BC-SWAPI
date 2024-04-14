@@ -1,8 +1,8 @@
 controladdin GoogleCharts
 {
-    StartupScript = 'src\charts\startup.js';
-    Scripts = 'src\charts\scripts.js', 'https://www.gstatic.com/charts/loader.js';
     HorizontalStretch = true;
+    Scripts = 'src\charts\scripts.js', 'https://www.gstatic.com/charts/loader.js';
+    StartupScript = 'src\charts\startup.js';
     VerticalStretch = true;
 
     event ControlReady();
