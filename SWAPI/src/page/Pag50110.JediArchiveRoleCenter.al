@@ -21,6 +21,11 @@ page 50110 JediArchiveRoleCenter
                     ApplicationArea = All;
                     Caption = 'Ressources';
                 }
+                part(Part3; ResourceEntriesChart)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Resource entry graph';
+                }
             }
         }
     }
