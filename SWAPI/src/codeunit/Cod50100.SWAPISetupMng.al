@@ -19,7 +19,7 @@ codeunit 50100 "SWAPI Setup Mng"
             exit(true)
     end;
 
-    procedure PingAPIConnection(): Boolean
+    procedure PingAPIConnection()
     var
         l_SWAPISetup: Record SWAPISetup;
         l_Client: HttpClient;
@@ -32,7 +32,6 @@ codeunit 50100 "SWAPI Setup Mng"
             Error('Status code result %1', l_Response.IsSuccessStatusCode);
 
         Message('Pong');
-        exit(true);
     end;
 
     local procedure GetRootContentTxt(): Text

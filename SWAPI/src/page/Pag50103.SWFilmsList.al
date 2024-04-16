@@ -96,8 +96,7 @@ page 50103 "SW Films List"
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    if l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films) then
-                        l_SWAPIMng.SendStatusNotification();
+                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
                 end;
             }
         }

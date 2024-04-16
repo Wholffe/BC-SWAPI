@@ -96,8 +96,7 @@ page 50106 "SW Species List"
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    if l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species) then
-                        l_SWAPIMng.SendStatusNotification();
+                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
                 end;
             }
         }

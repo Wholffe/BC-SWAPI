@@ -6,7 +6,7 @@ codeunit 50101 "SWAPI Mng"
         g_APISetup: Record SWAPISetup;
         g_ImportSuccessfullL: Label 'Data imported successfully.';
 
-    procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types"): Boolean
+    procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
     var
         l_Dialog: Dialog;
         l_CurrID: Integer;
@@ -31,10 +31,10 @@ codeunit 50101 "SWAPI Mng"
             end;
         end;
         l_Dialog.Close();
-        exit(true);
+        OnAfterFillAllResourcesOfAKind(p_Resource);
     end;
 
-    procedure FillJObjectContentInSWFilms(p_ID: Integer; p_JObject: JsonObject): Boolean
+    procedure FillJObjectContentInSWFilms(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Films: Record "SW Films";
     begin
@@ -58,10 +58,9 @@ codeunit 50101 "SWAPI Mng"
         FillResourceAssosiation(p_JObject, 'characters', Enum::"SW Resource Types"::films, p_ID);
         FillResourceAssosiation(p_JObject, 'planets', Enum::"SW Resource Types"::films, p_ID);
         Commit();
-        exit(true);
     end;
 
-    procedure FillJObjectContentInSWPeople(p_ID: Integer; p_JObject: JsonObject): Boolean
+    procedure FillJObjectContentInSWPeople(p_ID: Integer; p_JObject: JsonObject)
     var
         l_People: Record "SW People";
     begin
@@ -87,10 +86,9 @@ codeunit 50101 "SWAPI Mng"
         FillResourceAssosiation(p_JObject, 'starships', Enum::"SW Resource Types"::people, p_ID);
         FillResourceAssosiation(p_JObject, 'vehicles', Enum::"SW Resource Types"::people, p_ID);
         Commit();
-        exit(true);
     end;
 
-    procedure FillJObjectContentInSWPlanets(p_ID: Integer; p_JObject: JsonObject): Boolean
+    procedure FillJObjectContentInSWPlanets(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Planets: Record "SW Planets";
     begin
@@ -114,10 +112,9 @@ codeunit 50101 "SWAPI Mng"
         FillResourceAssosiation(p_JObject, 'residents', Enum::"SW Resource Types"::planets, p_ID);
         FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::planets, p_ID);
         Commit();
-        exit(true);
     end;
 
-    procedure FillJObjectContentInSWSpecies(p_ID: Integer; p_JObject: JsonObject): Boolean
+    procedure FillJObjectContentInSWSpecies(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Species: Record "SW Species";
     begin
@@ -142,10 +139,9 @@ codeunit 50101 "SWAPI Mng"
         FillResourceAssosiation(p_JObject, 'people', Enum::"SW Resource Types"::species, p_ID);
         FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::species, p_ID);
         Commit();
-        exit(true);
     end;
 
-    procedure FillJObjectContentInSWStarships(p_ID: Integer; p_JObject: JsonObject): Boolean
+    procedure FillJObjectContentInSWStarships(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Starships: Record "SW Starships";
     begin
@@ -172,10 +168,9 @@ codeunit 50101 "SWAPI Mng"
         FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::starships, p_ID);
         FillResourceAssosiation(p_JObject, 'pilots', Enum::"SW Resource Types"::starships, p_ID);
         Commit();
-        exit(true);
     end;
 
-    procedure FillJObjectContentInSWVehicles(p_ID: Integer; p_JObject: JsonObject): Boolean
+    procedure FillJObjectContentInSWVehicles(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Vehicles: Record "SW Vehicles";
     begin
@@ -201,7 +196,6 @@ codeunit 50101 "SWAPI Mng"
         FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::vehicles, p_ID);
         FillResourceAssosiation(p_JObject, 'pilots', Enum::"SW Resource Types"::vehicles, p_ID);
         Commit();
-        exit(true);
     end;
 
     procedure GetCategoryCount(p_Url: Text): Integer
@@ -387,7 +381,7 @@ codeunit 50101 "SWAPI Mng"
             exit(false);
         end;
         l_RecRef.Close();
-        exit(true)
+        exit(true);
     end;
 
     local procedure StartFillJObjectContentInSWResource(p_Resource: Enum "SW Resource Types"; l_ID: Integer; l_JObject: JsonObject)
@@ -406,5 +400,16 @@ codeunit 50101 "SWAPI Mng"
             Enum::"SW Resource Types"::vehicles:
                 FillJObjectContentInSWVehicles(l_ID, l_JObject);
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
+    local procedure SendStatus()
+    begin
+        SendStatusNotification();
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterFillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
+    begin
     end;
 }

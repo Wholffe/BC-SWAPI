@@ -104,8 +104,7 @@ page 50104 "SW Starships List"
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    if l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships) then
-                        l_SWAPIMng.SendStatusNotification();
+                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
                 end;
             }
         }
