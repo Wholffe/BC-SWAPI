@@ -2,43 +2,35 @@ namespace SWAPI.SWAPI;
 
 codeunit 50101 "SWAPI Mng"
 {
-
     var
-        g_ImportSuccessfullL: Label 'Data imported successfully.';
         g_APISetup: Record SWAPISetup;
+        g_ImportSuccessfullL: Label 'Data imported successfully.';
 
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types"): Boolean
     var
-        l_CurrCounter: Integer;
+        l_Dialog: Dialog;
+        l_CurrID: Integer;
         l_ID: Integer;
-        l_MaxCounter: Integer;
+        l_MaxID: Integer;
         l_JObject: JsonObject;
+        l_DialogL: Label 'Filling %1 tables, please wait... \Importing #2## \Total #3##';
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
+        l_Dialog.Open(StrSubstNo(l_DialogL, p_Resource));
         l_ResourceRouteUrl := StrSubstNo('%1%2', g_APISetup.Endpoint, p_Resource);
-        l_MaxCounter := GetCategoryCount(l_ResourceRouteUrl);
-        for l_CurrCounter := 1 to l_MaxCounter do begin
-            l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrCounter);
-            l_JObject := GetJObjectFromUrl(l_Url);
-            if l_JObject.Keys().Count <> 0 then begin
-                l_ID := l_CurrCounter;
-                case p_Resource of
-                    Enum::"SW Resource Types"::films:
-                        FillJObjectContentInSWFilms(l_ID, l_JObject);
-                    Enum::"SW Resource Types"::people:
-                        FillJObjectContentInSWPeople(l_ID, l_JObject);
-                    Enum::"SW Resource Types"::planets:
-                        FillJObjectContentInSWPlanets(l_ID, l_JObject);
-                    Enum::"SW Resource Types"::species:
-                        FillJObjectContentInSWSpecies(l_ID, l_JObject);
-                    Enum::"SW Resource Types"::starships:
-                        FillJObjectContentInSWStarships(l_ID, l_JObject);
-                    Enum::"SW Resource Types"::vehicles:
-                        FillJObjectContentInSWVehicles(l_ID, l_JObject);
-                end;
+        l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
+        l_Dialog.Update(3, l_MaxID);
+        for l_CurrID := 1 to l_MaxID do begin
+            l_Dialog.Update(2, l_CurrID);
+            if not RessourceWithCurrentIDExist(p_Resource, l_CurrID) then begin
+                l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrID);
+                l_JObject := GetJObjectFromUrl(l_Url);
+                if l_JObject.Keys().Count <> 0 then
+                    StartFillJObjectContentInSWResource(p_Resource, l_CurrID, l_JObject);
             end;
         end;
+        l_Dialog.Close();
         exit(true);
     end;
 
@@ -362,5 +354,54 @@ codeunit 50101 "SWAPI Mng"
         if l_Result.AsValue().IsNull() then
             exit('');
         exit(l_Result.AsValue().AsText());
+    end;
+
+    local procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
+    begin
+        case p_Resource of
+            Enum::"SW Resource Types"::films:
+                exit(Database::"SW Films");
+            Enum::"SW Resource Types"::people:
+                exit(Database::"SW People");
+            Enum::"SW Resource Types"::planets:
+                exit(Database::"SW Planets");
+            Enum::"SW Resource Types"::species:
+                exit(Database::"SW Species");
+            Enum::"SW Resource Types"::starships:
+                exit(Database::"SW Starships");
+            Enum::"SW Resource Types"::vehicles:
+                exit(Database::"SW Vehicles");
+        end;
+    end;
+
+    local procedure RessourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean
+    var
+        l_RecRef: RecordRef;
+        l_IDFieldRef: FieldRef;
+    begin
+        l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
+        l_IDFieldRef := l_RecRef.Field(1);
+        l_IDFieldRef.SetRange(l_CurrID);
+        if not l_RecRef.FindSet() then
+            exit(false);
+        exit(true)
+    end;
+
+    local procedure StartFillJObjectContentInSWResource(p_Resource: Enum "SW Resource Types"; l_ID: Integer; l_JObject: JsonObject)
+    begin
+        case p_Resource of
+            Enum::"SW Resource Types"::films:
+                FillJObjectContentInSWFilms(l_ID, l_JObject);
+            Enum::"SW Resource Types"::people:
+                FillJObjectContentInSWPeople(l_ID, l_JObject);
+            Enum::"SW Resource Types"::planets:
+                FillJObjectContentInSWPlanets(l_ID, l_JObject);
+            Enum::"SW Resource Types"::species:
+                FillJObjectContentInSWSpecies(l_ID, l_JObject);
+            Enum::"SW Resource Types"::starships:
+                FillJObjectContentInSWStarships(l_ID, l_JObject);
+            Enum::"SW Resource Types"::vehicles:
+                FillJObjectContentInSWVehicles(l_ID, l_JObject);
+        end;
     end;
 }
