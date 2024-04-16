@@ -382,8 +382,11 @@ codeunit 50101 "SWAPI Mng"
         l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
         l_IDFieldRef := l_RecRef.Field(1);
         l_IDFieldRef.SetRange(l_CurrID);
-        if not l_RecRef.FindSet() then
+        if not l_RecRef.FindSet() then begin
+            l_RecRef.Close();
             exit(false);
+        end;
+        l_RecRef.Close();
         exit(true)
     end;
 
