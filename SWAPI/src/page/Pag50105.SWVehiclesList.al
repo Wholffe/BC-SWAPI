@@ -100,7 +100,7 @@ page 50105 "SW Vehicles List"
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    if l_SWAPIMng.FillSWVehicles() then
+                    if l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles) then
                         l_SWAPIMng.SendStatusNotification();
                 end;
             }

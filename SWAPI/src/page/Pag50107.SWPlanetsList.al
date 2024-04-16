@@ -92,7 +92,7 @@ page 50107 "SW Planets List"
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    if l_SWAPIMng.FillSWPlanets() then
+                    if l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets) then
                         l_SWAPIMng.SendStatusNotification();
                 end;
             }

@@ -7,7 +7,6 @@ function DrawBarChart(json)
       var data = new google.visualization.arrayToDataTable(json)
 
       var options = {
-        width: 800,
         legend: { position: 'none' },
         chart: {
           title: '',

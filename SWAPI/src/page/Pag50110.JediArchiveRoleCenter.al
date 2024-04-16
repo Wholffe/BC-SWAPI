@@ -5,6 +5,7 @@ page 50110 JediArchiveRoleCenter
     ApplicationArea = All;
     Caption = 'Jedi Archive Role Center';
     PageType = RoleCenter;
+    RefreshOnActivate = true;
 
     layout
     {

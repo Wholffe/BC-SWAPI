@@ -102,7 +102,7 @@ page 50102 "SW People List"
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    if l_SWAPIMng.FillSWPeople() then
+                    if l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people) then
                         l_SWAPIMng.SendStatusNotification();
                 end;
             }
