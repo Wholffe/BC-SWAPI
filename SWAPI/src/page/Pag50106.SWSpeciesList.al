@@ -60,13 +60,19 @@ page 50106 "SW Species List"
                 }
                 field(People; Rec.People)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the People field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::species, Rec.ID, Enum::"SW Resource Types"::people);
+                    end;
                 }
                 field(Films; Rec.Films)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::species, Rec.ID, Enum::"SW Resource Types"::films);
+                    end;
                 }
                 field(Url; Rec.Url)
                 {
@@ -101,4 +107,6 @@ page 50106 "SW Species List"
             }
         }
     }
+    var
+        g_APIMng: Codeunit "SWAPI Mng";
 }

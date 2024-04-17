@@ -64,13 +64,19 @@ page 50105 "SW Vehicles List"
                 }
                 field(Film; Rec.Film)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Film field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::films);
+                    end;
                 }
                 field(Pilots; Rec.Pilots)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Pilots field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::people);
+                    end;
                 }
                 field(Url; Rec.Url)
                 {
@@ -105,4 +111,6 @@ page 50105 "SW Vehicles List"
             }
         }
     }
+    var
+        g_APIMng: Codeunit "SWAPI Mng";
 }

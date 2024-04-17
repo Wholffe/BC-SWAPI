@@ -70,11 +70,19 @@ page 50104 "SW Starships List"
                 {
                     DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::starships, Rec.ID, Enum::"SW Resource Types"::films);
+                    end;
                 }
                 field(Pilots; Rec.Pilots)
                 {
                     DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Pilots field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::starships, Rec.ID, Enum::"SW Resource Types"::people);
+                    end;
                 }
                 field(Url; Rec.Url)
                 {
@@ -109,4 +117,6 @@ page 50104 "SW Starships List"
             }
         }
     }
+    var
+        g_APIMng: Codeunit "SWAPI Mng";
 }

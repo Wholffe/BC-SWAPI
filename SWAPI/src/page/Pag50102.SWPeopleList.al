@@ -56,23 +56,36 @@ page 50102 "SW People List"
                 }
                 field(Films; Rec.Films)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Films field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::films);
+                    end;
                 }
                 field(Species; Rec.Species)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Species field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::species);
+                    end;
                 }
                 field(Starships; Rec.Starships)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Starships field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::starships);
+                    end;
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
                     DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Vehicles field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::vehicles);
+                    end;
                 }
                 field(Url; Rec.Url)
                 {
@@ -107,4 +120,6 @@ page 50102 "SW People List"
             }
         }
     }
+    var
+        g_APIMng: Codeunit "SWAPI Mng";
 }

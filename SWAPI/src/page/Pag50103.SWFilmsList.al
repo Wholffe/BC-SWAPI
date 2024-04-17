@@ -44,29 +44,44 @@ page 50103 "SW Films List"
                 }
                 field(Species; Rec.Species)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Species field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::species);
+                    end;
                 }
                 field(Starships; Rec.Starships)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Starships field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::starships);
+                    end;
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Vehicles field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::vehicles);
+                    end;
 
                 }
                 field(Characters; Rec.Characters)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Characters field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::people);
+                    end;
                 }
                 field(Planets; Rec.Planets)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
                     ToolTip = 'Specifies the value of the Planets field.';
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::planets);
+                    end;
                 }
                 field(Url; Rec.Url)
                 {
@@ -101,4 +116,6 @@ page 50103 "SW Films List"
             }
         }
     }
+    var
+        g_APIMng: Codeunit "SWAPI Mng";
 }

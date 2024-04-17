@@ -7,6 +7,49 @@ codeunit 50101 "SWAPI Mng"
         g_AlreadyImportedL: Label 'You have already imported all data. Take a seat.';
         g_ImportSuccessfullL: Label 'Data imported successfully.';
 
+    procedure DrilldownPage(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types")
+    var
+        l_RessourceAss: Record "SW Resource Assosiation";
+        l_RecRef: RecordRef;
+        l_FieldRef: FieldRef;
+        l_PageNo: Integer;
+        l_RecRefTableNo: Integer;
+        l_Filter: Text;
+        l_VarRecRef: Variant;
+    begin
+        l_RessourceAss.Reset();
+        l_RessourceAss.SetRange(ResourceType, p_ResourceType);
+        l_RessourceAss.SetRange(ResourceID, p_ID);
+        l_RessourceAss.SetRange(AssociatedResourceType, p_AssociatedResourceType);
+        if not l_RessourceAss.FindSet() then
+            exit;
+        repeat
+            l_Filter := StrSubstNo('%1|%2', l_RessourceAss.AssRessourceID, l_Filter)
+        until l_RessourceAss.Next() = 0;
+        l_Filter := l_Filter.TrimEnd('|');
+        l_RecRefTableNo := GetRecRefTableNoFromResourceEnum(p_AssociatedResourceType);
+        l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_AssociatedResourceType));
+        l_FieldRef := l_RecRef.Field(1);
+        l_FieldRef.SetFilter(l_Filter);
+        l_VarRecRef := l_RecRef;
+        l_RecRef.Close();
+        case l_RecRefTableNo of
+            Database::"SW Films":
+                l_PageNo := Page::"SW Films List";
+            Database::"SW People":
+                l_PageNo := Page::"SW People List";
+            Database::"SW Planets":
+                l_PageNo := Page::"SW Planets List";
+            Database::"SW Species":
+                l_PageNo := Page::"SW Species List";
+            Database::"SW Starships":
+                l_PageNo := Page::"SW Starships List";
+            Database::"SW Vehicles":
+                l_PageNo := Page::"SW Vehicles List";
+        end;
+        Page.Run(l_PageNo, l_VarRecRef);
+    end;
+
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
     var
         l_Dialog: Dialog;
