@@ -9,6 +9,7 @@ page 50109 SWResourceEntriesPart
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = CardPart;
+    RefreshOnActivate = true;
 
     layout
     {

@@ -5,6 +5,7 @@ page 50112 ResourceEntriesChart
     ApplicationArea = All;
     Caption = 'ResourceEntriesChart';
     PageType = CardPart;
+    RefreshOnActivate = true;
 
     layout
     {

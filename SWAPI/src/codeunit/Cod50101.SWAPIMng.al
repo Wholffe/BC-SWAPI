@@ -4,6 +4,7 @@ codeunit 50101 "SWAPI Mng"
 {
     var
         g_APISetup: Record SWAPISetup;
+        g_AlreadyImportedL: Label 'You have already imported all data. Take a seat.';
         g_ImportSuccessfullL: Label 'Data imported successfully.';
 
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
@@ -13,22 +14,28 @@ codeunit 50101 "SWAPI Mng"
         l_ID: Integer;
         l_MaxID: Integer;
         l_JObject: JsonObject;
-        l_DialogL: Label 'Filling %1 tables, please wait... \Importing #2## \Total #3##';
+        l_DialogL: Label 'Filling %1 tables, please wait... \Looking for ID #2## \Total #3##';
         l_ResourceRouteUrl: Text;
         l_Url: Text;
     begin
+        if DataAlreadyImported(p_Resource) then
+            exit;
         l_Dialog.Open(StrSubstNo(l_DialogL, p_Resource));
         l_ResourceRouteUrl := StrSubstNo('%1%2', g_APISetup.Endpoint, p_Resource);
         l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
         l_Dialog.Update(3, l_MaxID);
-        for l_CurrID := 1 to l_MaxID do begin
+        l_CurrID := 1;
+        while l_CurrID <= l_MaxID do begin
             l_Dialog.Update(2, l_CurrID);
             if not RessourceWithCurrentIDExist(p_Resource, l_CurrID) then begin
                 l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrID);
                 l_JObject := GetJObjectFromUrl(l_Url);
-                if l_JObject.Keys().Count <> 0 then
-                    StartFillJObjectContentInSWResource(p_Resource, l_CurrID, l_JObject);
+                if not (l_JObject.Keys().Count = 0) then
+                    StartFillJObjectContentInSWResource(p_Resource, l_CurrID, l_JObject)
+                else
+                    l_MaxID := l_MaxID + 1;
             end;
+            l_CurrID := l_CurrID + 1;
         end;
         l_Dialog.Close();
         OnAfterFillAllResourcesOfAKind(p_Resource);
@@ -247,6 +254,24 @@ codeunit 50101 "SWAPI Mng"
         exit(l_JObject)
     end;
 
+    procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
+    begin
+        case p_Resource of
+            Enum::"SW Resource Types"::films:
+                exit(Database::"SW Films");
+            Enum::"SW Resource Types"::people:
+                exit(Database::"SW People");
+            Enum::"SW Resource Types"::planets:
+                exit(Database::"SW Planets");
+            Enum::"SW Resource Types"::species:
+                exit(Database::"SW Species");
+            Enum::"SW Resource Types"::starships:
+                exit(Database::"SW Starships");
+            Enum::"SW Resource Types"::vehicles:
+                exit(Database::"SW Vehicles");
+        end;
+    end;
+
     procedure GetUrlFromEnum(p_ResourceType: Enum "SW Resource Types"): Text
     var
         l_SWAPISetup: Record SWAPISetup;
@@ -254,12 +279,30 @@ codeunit 50101 "SWAPI Mng"
         exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_ResourceType))
     end;
 
-    procedure SendStatusNotification()
+    procedure SendStatusNotification(p_StatusL: Text)
     var
         l_StatusNotification: Notification;
     begin
-        l_StatusNotification.Message(g_ImportSuccessfullL);
+        l_StatusNotification.Message(p_StatusL);
         l_StatusNotification.Send();
+    end;
+
+    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
+    var
+        l_RecRef: RecordRef;
+        l_MaxID: Integer;
+        l_ResourceRouteUrl: Text;
+    begin
+        l_ResourceRouteUrl := StrSubstNo('%1%2', g_APISetup.Endpoint, p_Resource);
+        l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
+        l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
+        if not (l_RecRef.Count = l_MaxID) then begin
+            l_RecRef.Close();
+            exit;
+        end;
+        SendStatusNotification(g_AlreadyImportedL);
+        l_RecRef.Close();
+        exit(true)
     end;
 
     local procedure FillResourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
@@ -350,24 +393,6 @@ codeunit 50101 "SWAPI Mng"
         exit(l_Result.AsValue().AsText());
     end;
 
-    local procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
-    begin
-        case p_Resource of
-            Enum::"SW Resource Types"::films:
-                exit(Database::"SW Films");
-            Enum::"SW Resource Types"::people:
-                exit(Database::"SW People");
-            Enum::"SW Resource Types"::planets:
-                exit(Database::"SW Planets");
-            Enum::"SW Resource Types"::species:
-                exit(Database::"SW Species");
-            Enum::"SW Resource Types"::starships:
-                exit(Database::"SW Starships");
-            Enum::"SW Resource Types"::vehicles:
-                exit(Database::"SW Vehicles");
-        end;
-    end;
-
     local procedure RessourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean
     var
         l_RecRef: RecordRef;
@@ -405,7 +430,7 @@ codeunit 50101 "SWAPI Mng"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
     local procedure SendStatus()
     begin
-        SendStatusNotification();
+        SendStatusNotification(g_ImportSuccessfullL);
     end;
 
     [IntegrationEvent(false, false)]
