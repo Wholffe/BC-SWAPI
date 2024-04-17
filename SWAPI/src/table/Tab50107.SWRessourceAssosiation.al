@@ -1,6 +1,6 @@
-table 50107 "SW Resource Assosiation"
+table 50107 "SW Resource Association"
 {
-    Caption = 'SW Resource Assosiation';
+    Caption = 'SW Resource Association';
     DataClassification = ToBeClassified;
 
     fields

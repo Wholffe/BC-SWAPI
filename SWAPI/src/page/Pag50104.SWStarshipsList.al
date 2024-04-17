@@ -68,7 +68,7 @@ page 50104 "SW Starships List"
                 }
                 field(Films; Rec.Films)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
+                    DrillDownPageId = "SW Resource Association List";
                     ToolTip = 'Specifies the value of the Films field.';
                     trigger OnDrillDown()
                     begin
@@ -77,7 +77,7 @@ page 50104 "SW Starships List"
                 }
                 field(Pilots; Rec.Pilots)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
+                    DrillDownPageId = "SW Resource Association List";
                     ToolTip = 'Specifies the value of the Pilots field.';
                     trigger OnDrillDown()
                     begin

@@ -80,7 +80,7 @@ page 50102 "SW People List"
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
-                    DrillDownPageId = "SW Resource Assosiation List";
+                    DrillDownPageId = "SW Resource Association List";
                     ToolTip = 'Specifies the value of the Vehicles field.';
                     trigger OnDrillDown()
                     begin

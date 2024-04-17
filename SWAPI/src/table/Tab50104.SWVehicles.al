@@ -57,14 +57,14 @@ table 50104 "SW Vehicles"
         }
         field(13; Film; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(vehicles), ResourceID = field(ID), AssociatedResourceType = const(films)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(vehicles), ResourceID = field(ID), AssociatedResourceType = const(films)));
             Caption = 'Film';
             Editable = false;
             FieldClass = FlowField;
         }
         field(14; Pilots; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(vehicles), ResourceID = field(ID), AssociatedResourceType = const(people)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(vehicles), ResourceID = field(ID), AssociatedResourceType = const(people)));
             Caption = 'Pilots';
             Editable = false;
             FieldClass = FlowField;

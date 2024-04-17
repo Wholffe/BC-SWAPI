@@ -49,28 +49,28 @@ table 50101 "SW People"
         }
         field(11; Films; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(films)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(films)));
             Caption = 'Films';
             Editable = false;
             FieldClass = FlowField;
         }
         field(12; Species; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(species)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(species)));
             Caption = 'Species';
             Editable = false;
             FieldClass = FlowField;
         }
         field(13; Starships; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(starships)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(starships)));
             Caption = 'Starships';
             Editable = false;
             FieldClass = FlowField;
         }
         field(14; Vehicles; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(vehicles)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(vehicles)));
             Caption = 'Vehicles';
             Editable = false;
             FieldClass = FlowField;

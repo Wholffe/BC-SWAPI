@@ -37,35 +37,35 @@ table 50102 "SW Films"
         }
         field(8; Species; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(species)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(species)));
             Caption = 'Species';
             Editable = false;
             FieldClass = FlowField;
         }
         field(9; Starships; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(starships)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(starships)));
             Caption = 'Starships';
             Editable = false;
             FieldClass = FlowField;
         }
         field(10; Vehicles; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(vehicles)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(vehicles)));
             Caption = 'Vehicles';
             Editable = false;
             FieldClass = FlowField;
         }
         field(11; Characters; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(people)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(people)));
             Caption = 'Characters';
             Editable = false;
             FieldClass = FlowField;
         }
         field(12; Planets; Integer)
         {
-            CalcFormula = count("SW Resource Assosiation" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(planets)));
+            CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(planets)));
             Caption = 'Planets';
             Editable = false;
             FieldClass = FlowField;

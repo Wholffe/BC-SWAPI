@@ -9,7 +9,7 @@ codeunit 50101 "SWAPI Mng"
 
     procedure DrilldownPage(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types")
     var
-        l_RessourceAss: Record "SW Resource Assosiation";
+        l_RessourceAss: Record "SW Resource Association";
         l_RecRef: RecordRef;
         l_FieldRef: FieldRef;
         l_PageNo: Integer;
@@ -102,11 +102,11 @@ codeunit 50101 "SWAPI Mng"
             l_Films.Edited := GetJsonDateTimeField(p_JObject, 'edited');
             l_Films.Insert();
         end;
-        FillResourceAssosiation(p_JObject, 'species', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssosiation(p_JObject, 'starships', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssosiation(p_JObject, 'vehicles', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssosiation(p_JObject, 'characters', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssosiation(p_JObject, 'planets', Enum::"SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'species', Enum::"SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'starships', Enum::"SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'vehicles', Enum::"SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'characters', Enum::"SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'planets', Enum::"SW Resource Types"::films, p_ID);
         Commit();
     end;
 
@@ -131,10 +131,10 @@ codeunit 50101 "SWAPI Mng"
             l_People.Edited := GetJsonDateTimeField(p_JObject, 'edited');
             l_People.Insert();
         end;
-        FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::people, p_ID);
-        FillResourceAssosiation(p_JObject, 'species', Enum::"SW Resource Types"::people, p_ID);
-        FillResourceAssosiation(p_JObject, 'starships', Enum::"SW Resource Types"::people, p_ID);
-        FillResourceAssosiation(p_JObject, 'vehicles', Enum::"SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'species', Enum::"SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'starships', Enum::"SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'vehicles', Enum::"SW Resource Types"::people, p_ID);
         Commit();
     end;
 
@@ -159,8 +159,8 @@ codeunit 50101 "SWAPI Mng"
             l_Planets.Edited := GetJsonDateTimeField(p_JObject, 'edited');
             l_Planets.Insert();
         end;
-        FillResourceAssosiation(p_JObject, 'residents', Enum::"SW Resource Types"::planets, p_ID);
-        FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::planets, p_ID);
+        FillResourceAssociation(p_JObject, 'residents', Enum::"SW Resource Types"::planets, p_ID);
+        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::planets, p_ID);
         Commit();
     end;
 
@@ -186,8 +186,8 @@ codeunit 50101 "SWAPI Mng"
             l_Species.Edited := GetJsonDateTimeField(p_JObject, 'edited');
             l_Species.Insert();
         end;
-        FillResourceAssosiation(p_JObject, 'people', Enum::"SW Resource Types"::species, p_ID);
-        FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::species, p_ID);
+        FillResourceAssociation(p_JObject, 'people', Enum::"SW Resource Types"::species, p_ID);
+        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::species, p_ID);
         Commit();
     end;
 
@@ -215,8 +215,8 @@ codeunit 50101 "SWAPI Mng"
             l_Starships.Edited := GetJsonDateTimeField(p_JObject, 'edited');
             l_Starships.Insert();
         end;
-        FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::starships, p_ID);
-        FillResourceAssosiation(p_JObject, 'pilots', Enum::"SW Resource Types"::starships, p_ID);
+        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::starships, p_ID);
+        FillResourceAssociation(p_JObject, 'pilots', Enum::"SW Resource Types"::starships, p_ID);
         Commit();
     end;
 
@@ -243,8 +243,8 @@ codeunit 50101 "SWAPI Mng"
             l_Vehicles.Edited := GetJsonDateTimeField(p_JObject, 'edited');
             l_Vehicles.Insert();
         end;
-        FillResourceAssosiation(p_JObject, 'films', Enum::"SW Resource Types"::vehicles, p_ID);
-        FillResourceAssosiation(p_JObject, 'pilots', Enum::"SW Resource Types"::vehicles, p_ID);
+        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::vehicles, p_ID);
+        FillResourceAssociation(p_JObject, 'pilots', Enum::"SW Resource Types"::vehicles, p_ID);
         Commit();
     end;
 
@@ -348,7 +348,7 @@ codeunit 50101 "SWAPI Mng"
         exit(true)
     end;
 
-    local procedure FillResourceAssosiation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
+    local procedure FillResourceAssociation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
     var
         l_InnerJsonObject: JsonToken;
         l_JToken: JsonToken;
@@ -357,21 +357,21 @@ codeunit 50101 "SWAPI Mng"
         l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
         foreach l_JToken in l_InnerJsonObject.AsArray() do begin
             l_AssValue := l_JToken.AsValue().AsText();
-            FillSingleResourceAssosiation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
+            FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
         end;
     end;
 
-    local procedure FillSingleResourceAssosiation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
+    local procedure FillSingleResourceAssociation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
     var
-        l_ResourceAssosiation: Record "SW Resource Assosiation";
+        l_ResourceAssociation: Record "SW Resource Association";
     begin
-        if not l_ResourceAssosiation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
-            l_ResourceAssosiation.Init();
-            l_ResourceAssosiation.ResourceType := p_ResourceType;
-            l_ResourceAssosiation.ResourceID := p_ID;
-            l_ResourceAssosiation.AssociatedResourceType := p_AssType;
-            l_ResourceAssosiation.AssociatedResourceValue := p_AssValue;
-            l_ResourceAssosiation.Insert();
+        if not l_ResourceAssociation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
+            l_ResourceAssociation.Init();
+            l_ResourceAssociation.ResourceType := p_ResourceType;
+            l_ResourceAssociation.ResourceID := p_ID;
+            l_ResourceAssociation.AssociatedResourceType := p_AssType;
+            l_ResourceAssociation.AssociatedResourceValue := p_AssValue;
+            l_ResourceAssociation.Insert();
         end;
     end;
 

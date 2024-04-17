@@ -1,11 +1,11 @@
 namespace SWAPI.SWAPI;
 
-page 50108 "SW Resource Assosiation List"
+page 50108 "SW Resource Association List"
 {
     ApplicationArea = All;
-    Caption = 'SW Resource Assosiation List';
+    Caption = 'SW Resource Association List';
     PageType = List;
-    SourceTable = "SW Resource Assosiation";
+    SourceTable = "SW Resource Association";
     UsageCategory = Lists;
 
     layout
@@ -48,7 +48,7 @@ page 50108 "SW Resource Assosiation List"
 
                 trigger OnAction()
                 var
-                    l_ResourceAss: Record "SW Resource Assosiation";
+                    l_ResourceAss: Record "SW Resource Association";
                     l_Dialog: Dialog;
                     l_Counter: Integer;
                     l_DialogL: Label 'Validating resources, please wait... \Validate #2## \Total #3##';
