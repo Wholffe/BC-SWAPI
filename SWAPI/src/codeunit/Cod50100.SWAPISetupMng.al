@@ -41,30 +41,38 @@ codeunit 50100 "SWAPI Setup Mng"
         g_APIMng.ValidateAllResourcesAss();
     end;
 
-    local procedure GetRootContentTxt(): Text
+    local procedure GetExpectedRootContent(p_Rec: Record SWAPISetup; p_ElementNo: Integer): Text
     var
-        l_RootContentTxt: Text;
+        l_ExpectedContentArray: array[6] of Text;
+        l_ExpectedRootElement: Text;
     begin
-        l_RootContentTxt := '{"people":"https://swapi.dev/api/people/",' +
-                            '"planets":"https://swapi.dev/api/planets/",' +
-                            '"films":"https://swapi.dev/api/films/",' +
-                            '"species":"https://swapi.dev/api/species/",' +
-                            '"vehicles":"https://swapi.dev/api/vehicles/",' +
-                            '"starships":"https://swapi.dev/api/starships/"}';
-        exit(l_RootContentTxt);
+        l_ExpectedContentArray[1] := StrSubstNo('people":"%1/people', p_Rec.Endpoint);
+        l_ExpectedContentArray[2] := StrSubstNo('films":"%1/films', p_Rec.Endpoint);
+        l_ExpectedContentArray[3] := StrSubstNo('species":"%1/species', p_Rec.Endpoint);
+        l_ExpectedContentArray[4] := StrSubstNo('vehicles":"%1/vehicles', p_Rec.Endpoint);
+        l_ExpectedContentArray[5] := StrSubstNo('starships":"%1/starships', p_Rec.Endpoint);
+        l_ExpectedContentArray[6] := StrSubstNo('planets":"%1/planets', p_Rec.Endpoint);
+        l_ExpectedRootElement := l_ExpectedContentArray[p_ElementNo];
+        exit(l_ExpectedContentArray[p_ElementNo]);
     end;
 
     procedure IsValidEndpointRoot(p_Rec: Record SWAPISetup): Boolean
     var
+        l_ElementNo: Integer;
         l_JObject: JsonObject;
         l_ContentTxt: Text;
+        l_ExpectedRootElement: Text;
         l_Url: Text;
     begin
         l_Url := StrSubstNo('%1', p_Rec.Endpoint);
         l_JObject := g_APIMng.GetJObjectFromUrl(l_Url);
         l_ContentTxt := StrSubstNo('%1', l_JObject);
-        if l_ContentTxt = GetRootContentTxt() then
-            exit(true)
+        for l_ElementNo := 1 to 6 do begin
+            l_ExpectedRootElement := GetExpectedRootContent(p_Rec, l_ElementNo);
+            if not l_ContentTxt.Contains(l_ExpectedRootElement) then
+                exit(false);
+        end;
+        exit(true);
     end;
 
     procedure PingAPIConnection()

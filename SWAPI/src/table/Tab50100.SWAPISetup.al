@@ -12,10 +12,11 @@ table 50100 SWAPISetup
         field(2; Endpoint; Text[100])
         {
             Caption = 'RequestURL';
-            InitValue = 'https://swapi.dev/api/';
+            InitValue = 'https://swapi.dev/api';
 
             trigger OnValidate()
             begin
+                Rec.Endpoint := Rec.Endpoint.TrimEnd('/');
                 if not g_APISetupMng.IsValidEndpointRoot(Rec) then
                     Error(g_EndpointErrorMsg);
             end;

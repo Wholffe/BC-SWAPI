@@ -13,7 +13,7 @@ codeunit 50101 "SWAPI Mng"
         l_MaxID: Integer;
         l_ResourceRouteUrl: Text;
     begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', g_APISetup.Endpoint, p_Resource);
+        l_ResourceRouteUrl := GetUrlFromEnum(p_Resource);
         l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
         l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
         if not (l_RecRef.Count = l_MaxID) then begin
@@ -82,7 +82,7 @@ codeunit 50101 "SWAPI Mng"
         if DataAlreadyImported(p_Resource) then
             exit;
         l_Dialog.Open(StrSubstNo(l_DialogL, p_Resource));
-        l_ResourceRouteUrl := StrSubstNo('%1%2', g_APISetup.Endpoint, p_Resource);
+        l_ResourceRouteUrl := GetUrlFromEnum(p_Resource);
         l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
         l_Dialog.Update(3, l_MaxID);
         l_CurrID := 1;
@@ -445,7 +445,7 @@ codeunit 50101 "SWAPI Mng"
     var
         l_SWAPISetup: Record SWAPISetup;
     begin
-        exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_ResourceType))
+        exit(StrSubstNo('%1/%2/', l_SWAPISetup.Endpoint, p_ResourceType))
     end;
 
     [IntegrationEvent(false, false)]
@@ -504,21 +504,15 @@ codeunit 50101 "SWAPI Mng"
     procedure ValidateAllResourcesAss()
     var
         l_ResourceAss: Record "SW Resource Association";
-        l_Dialog: Dialog;
         l_Counter: Integer;
-        l_DialogL: Label 'Validating resource ass, please wait... \Validate #2## \Total #3##';
     begin
         l_ResourceAss.Reset();
-        l_Dialog.Open(l_DialogL);
-        l_Dialog.Update(3, l_ResourceAss.Count);
         l_Counter := 1;
         if l_ResourceAss.FindSet() then
             repeat
-                l_Dialog.Update(2, l_Counter);
                 l_ResourceAss.Validate(AssociatedResourceValue);
                 l_ResourceAss.Modify();
                 l_Counter := l_Counter + 1;
             until l_ResourceAss.Next() = 0;
-        l_Dialog.Close();
     end;
 }
