@@ -4,8 +4,8 @@ codeunit 50101 "SWAPI Mng"
 {
     var
         g_APISetup: Record SWAPISetup;
-        g_AlreadyImportedL: Label 'You have already imported all data. Take a seat.';
-        g_ImportSuccessfullL: Label 'Data imported successfully.';
+        g_AlreadyImportedL: Label 'You have already imported %1. Take a seat.';
+        g_ImportSuccessfullL: Label '%1 imported successfully.';
 
     local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
     var
@@ -20,7 +20,7 @@ codeunit 50101 "SWAPI Mng"
             l_RecRef.Close();
             exit;
         end;
-        SendStatusNotification(g_AlreadyImportedL);
+        SendStatusNotification(StrSubstNo(g_AlreadyImportedL, p_Resource));
         l_RecRef.Close();
         exit(true)
     end;
@@ -68,17 +68,6 @@ codeunit 50101 "SWAPI Mng"
         Page.Run(l_PageNo, l_VarRecRef);
     end;
 
-    procedure FillAllResources()
-    begin
-        FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
-        FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
-        FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets);
-        FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
-        FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
-        FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
-        ValidateAllResourcesAss();
-    end;
-
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
     var
         l_Dialog: Dialog;
@@ -109,6 +98,7 @@ codeunit 50101 "SWAPI Mng"
             end;
             l_CurrID := l_CurrID + 1;
         end;
+        ValidateAllResourcesAss();
         l_Dialog.Close();
         OnAfterFillAllResourcesOfAKind(p_Resource);
     end;
@@ -154,7 +144,7 @@ codeunit 50101 "SWAPI Mng"
             l_People.Height := GetJsonIntegerField(p_JObject, 'height');
             l_People.Mass := GetJsonIntegerField(p_JObject, 'mass');
             l_People.SkinColor := GetJsonTextField(p_JObject, 'skin_color');
-            l_People.Homeworld := GetJsonTextField(p_JObject, 'homeworld');
+            l_People.Validate(Homeworld, GetJsonTextField(p_JObject, 'homeworld'));
             l_People.Url := GetJsonTextField(p_JObject, 'url');
             l_People.Created := GetJsonDateTimeField(p_JObject, 'created');
             l_People.Edited := GetJsonDateTimeField(p_JObject, 'edited');
@@ -300,7 +290,7 @@ codeunit 50101 "SWAPI Mng"
             l_ResourceAssociation.ResourceType := p_ResourceType;
             l_ResourceAssociation.ResourceID := p_ID;
             l_ResourceAssociation.AssociatedResourceType := p_AssType;
-            l_ResourceAssociation.AssociatedResourceValue := p_AssValue;
+            l_ResourceAssociation.Validate(AssociatedResourceValue, p_AssValue);
             l_ResourceAssociation.Insert();
         end;
     end;
@@ -480,9 +470,9 @@ codeunit 50101 "SWAPI Mng"
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
-    local procedure SendStatus()
+    local procedure SendStatus(p_Resource: Enum "SW Resource Types")
     begin
-        SendStatusNotification(g_ImportSuccessfullL);
+        SendStatusNotification(StrSubstNo(g_ImportSuccessfullL, p_Resource));
     end;
 
     procedure SendStatusNotification(p_StatusL: Text)

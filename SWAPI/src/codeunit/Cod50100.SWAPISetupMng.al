@@ -4,6 +4,42 @@ using System.Media;
 
 codeunit 50100 "SWAPI Setup Mng"
 {
+    var
+        g_APIMng: Codeunit "SWAPI Mng";
+
+    procedure ClearAllSWData()
+    var
+        l_Films: Record "SW Films";
+        l_People: Record "SW People";
+        l_Planets: Record "SW Planets";
+        l_ResourceAss: Record "SW Resource Association";
+        l_Species: Record "SW Species";
+        l_Starships: Record "SW Starships";
+        l_Vehicles: Record "SW Vehicles";
+        l_Notification: Notification;
+        l_NotificationL: Label 'Sector is Clear.';
+    begin
+        l_Films.DeleteAll();
+        l_People.DeleteAll();
+        l_Planets.DeleteAll();
+        l_Species.DeleteAll();
+        l_Starships.DeleteAll();
+        l_Vehicles.DeleteAll();
+        l_ResourceAss.DeleteAll();
+        l_Notification.Message(l_NotificationL);
+        l_Notification.Send();
+    end;
+
+    procedure FillAllResources()
+    begin
+        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
+        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets); //planets before people bec of people Homeworld Validate trigger
+        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
+        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
+        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
+        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
+        g_APIMng.ValidateAllResourcesAss();
+    end;
 
     local procedure GetRootContentTxt(): Text
     var
@@ -20,14 +56,12 @@ codeunit 50100 "SWAPI Setup Mng"
 
     procedure IsValidEndpointRoot(p_Rec: Record SWAPISetup): Boolean
     var
-        l_SWAPISetup: Record SWAPISetup;
-        l_APIMng: Codeunit "SWAPI Mng";
         l_JObject: JsonObject;
         l_ContentTxt: Text;
         l_Url: Text;
     begin
         l_Url := StrSubstNo('%1', p_Rec.Endpoint);
-        l_JObject := l_APIMng.GetJObjectFromUrl(l_Url);
+        l_JObject := g_APIMng.GetJObjectFromUrl(l_Url);
         l_ContentTxt := StrSubstNo('%1', l_JObject);
         if l_ContentTxt = GetRootContentTxt() then
             exit(true)
@@ -46,6 +80,20 @@ codeunit 50100 "SWAPI Setup Mng"
             Error('Status code result %1', l_Response.IsSuccessStatusCode);
 
         Message('Pong');
+    end;
+
+    procedure ShowNumberOfRequestEntries()
+    var
+        l_ResourceDialog: Page "SW Resource StandardDialog";
+        l_Count: Integer;
+        l_Url: Text;
+    begin
+        l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
+        if l_ResourceDialog.RunModal() = Action::OK then begin
+            l_Url := g_APIMng.GetUrlFromEnum(l_ResourceDialog.GetResourceType());
+            l_Count := g_APIMng.GetCategoryCount(l_Url);
+            Message('Url: %1, Count: %2', l_Url, l_Count);
+        end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Guided Experience", 'OnRegisterAssistedSetup', '', true, true)]

@@ -35,51 +35,72 @@ page 50100 SWAPISetup
     }
     actions
     {
+        area(Promoted)
+        {
+            actionref(RefFillAllResources; FillAllResources)
+            {
+            }
+        }
         area(Processing)
         {
-            action(PingConnection)
+            group(Check)
             {
-                ApplicationArea = All;
-                Image = Web;
-                Promoted = true;
+                Caption = 'Check';
+                action(PingConnection)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Ping Connection';
+                    Image = Web;
 
-                trigger OnAction()
-                begin
-                    g_APISetupMng.PingAPIConnection();
-                end;
-            }
-
-            action(ShowNumberOfRequestEntries)
-            {
-                ApplicationArea = All;
-                Promoted = true;
-
-                trigger OnAction()
-                var
-                    l_SWAPIMng: Codeunit "SWAPI Mng";
-                    l_ResourceDialog: Page "SW Resource StandardDialog";
-                    l_Count: Integer;
-                    l_Url: Text;
-                begin
-                    l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
-                    if l_ResourceDialog.RunModal() = Action::OK then begin
-                        l_Url := l_SWAPIMng.GetUrlFromEnum(l_ResourceDialog.GetResourceType());
-                        l_Count := l_SWAPIMng.GetCategoryCount(l_Url);
-                        Message('Url: %1, Count: %2', l_Url, l_Count);
+                    trigger OnAction()
+                    begin
+                        g_APISetupMng.PingAPIConnection();
                     end;
-                end;
-            }
-            action(FillAllResources)
-            {
-                ApplicationArea = All;
-                Promoted = true;
+                }
+                action(ShowNumberOfRequestEntries)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Show Number Of Request Entries';
+                    Image = ShowList;
 
-                trigger OnAction()
-                var
-                    l_APIMng: Codeunit "SWAPI Mng";
-                begin
-                    l_APIMng.FillAllResources();
-                end;
+                    trigger OnAction()
+                    begin
+                        g_APISetupMng.ShowNumberOfRequestEntries();
+                    end;
+                }
+            }
+            group(GetData)
+            {
+                Caption = 'Get Data';
+                action(FillAllResources)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Fill All Resources';
+                    Image = Insert;
+
+                    trigger OnAction()
+                    begin
+                        g_APISetupMng.FillAllResources();
+                    end;
+                }
+            }
+            group(Delete)
+            {
+                Caption = 'Delete';
+                action(ClearAllSWData)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Clear All SW Data';
+                    Image = Delete;
+
+                    trigger OnAction()
+                    var
+                        l_ConfirmMsg: Label 'Delete all SW Data?';
+                    begin
+                        if Confirm(l_ConfirmMsg) then
+                            g_APISetupMng.ClearAllSWData();
+                    end;
+                }
             }
         }
         area(Navigation)
@@ -88,6 +109,7 @@ page 50100 SWAPISetup
             {
                 ApplicationArea = All;
                 Caption = 'Films';
+                Image = Navigate;
 
                 trigger OnAction()
                 begin
@@ -98,6 +120,7 @@ page 50100 SWAPISetup
             {
                 ApplicationArea = All;
                 Caption = 'People';
+                Image = Navigate;
 
                 trigger OnAction()
                 begin
@@ -108,6 +131,7 @@ page 50100 SWAPISetup
             {
                 ApplicationArea = All;
                 Caption = 'Planets';
+                Image = Navigate;
 
                 trigger OnAction()
                 begin
@@ -118,6 +142,7 @@ page 50100 SWAPISetup
             {
                 ApplicationArea = All;
                 Caption = 'Species';
+                Image = Navigate;
 
                 trigger OnAction()
                 begin
@@ -128,6 +153,7 @@ page 50100 SWAPISetup
             {
                 ApplicationArea = All;
                 Caption = 'Starships';
+                Image = Navigate;
 
                 trigger OnAction()
                 begin
@@ -138,6 +164,7 @@ page 50100 SWAPISetup
             {
                 ApplicationArea = All;
                 Caption = 'Vehicles';
+                Image = Navigate;
 
                 trigger OnAction()
                 begin

@@ -48,6 +48,14 @@ table 50101 "SW People"
         field(10; Homeworld; Text[100])
         {
             Caption = 'Homeworld';
+            trigger OnValidate()
+            var
+                l_Planets: Record "SW Planets";
+            begin
+                l_Planets.SetRange(Url, Rec.Homeworld);
+                if l_Planets.FindFirst() then
+                    Homeworld := l_Planets.Name;
+            end;
         }
         field(11; Films; Integer)
         {

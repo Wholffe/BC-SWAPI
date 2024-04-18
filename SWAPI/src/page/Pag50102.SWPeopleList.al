@@ -53,6 +53,14 @@ page 50102 "SW People List"
                 field("Homeworld "; Rec.Homeworld)
                 {
                     ToolTip = 'Specifies the value of the Homeworld field.';
+                    trigger OnDrillDown()
+                    var
+                        l_Planets: Record "SW Planets";
+                    begin
+                        l_Planets.SetRange(Name, Rec.Homeworld);
+                        if l_Planets.FindSet() then
+                            Page.Run(Page::"SW Planets List", l_Planets);
+                    end;
                 }
                 field(Films; Rec.Films)
                 {
