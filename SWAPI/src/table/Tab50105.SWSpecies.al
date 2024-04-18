@@ -23,12 +23,14 @@ table 50105 "SW Species"
         {
             Caption = 'Designation';
         }
-        field(5; AverageHeight; Text[100])
+        field(5; AverageHeight; Integer)
         {
+            BlankZero = true;
             Caption = 'Average height';
         }
-        field(6; AverageLifeSpan; Text[100])
+        field(6; AverageLifeSpan; Integer)
         {
+            BlankZero = true;
             Caption = 'Average life span';
         }
         field(7; EyeColor; Text[100])

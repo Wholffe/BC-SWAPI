@@ -69,6 +69,18 @@ page 50100 SWAPISetup
                     end;
                 end;
             }
+            action(FillAllResources)
+            {
+                ApplicationArea = All;
+                Promoted = true;
+
+                trigger OnAction()
+                var
+                    l_APIMng: Codeunit "SWAPI Mng";
+                begin
+                    l_APIMng.FillAllResources();
+                end;
+            }
         }
         area(Navigation)
         {

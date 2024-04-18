@@ -31,12 +31,14 @@ table 50101 "SW People"
         {
             Caption = 'Hair color';
         }
-        field(7; Height; Text[100])
+        field(7; Height; Integer)
         {
+            BlankZero = true;
             Caption = 'Height';
         }
-        field(8; Mass; Text[100])
+        field(8; Mass; Integer)
         {
+            BlankZero = true;
             Caption = 'Mass';
         }
         field(9; SkinColor; Text[100])

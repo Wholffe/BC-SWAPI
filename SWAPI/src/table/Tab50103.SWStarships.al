@@ -27,36 +27,44 @@ table 50103 "SW Starships"
         {
             Caption = 'Manufacturer';
         }
-        field(6; CostInCredits; Text[100])
+        field(6; CostInCredits; Integer)
         {
+            BlankZero = true;
             Caption = 'Cost in credits';
         }
-        field(7; Length; Text[100])
+        field(7; Length; Integer)
         {
+            BlankZero = true;
             Caption = 'Length';
         }
-        field(8; Crew; Text[100])
+        field(8; Crew; Integer)
         {
+            BlankZero = true;
             Caption = 'Crew';
         }
-        field(9; Passengers; Text[100])
+        field(9; Passengers; Integer)
         {
+            BlankZero = true;
             Caption = 'Passengers';
         }
-        field(10; MaxAtmospheringSpeed; Text[100])
+        field(10; MaxAtmospheringSpeed; Integer)
         {
+            BlankZero = true;
             Caption = 'Max atmosphering speed';
         }
-        field(11; HyperdriveRating; Text[100])
+        field(11; HyperdriveRating; Decimal)
         {
+            BlankZero = true;
             Caption = 'Hyperdrive rating ';
         }
-        field(12; MGLT; Text[100])
+        field(12; MGLT; Integer)
         {
+            BlankZero = true;
             Caption = 'MGLT';
         }
-        field(13; CargoCapacity; Text[100])
+        field(13; CargoCapacity; Integer)
         {
+            BlankZero = true;
             Caption = 'Cargo capacity';
         }
         field(14; Consumables; Text[100])

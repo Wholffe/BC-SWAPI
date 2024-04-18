@@ -7,6 +7,24 @@ codeunit 50101 "SWAPI Mng"
         g_AlreadyImportedL: Label 'You have already imported all data. Take a seat.';
         g_ImportSuccessfullL: Label 'Data imported successfully.';
 
+    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
+    var
+        l_RecRef: RecordRef;
+        l_MaxID: Integer;
+        l_ResourceRouteUrl: Text;
+    begin
+        l_ResourceRouteUrl := StrSubstNo('%1%2', g_APISetup.Endpoint, p_Resource);
+        l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
+        l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
+        if not (l_RecRef.Count = l_MaxID) then begin
+            l_RecRef.Close();
+            exit;
+        end;
+        SendStatusNotification(g_AlreadyImportedL);
+        l_RecRef.Close();
+        exit(true)
+    end;
+
     procedure DrilldownPage(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types")
     var
         l_RessourceAss: Record "SW Resource Association";
@@ -48,6 +66,17 @@ codeunit 50101 "SWAPI Mng"
                 l_PageNo := Page::"SW Vehicles List";
         end;
         Page.Run(l_PageNo, l_VarRecRef);
+    end;
+
+    procedure FillAllResources()
+    begin
+        FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
+        FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
+        FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets);
+        FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
+        FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
+        FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
+        ValidateAllResourcesAss();
     end;
 
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
@@ -122,8 +151,8 @@ codeunit 50101 "SWAPI Mng"
             l_People.EyeColor := GetJsonTextField(p_JObject, 'eye_color');
             l_People.Gender := GetJsonTextField(p_JObject, 'gender');
             l_People.HairColor := GetJsonTextField(p_JObject, 'hair_color');
-            l_People.Height := GetJsonTextField(p_JObject, 'height');
-            l_People.Mass := GetJsonTextField(p_JObject, 'mass');
+            l_People.Height := GetJsonIntegerField(p_JObject, 'height');
+            l_People.Mass := GetJsonIntegerField(p_JObject, 'mass');
             l_People.SkinColor := GetJsonTextField(p_JObject, 'skin_color');
             l_People.Homeworld := GetJsonTextField(p_JObject, 'homeworld');
             l_People.Url := GetJsonTextField(p_JObject, 'url');
@@ -146,14 +175,14 @@ codeunit 50101 "SWAPI Mng"
             l_Planets.Init();
             l_Planets.ID := p_ID;
             l_Planets.Name := GetJsonTextField(p_JObject, 'name');
-            l_Planets.Diameter := GetJsonTextField(p_JObject, 'diameter');
-            l_Planets.RotationPeriod := GetJsonTextField(p_JObject, 'rotation_period');
-            l_Planets.OrbitalPeriod := GetJsonTextField(p_JObject, 'orbital_period');
-            l_Planets.Gravity := GetJsonTextField(p_JObject, 'gravity');
-            l_Planets.Population := GetJsonTextField(p_JObject, 'population');
+            l_Planets.Diameter := GetJsonIntegerField(p_JObject, 'diameter');
+            l_Planets.RotationPeriod := GetJsonIntegerField(p_JObject, 'rotation_period');
+            l_Planets.OrbitalPeriod := GetJsonIntegerField(p_JObject, 'orbital_period');
+            l_Planets.Gravity := GetJsonIntegerField(p_JObject, 'gravity');
+            l_Planets.Population := GetJsonIntegerField(p_JObject, 'population');
             l_Planets.Climate := GetJsonTextField(p_JObject, 'climate');
             l_Planets.Terrain := GetJsonTextField(p_JObject, 'terrain');
-            l_Planets.SurfaceWater := GetJsonTextField(p_JObject, 'surface_water');
+            l_Planets.SurfaceWater := GetJsonIntegerField(p_JObject, 'surface_water');
             l_Planets.Url := GetJsonTextField(p_JObject, 'url');
             l_Planets.Created := GetJsonDateTimeField(p_JObject, 'created');
             l_Planets.Edited := GetJsonDateTimeField(p_JObject, 'edited');
@@ -174,8 +203,8 @@ codeunit 50101 "SWAPI Mng"
             l_Species.Name := GetJsonTextField(p_JObject, 'name');
             l_Species.Classification := GetJsonTextField(p_JObject, 'classification');
             l_Species.Designation := GetJsonTextField(p_JObject, 'designation');
-            l_Species.AverageHeight := GetJsonTextField(p_JObject, 'average_height');
-            l_Species.AverageLifeSpan := GetJsonTextField(p_JObject, 'average_lifespan');
+            l_Species.AverageHeight := GetJsonIntegerField(p_JObject, 'average_height');
+            l_Species.AverageLifeSpan := GetJsonIntegerField(p_JObject, 'average_lifespan');
             l_Species.EyeColor := GetJsonTextField(p_JObject, 'eye_colors');
             l_Species.HairColors := GetJsonTextField(p_JObject, 'hair_colors');
             l_Species.SkinColors := GetJsonTextField(p_JObject, 'skin_colors');
@@ -202,13 +231,14 @@ codeunit 50101 "SWAPI Mng"
             l_Starships.Model := GetJsonTextField(p_JObject, 'model');
             l_Starships.StarshipClass := GetJsonTextField(p_JObject, 'starship_class');
             l_Starships.Manufacturer := GetJsonTextField(p_JObject, 'manufacturer');
-            l_Starships.CostInCredits := GetJsonTextField(p_JObject, 'cost_in_credits');
-            l_Starships.Crew := GetJsonTextField(p_JObject, 'crew');
-            l_Starships.Passengers := GetJsonTextField(p_JObject, 'passengers');
-            l_Starships.MaxAtmospheringSpeed := GetJsonTextField(p_JObject, 'max_atmosphering_speed');
-            l_Starships.HyperdriveRating := GetJsonTextField(p_JObject, 'hyperdrive_rating');
-            l_Starships.MGLT := GetJsonTextField(p_JObject, 'MGLT');
-            l_Starships.CargoCapacity := GetJsonTextField(p_JObject, 'cargo_capacity');
+            l_Starships.CostInCredits := GetJsonIntegerField(p_JObject, 'cost_in_credits');
+            l_Starships.Length := GetJsonIntegerField(p_JObject, 'length');
+            l_Starships.Crew := GetJsonIntegerField(p_JObject, 'crew');
+            l_Starships.Passengers := GetJsonIntegerField(p_JObject, 'passengers');
+            l_Starships.MaxAtmospheringSpeed := GetJsonIntegerField(p_JObject, 'max_atmosphering_speed');
+            l_Starships.HyperdriveRating := GetJsonDecimalField(p_JObject, 'hyperdrive_rating');
+            l_Starships.MGLT := GetJsonIntegerField(p_JObject, 'MGLT');
+            l_Starships.CargoCapacity := GetJsonIntegerField(p_JObject, 'cargo_capacity');
             l_Starships.Consumables := GetJsonTextField(p_JObject, 'consumables');
             l_Starships.Url := GetJsonTextField(p_JObject, 'url');
             l_Starships.Created := GetJsonDateTimeField(p_JObject, 'created');
@@ -231,12 +261,12 @@ codeunit 50101 "SWAPI Mng"
             l_Vehicles.Model := GetJsonTextField(p_JObject, 'model');
             l_Vehicles.VehicleClass := GetJsonTextField(p_JObject, 'vehicle_class');
             l_Vehicles.Manufacturer := GetJsonTextField(p_JObject, 'manufacturer');
-            l_Vehicles.Lenght := GetJsonTextField(p_JObject, 'length');
-            l_Vehicles.CostInCredits := GetJsonTextField(p_JObject, 'cost_in_credits');
-            l_Vehicles.Crew := GetJsonTextField(p_JObject, 'crew');
-            l_Vehicles.Passengers := GetJsonTextField(p_JObject, 'passengers');
-            l_Vehicles.MaxAtmospheringSpeed := GetJsonTextField(p_JObject, 'max_atmosphering_speed');
-            l_Vehicles.CargoCapacity := GetJsonTextField(p_JObject, 'cargo_capacity');
+            l_Vehicles.Lenght := GetJsonDecimalField(p_JObject, 'length');
+            l_Vehicles.CostInCredits := GetJsonIntegerField(p_JObject, 'cost_in_credits');
+            l_Vehicles.Crew := GetJsonIntegerField(p_JObject, 'crew');
+            l_Vehicles.Passengers := GetJsonIntegerField(p_JObject, 'passengers');
+            l_Vehicles.MaxAtmospheringSpeed := GetJsonIntegerField(p_JObject, 'max_atmosphering_speed');
+            l_Vehicles.CargoCapacity := GetJsonIntegerField(p_JObject, 'cargo_capacity');
             l_Vehicles.Consumables := GetJsonTextField(p_JObject, 'consumables');
             l_Vehicles.Url := GetJsonTextField(p_JObject, 'url');
             l_Vehicles.Created := GetJsonDateTimeField(p_JObject, 'created');
@@ -246,6 +276,33 @@ codeunit 50101 "SWAPI Mng"
         FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::vehicles, p_ID);
         FillResourceAssociation(p_JObject, 'pilots', Enum::"SW Resource Types"::vehicles, p_ID);
         Commit();
+    end;
+
+    local procedure FillResourceAssociation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
+    var
+        l_InnerJsonObject: JsonToken;
+        l_JToken: JsonToken;
+        l_AssValue: Text[100];
+    begin
+        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
+        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
+            l_AssValue := l_JToken.AsValue().AsText();
+            FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
+        end;
+    end;
+
+    local procedure FillSingleResourceAssociation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
+    var
+        l_ResourceAssociation: Record "SW Resource Association";
+    begin
+        if not l_ResourceAssociation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
+            l_ResourceAssociation.Init();
+            l_ResourceAssociation.ResourceType := p_ResourceType;
+            l_ResourceAssociation.ResourceID := p_ID;
+            l_ResourceAssociation.AssociatedResourceType := p_AssType;
+            l_ResourceAssociation.AssociatedResourceValue := p_AssValue;
+            l_ResourceAssociation.Insert();
+        end;
     end;
 
     procedure GetCategoryCount(p_Url: Text): Integer
@@ -276,6 +333,14 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
+    local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
+    var
+        l_Result: JsonToken;
+    begin
+        if p_JObject.Get(p_Member, l_Result) then
+            exit(l_Result.AsArray().AsToken());
+    end;
+
     procedure GetJObjectFromUrl(p_Url: Text): JsonObject
     var
         l_Client: HttpClient;
@@ -295,92 +360,6 @@ codeunit 50101 "SWAPI Mng"
         l_Content.ReadAs(l_ResponseTxt);
         l_JObject.ReadFrom(l_ResponseTxt);
         exit(l_JObject)
-    end;
-
-    procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
-    begin
-        case p_Resource of
-            Enum::"SW Resource Types"::films:
-                exit(Database::"SW Films");
-            Enum::"SW Resource Types"::people:
-                exit(Database::"SW People");
-            Enum::"SW Resource Types"::planets:
-                exit(Database::"SW Planets");
-            Enum::"SW Resource Types"::species:
-                exit(Database::"SW Species");
-            Enum::"SW Resource Types"::starships:
-                exit(Database::"SW Starships");
-            Enum::"SW Resource Types"::vehicles:
-                exit(Database::"SW Vehicles");
-        end;
-    end;
-
-    procedure GetUrlFromEnum(p_ResourceType: Enum "SW Resource Types"): Text
-    var
-        l_SWAPISetup: Record SWAPISetup;
-    begin
-        exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_ResourceType))
-    end;
-
-    procedure SendStatusNotification(p_StatusL: Text)
-    var
-        l_StatusNotification: Notification;
-    begin
-        l_StatusNotification.Message(p_StatusL);
-        l_StatusNotification.Send();
-    end;
-
-    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
-    var
-        l_RecRef: RecordRef;
-        l_MaxID: Integer;
-        l_ResourceRouteUrl: Text;
-    begin
-        l_ResourceRouteUrl := StrSubstNo('%1%2', g_APISetup.Endpoint, p_Resource);
-        l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
-        l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
-        if not (l_RecRef.Count = l_MaxID) then begin
-            l_RecRef.Close();
-            exit;
-        end;
-        SendStatusNotification(g_AlreadyImportedL);
-        l_RecRef.Close();
-        exit(true)
-    end;
-
-    local procedure FillResourceAssociation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
-    var
-        l_InnerJsonObject: JsonToken;
-        l_JToken: JsonToken;
-        l_AssValue: Text[100];
-    begin
-        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
-        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
-            l_AssValue := l_JToken.AsValue().AsText();
-            FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
-        end;
-    end;
-
-    local procedure FillSingleResourceAssociation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
-    var
-        l_ResourceAssociation: Record "SW Resource Association";
-    begin
-        if not l_ResourceAssociation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
-            l_ResourceAssociation.Init();
-            l_ResourceAssociation.ResourceType := p_ResourceType;
-            l_ResourceAssociation.ResourceID := p_ID;
-            l_ResourceAssociation.AssociatedResourceType := p_AssType;
-            l_ResourceAssociation.AssociatedResourceValue := p_AssValue;
-            l_ResourceAssociation.Insert();
-        end;
-    end;
-
-    local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
-    var
-        l_Result: JsonToken;
-    begin
-        if p_JObject.Get(p_Member, l_Result) then
-            exit(l_Result.AsArray().AsToken());
     end;
 
     local procedure GetJsonDateField(p_JObject: JsonObject; p_Member: Text): Date
@@ -411,6 +390,20 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
+    local procedure GetJsonDecimalField(p_JObject: JsonObject; p_Member: Text): Decimal
+    var
+        l_Result: Decimal;
+        l_JToken: JsonToken;
+        l_ResultTxt: Text;
+    begin
+        if p_JObject.Get(p_Member, l_JToken) then begin
+            l_ResultTxt := l_JToken.AsValue().AsText();
+            if not Evaluate(l_Result, l_ResultTxt) then
+                l_Result := 0;
+            exit(l_Result)
+        end;
+    end;
+
     local procedure GetJsonIntegerField(p_JObject: JsonObject; p_Member: Text): Integer
     var
         l_Result: Integer;
@@ -427,13 +420,47 @@ codeunit 50101 "SWAPI Mng"
 
     local procedure GetJsonTextField(p_JObject: JsonObject; p_Member: Text): Text
     var
-        l_Result: JsonToken;
+        l_JToken: JsonToken;
+        l_Result: Text;
     begin
-        if not p_JObject.Get(p_Member, l_Result) then
+        if not p_JObject.Get(p_Member, l_JToken) then
             exit('');
-        if l_Result.AsValue().IsNull() then
+        if l_JToken.AsValue().IsNull() then
             exit('');
-        exit(l_Result.AsValue().AsText());
+        l_Result := l_JToken.AsValue().AsText();
+        if l_Result in ['unknown', 'n/a'] then
+            exit('');
+        exit(l_Result);
+    end;
+
+    procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
+    begin
+        case p_Resource of
+            Enum::"SW Resource Types"::films:
+                exit(Database::"SW Films");
+            Enum::"SW Resource Types"::people:
+                exit(Database::"SW People");
+            Enum::"SW Resource Types"::planets:
+                exit(Database::"SW Planets");
+            Enum::"SW Resource Types"::species:
+                exit(Database::"SW Species");
+            Enum::"SW Resource Types"::starships:
+                exit(Database::"SW Starships");
+            Enum::"SW Resource Types"::vehicles:
+                exit(Database::"SW Vehicles");
+        end;
+    end;
+
+    procedure GetUrlFromEnum(p_ResourceType: Enum "SW Resource Types"): Text
+    var
+        l_SWAPISetup: Record SWAPISetup;
+    begin
+        exit(StrSubstNo('%1%2/', l_SWAPISetup.Endpoint, p_ResourceType))
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterFillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
+    begin
     end;
 
     local procedure RessourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean
@@ -450,6 +477,20 @@ codeunit 50101 "SWAPI Mng"
         end;
         l_RecRef.Close();
         exit(true);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
+    local procedure SendStatus()
+    begin
+        SendStatusNotification(g_ImportSuccessfullL);
+    end;
+
+    procedure SendStatusNotification(p_StatusL: Text)
+    var
+        l_StatusNotification: Notification;
+    begin
+        l_StatusNotification.Message(p_StatusL);
+        l_StatusNotification.Send();
     end;
 
     local procedure StartFillJObjectContentInSWResource(p_Resource: Enum "SW Resource Types"; l_ID: Integer; l_JObject: JsonObject)
@@ -470,14 +511,24 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
-    local procedure SendStatus()
+    procedure ValidateAllResourcesAss()
+    var
+        l_ResourceAss: Record "SW Resource Association";
+        l_Dialog: Dialog;
+        l_Counter: Integer;
+        l_DialogL: Label 'Validating resource ass, please wait... \Validate #2## \Total #3##';
     begin
-        SendStatusNotification(g_ImportSuccessfullL);
-    end;
-
-    [IntegrationEvent(false, false)]
-    local procedure OnAfterFillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
-    begin
+        l_ResourceAss.Reset();
+        l_Dialog.Open(l_DialogL);
+        l_Dialog.Update(3, l_ResourceAss.Count);
+        l_Counter := 1;
+        if l_ResourceAss.FindSet() then
+            repeat
+                l_Dialog.Update(2, l_Counter);
+                l_ResourceAss.Validate(AssociatedResourceValue);
+                l_ResourceAss.Modify();
+                l_Counter := l_Counter + 1;
+            until l_ResourceAss.Next() = 0;
+        l_Dialog.Close();
     end;
 }

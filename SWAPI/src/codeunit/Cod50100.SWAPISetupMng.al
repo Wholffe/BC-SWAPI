@@ -4,6 +4,20 @@ using System.Media;
 
 codeunit 50100 "SWAPI Setup Mng"
 {
+
+    local procedure GetRootContentTxt(): Text
+    var
+        l_RootContentTxt: Text;
+    begin
+        l_RootContentTxt := '{"people":"https://swapi.dev/api/people/",' +
+                            '"planets":"https://swapi.dev/api/planets/",' +
+                            '"films":"https://swapi.dev/api/films/",' +
+                            '"species":"https://swapi.dev/api/species/",' +
+                            '"vehicles":"https://swapi.dev/api/vehicles/",' +
+                            '"starships":"https://swapi.dev/api/starships/"}';
+        exit(l_RootContentTxt);
+    end;
+
     procedure IsValidEndpointRoot(p_Rec: Record SWAPISetup): Boolean
     var
         l_SWAPISetup: Record SWAPISetup;
@@ -32,19 +46,6 @@ codeunit 50100 "SWAPI Setup Mng"
             Error('Status code result %1', l_Response.IsSuccessStatusCode);
 
         Message('Pong');
-    end;
-
-    local procedure GetRootContentTxt(): Text
-    var
-        l_RootContentTxt: Text;
-    begin
-        l_RootContentTxt := '{"people":"https://swapi.dev/api/people/",' +
-                            '"planets":"https://swapi.dev/api/planets/",' +
-                            '"films":"https://swapi.dev/api/films/",' +
-                            '"species":"https://swapi.dev/api/species/",' +
-                            '"vehicles":"https://swapi.dev/api/vehicles/",' +
-                            '"starships":"https://swapi.dev/api/starships/"}';
-        exit(l_RootContentTxt);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Guided Experience", 'OnRegisterAssistedSetup', '', true, true)]

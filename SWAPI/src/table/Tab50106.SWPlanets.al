@@ -15,24 +15,29 @@ table 50106 "SW Planets"
         {
             Caption = 'Name';
         }
-        field(3; Diameter; Text[100])
+        field(3; Diameter; Integer)
         {
+            BlankZero = true;
             Caption = 'Diameter';
         }
-        field(4; RotationPeriod; Text[100])
+        field(4; RotationPeriod; Integer)
         {
+            BlankZero = true;
             Caption = 'Rotation period';
         }
-        field(5; OrbitalPeriod; Text[100])
+        field(5; OrbitalPeriod; Integer)
         {
+            BlankZero = true;
             Caption = 'Orbital period';
         }
-        field(6; Gravity; Text[100])
+        field(6; Gravity; Integer)
         {
+            BlankZero = true;
             Caption = 'Gravity';
         }
-        field(7; Population; Text[100])
+        field(7; Population; Integer)
         {
+            BlankZero = true;
             Caption = 'Population';
         }
         field(8; Climate; Text[100])
@@ -43,8 +48,9 @@ table 50106 "SW Planets"
         {
             Caption = 'Terrain';
         }
-        field(10; SurfaceWater; Text[100])
+        field(10; SurfaceWater; Integer)
         {
+            BlankZero = true;
             Caption = 'Surface water';
         }
         field(11; Residents; Integer)

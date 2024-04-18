@@ -27,28 +27,33 @@ table 50104 "SW Vehicles"
         {
             Caption = 'Manufacturer';
         }
-        field(6; Lenght; Text[100])
+        field(6; Lenght; Decimal)
         {
+            BlankZero = true;
             Caption = 'Lenght';
         }
-        field(7; CostInCredits; Text[100])
+        field(7; CostInCredits; Integer)
         {
+            BlankZero = true;
             Caption = 'Cost in credits';
         }
-        field(8; Crew; Text[100])
+        field(8; Crew; Integer)
         {
+            BlankZero = true;
             Caption = 'Crew';
         }
-        field(9; Passengers; Text[100])
+        field(9; Passengers; Integer)
         {
+            BlankZero = true;
             Caption = 'Passengers';
         }
-        field(10; MaxAtmospheringSpeed; Text[100])
+        field(10; MaxAtmospheringSpeed; Integer)
         {
             Caption = 'Max atmosphering speed';
         }
-        field(11; CargoCapacity; Text[100])
+        field(11; CargoCapacity; Integer)
         {
+            BlankZero = true;
             Caption = 'CargoCapacity';
         }
         field(12; Consumables; Text[100])
