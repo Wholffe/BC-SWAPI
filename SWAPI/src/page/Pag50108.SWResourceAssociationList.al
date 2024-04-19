@@ -16,23 +16,24 @@ page 50108 "SW Resource Association List"
             {
                 field(ResourceType; Rec.ResourceType)
                 {
-                    ToolTip = 'Specifies the value of the ResourceType field.';
                 }
                 field(ResourceID; Rec.ResourceID)
                 {
-                    ToolTip = 'Specifies the value of the ResourceID field.';
                 }
                 field(AssociatedResourceType; Rec.AssociatedResourceType)
                 {
-                    ToolTip = 'Specifies the value of the AssociatedResourceType field.';
                 }
-                field(AssociatedResourceValue; Rec.AssociatedResourceValue)
+                field(AssociatedResourceValue; Rec.AssociatedResourceUrl)
                 {
-                    ToolTip = 'Specifies the value of the AssociatedResourceValue field.';
                 }
                 field(AssRessourceID; Rec.AssRessourceID)
                 {
-                    ToolTip = 'Specifies the value of the Associated Ressource ID field.';
+                }
+                field(AssRessourceName; Rec.AssRessourceName)
+                {
+                }
+                field(AssRessourceValue; Rec.AssRessourceValue)
+                {
                 }
             }
         }

@@ -4,6 +4,8 @@ page 50103 "SW Films List"
 {
     ApplicationArea = All;
     Caption = 'SW Films List';
+    CardPageId = 50113;
+    Editable = false;
     PageType = List;
     SourceTable = "SW Films";
     UsageCategory = Lists;

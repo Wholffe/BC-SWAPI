@@ -7,24 +7,6 @@ codeunit 50101 "SWAPI Mng"
         g_AlreadyImportedL: Label 'You have already imported %1. Take a seat.';
         g_ImportSuccessfullL: Label '%1 imported successfully.';
 
-    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
-    var
-        l_RecRef: RecordRef;
-        l_MaxID: Integer;
-        l_ResourceRouteUrl: Text;
-    begin
-        l_ResourceRouteUrl := GetUrlFromEnum(p_Resource);
-        l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
-        l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
-        if not (l_RecRef.Count = l_MaxID) then begin
-            l_RecRef.Close();
-            exit;
-        end;
-        SendStatusNotification(StrSubstNo(g_AlreadyImportedL, p_Resource));
-        l_RecRef.Close();
-        exit(true)
-    end;
-
     procedure DrilldownPage(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types")
     var
         l_RessourceAss: Record "SW Resource Association";
@@ -35,16 +17,7 @@ codeunit 50101 "SWAPI Mng"
         l_Filter: Text;
         l_VarRecRef: Variant;
     begin
-        l_RessourceAss.Reset();
-        l_RessourceAss.SetRange(ResourceType, p_ResourceType);
-        l_RessourceAss.SetRange(ResourceID, p_ID);
-        l_RessourceAss.SetRange(AssociatedResourceType, p_AssociatedResourceType);
-        if not l_RessourceAss.FindSet() then
-            exit;
-        repeat
-            l_Filter := StrSubstNo('%1|%2', l_RessourceAss.AssRessourceID, l_Filter)
-        until l_RessourceAss.Next() = 0;
-        l_Filter := l_Filter.TrimEnd('|');
+        l_Filter := GetAssociationFilter(p_ResourceType, p_ID, p_AssociatedResourceType);
         l_RecRefTableNo := GetRecRefTableNoFromResourceEnum(p_AssociatedResourceType);
         l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_AssociatedResourceType));
         l_FieldRef := l_RecRef.Field(1);
@@ -268,31 +241,22 @@ codeunit 50101 "SWAPI Mng"
         Commit();
     end;
 
-    local procedure FillResourceAssociation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
+    procedure GetAssociationFilter(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types"): Text
     var
-        l_InnerJsonObject: JsonToken;
-        l_JToken: JsonToken;
-        l_AssValue: Text[100];
+        l_RessourceAss: Record "SW Resource Association";
+        l_Filter: Text;
     begin
-        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
-        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
-            l_AssValue := l_JToken.AsValue().AsText();
-            FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
-        end;
-    end;
-
-    local procedure FillSingleResourceAssociation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
-    var
-        l_ResourceAssociation: Record "SW Resource Association";
-    begin
-        if not l_ResourceAssociation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
-            l_ResourceAssociation.Init();
-            l_ResourceAssociation.ResourceType := p_ResourceType;
-            l_ResourceAssociation.ResourceID := p_ID;
-            l_ResourceAssociation.AssociatedResourceType := p_AssType;
-            l_ResourceAssociation.Validate(AssociatedResourceValue, p_AssValue);
-            l_ResourceAssociation.Insert();
-        end;
+        l_RessourceAss.Reset();
+        l_RessourceAss.SetRange(ResourceType, p_ResourceType);
+        l_RessourceAss.SetRange(ResourceID, p_ID);
+        l_RessourceAss.SetRange(AssociatedResourceType, p_AssociatedResourceType);
+        if not l_RessourceAss.FindSet() then
+            exit;
+        repeat
+            l_Filter := StrSubstNo('%1|%2', l_RessourceAss.AssRessourceID, l_Filter)
+        until l_RessourceAss.Next() = 0;
+        l_Filter := l_Filter.TrimEnd('|');
+        exit(l_Filter)
     end;
 
     procedure GetCategoryCount(p_Url: Text): Integer
@@ -323,14 +287,6 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
-    local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
-    var
-        l_Result: JsonToken;
-    begin
-        if p_JObject.Get(p_Member, l_Result) then
-            exit(l_Result.AsArray().AsToken());
-    end;
-
     procedure GetJObjectFromUrl(p_Url: Text): JsonObject
     var
         l_Client: HttpClient;
@@ -350,6 +306,105 @@ codeunit 50101 "SWAPI Mng"
         l_Content.ReadAs(l_ResponseTxt);
         l_JObject.ReadFrom(l_ResponseTxt);
         exit(l_JObject)
+    end;
+
+    procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
+    begin
+        case p_Resource of
+            Enum::"SW Resource Types"::films:
+                exit(Database::"SW Films");
+            Enum::"SW Resource Types"::people:
+                exit(Database::"SW People");
+            Enum::"SW Resource Types"::planets:
+                exit(Database::"SW Planets");
+            Enum::"SW Resource Types"::species:
+                exit(Database::"SW Species");
+            Enum::"SW Resource Types"::starships:
+                exit(Database::"SW Starships");
+            Enum::"SW Resource Types"::vehicles:
+                exit(Database::"SW Vehicles");
+        end;
+    end;
+
+    procedure GetUrlFromEnum(p_ResourceType: Enum "SW Resource Types"): Text
+    var
+        l_SWAPISetup: Record SWAPISetup;
+    begin
+        exit(StrSubstNo('%1/%2/', l_SWAPISetup.Endpoint, p_ResourceType))
+    end;
+
+    procedure SendStatusNotification(p_StatusL: Text)
+    var
+        l_StatusNotification: Notification;
+    begin
+        l_StatusNotification.Message(p_StatusL);
+        l_StatusNotification.Send();
+    end;
+
+    procedure ValidateAllResourcesAss()
+    var
+        l_ResourceAss: Record "SW Resource Association";
+        l_Counter: Integer;
+    begin
+        l_ResourceAss.Reset();
+        if l_ResourceAss.FindSet() then
+            repeat
+                l_ResourceAss.Validate(AssociatedResourceUrl);
+                l_ResourceAss.Modify();
+            until l_ResourceAss.Next() = 0;
+    end;
+
+    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
+    var
+        l_RecRef: RecordRef;
+        l_MaxID: Integer;
+        l_ResourceRouteUrl: Text;
+    begin
+        l_ResourceRouteUrl := GetUrlFromEnum(p_Resource);
+        l_MaxID := GetCategoryCount(l_ResourceRouteUrl);
+        l_RecRef.Open(GetRecRefTableNoFromResourceEnum(p_Resource));
+        if not (l_RecRef.Count = l_MaxID) then begin
+            l_RecRef.Close();
+            exit;
+        end;
+        SendStatusNotification(StrSubstNo(g_AlreadyImportedL, p_Resource));
+        l_RecRef.Close();
+        exit(true)
+    end;
+
+    local procedure FillResourceAssociation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
+    var
+        l_InnerJsonObject: JsonToken;
+        l_JToken: JsonToken;
+        l_AssValue: Text[100];
+    begin
+        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
+        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
+            l_AssValue := l_JToken.AsValue().AsText();
+            FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
+        end;
+    end;
+
+    local procedure FillSingleResourceAssociation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
+    var
+        l_ResourceAssociation: Record "SW Resource Association";
+    begin
+        if not l_ResourceAssociation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
+            l_ResourceAssociation.Init();
+            l_ResourceAssociation.ResourceType := p_ResourceType;
+            l_ResourceAssociation.ResourceID := p_ID;
+            l_ResourceAssociation.AssociatedResourceType := p_AssType;
+            l_ResourceAssociation.Validate(AssociatedResourceUrl, p_AssValue);
+            l_ResourceAssociation.Insert();
+        end;
+    end;
+
+    local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
+    var
+        l_Result: JsonToken;
+    begin
+        if p_JObject.Get(p_Member, l_Result) then
+            exit(l_Result.AsArray().AsToken());
     end;
 
     local procedure GetJsonDateField(p_JObject: JsonObject; p_Member: Text): Date
@@ -423,36 +478,6 @@ codeunit 50101 "SWAPI Mng"
         exit(l_Result);
     end;
 
-    procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
-    begin
-        case p_Resource of
-            Enum::"SW Resource Types"::films:
-                exit(Database::"SW Films");
-            Enum::"SW Resource Types"::people:
-                exit(Database::"SW People");
-            Enum::"SW Resource Types"::planets:
-                exit(Database::"SW Planets");
-            Enum::"SW Resource Types"::species:
-                exit(Database::"SW Species");
-            Enum::"SW Resource Types"::starships:
-                exit(Database::"SW Starships");
-            Enum::"SW Resource Types"::vehicles:
-                exit(Database::"SW Vehicles");
-        end;
-    end;
-
-    procedure GetUrlFromEnum(p_ResourceType: Enum "SW Resource Types"): Text
-    var
-        l_SWAPISetup: Record SWAPISetup;
-    begin
-        exit(StrSubstNo('%1/%2/', l_SWAPISetup.Endpoint, p_ResourceType))
-    end;
-
-    [IntegrationEvent(false, false)]
-    local procedure OnAfterFillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
-    begin
-    end;
-
     local procedure RessourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean
     var
         l_RecRef: RecordRef;
@@ -467,20 +492,6 @@ codeunit 50101 "SWAPI Mng"
         end;
         l_RecRef.Close();
         exit(true);
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
-    local procedure SendStatus(p_Resource: Enum "SW Resource Types")
-    begin
-        SendStatusNotification(StrSubstNo(g_ImportSuccessfullL, p_Resource));
-    end;
-
-    procedure SendStatusNotification(p_StatusL: Text)
-    var
-        l_StatusNotification: Notification;
-    begin
-        l_StatusNotification.Message(p_StatusL);
-        l_StatusNotification.Send();
     end;
 
     local procedure StartFillJObjectContentInSWResource(p_Resource: Enum "SW Resource Types"; l_ID: Integer; l_JObject: JsonObject)
@@ -501,18 +512,14 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
-    procedure ValidateAllResourcesAss()
-    var
-        l_ResourceAss: Record "SW Resource Association";
-        l_Counter: Integer;
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
+    local procedure SendStatus(p_Resource: Enum "SW Resource Types")
     begin
-        l_ResourceAss.Reset();
-        l_Counter := 1;
-        if l_ResourceAss.FindSet() then
-            repeat
-                l_ResourceAss.Validate(AssociatedResourceValue);
-                l_ResourceAss.Modify();
-                l_Counter := l_Counter + 1;
-            until l_ResourceAss.Next() = 0;
+        SendStatusNotification(StrSubstNo(g_ImportSuccessfullL, p_Resource));
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterFillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
+    begin
     end;
 }

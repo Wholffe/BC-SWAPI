@@ -17,9 +17,9 @@ table 50107 "SW Resource Association"
         {
             Caption = 'Associated Resource Type';
         }
-        field(4; AssociatedResourceValue; Text[100])
+        field(4; AssociatedResourceUrl; Text[100])
         {
-            Caption = 'Associated Resource Value';
+            Caption = 'Associated Resource Url';
             trigger OnValidate()
             var
                 l_FieldList: Record Field;
@@ -36,9 +36,12 @@ table 50107 "SW Resource Association"
                 l_FieldNo := l_FieldList."No.";
                 l_RecRef.Open(l_TableNo);
                 l_UrlRef := l_RecRef.Field(l_FieldNo);
-                l_UrlRef.SetRange(Rec.AssociatedResourceValue);
-                if l_RecRef.FindFirst() then
+                l_UrlRef.SetRange(Rec.AssociatedResourceUrl);
+                if l_RecRef.FindFirst() then begin
                     AssRessourceID := l_RecRef.Field(1).Value;
+                    AssRessourceName := l_RecRef.Field(2).Value;
+                    AssRessourceValue := l_RecRef.Field(3).Value;
+                end;
                 l_RecRef.Close();
             end;
         }
@@ -46,10 +49,18 @@ table 50107 "SW Resource Association"
         {
             Caption = 'Associated Ressource ID';
         }
+        field(6; AssRessourceName; Text[100])
+        {
+            Caption = 'Associated Ressource Name';
+        }
+        field(7; AssRessourceValue; Text[100])
+        {
+            Caption = 'Associated Ressource Value';
+        }
     }
     keys
     {
-        key(PK; ResourceType, ResourceID, AssociatedResourceType, AssociatedResourceValue)
+        key(PK; ResourceType, ResourceID, AssociatedResourceType, AssociatedResourceUrl)
         {
             Clustered = true;
         }
