@@ -1,15 +1,15 @@
 namespace SWAPI.SWAPI;
 
-page 50114 SWRessourceAssListPart
+page 50114 SWResourceAssListPart
 {
     ApplicationArea = All;
-    Caption = 'Ressource Association Part';
+    Caption = 'Resource Association Part';
     DeleteAllowed = false;
     Editable = false;
     InsertAllowed = false;
     PageType = ListPart;
-    SourceTable = "SW Resource Association";
     RefreshOnActivate = true;
+    SourceTable = "SW Resource Association";
 
     layout
     {
@@ -17,17 +17,17 @@ page 50114 SWRessourceAssListPart
         {
             repeater(General)
             {
-                field(AssRessourceID; Rec.AssRessourceID)
+                field(AssResourceID; Rec.AssResourceID)
                 {
                     Caption = 'ID';
                 }
-                field(AssRessourceName; Rec.AssRessourceName)
+                field(AssResourceName; Rec.AssResourceName)
                 {
-                    CaptionClass = g_AssRessourceNameCaption;
+                    CaptionClass = g_AssResourceNameCaption;
                 }
-                field(AssRessourceValue; Rec.AssRessourceValue)
+                field(AssResourceValue; Rec.AssResourceValue)
                 {
-                    CaptionClass = g_AssRessourceValueCaption;
+                    CaptionClass = g_AssResourceValueCaption;
                 }
             }
         }
@@ -48,8 +48,8 @@ page 50114 SWRessourceAssListPart
         }
     }
     var
-        g_AssRessourceNameCaption: Text;
-        g_AssRessourceValueCaption: Text;
+        g_AssResourceNameCaption: Text;
+        g_AssResourceValueCaption: Text;
 
     trigger OnAfterGetCurrRecord()
     begin
@@ -79,8 +79,8 @@ page 50114 SWRessourceAssListPart
                 l_DBNo := Database::"SW Vehicles";
         end;
         l_RecRef.Open(l_DBNo);
-        g_AssRessourceNameCaption := l_RecRef.Field(2).Caption;
-        g_AssRessourceValueCaption := l_RecRef.Field(3).Caption;
+        g_AssResourceNameCaption := l_RecRef.Field(2).Caption;
+        g_AssResourceValueCaption := l_RecRef.Field(3).Caption;
         l_RecRef.Close();
     end;
 }

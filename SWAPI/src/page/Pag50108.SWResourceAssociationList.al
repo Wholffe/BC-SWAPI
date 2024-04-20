@@ -4,6 +4,9 @@ page 50108 "SW Resource Association List"
 {
     ApplicationArea = All;
     Caption = 'SW Resource Association List';
+    DeleteAllowed = false;
+    InsertAllowed = false;
+    ModifyAllowed = false;
     PageType = List;
     SourceTable = "SW Resource Association";
     UsageCategory = Lists;
@@ -23,16 +26,13 @@ page 50108 "SW Resource Association List"
                 field(AssociatedResourceType; Rec.AssociatedResourceType)
                 {
                 }
-                field(AssociatedResourceValue; Rec.AssociatedResourceUrl)
+                field(AssResourceID; Rec.AssResourceID)
                 {
                 }
-                field(AssRessourceID; Rec.AssRessourceID)
+                field(AssResourceName; Rec.AssResourceName)
                 {
                 }
-                field(AssRessourceName; Rec.AssRessourceName)
-                {
-                }
-                field(AssRessourceValue; Rec.AssRessourceValue)
+                field(AssResourceValue; Rec.AssResourceValue)
                 {
                 }
             }

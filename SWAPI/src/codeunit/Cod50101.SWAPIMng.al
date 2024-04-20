@@ -9,7 +9,7 @@ codeunit 50101 "SWAPI Mng"
 
     procedure DrilldownPage(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types")
     var
-        l_RessourceAss: Record "SW Resource Association";
+        l_ResourceAss: Record "SW Resource Association";
         l_RecRef: RecordRef;
         l_FieldRef: FieldRef;
         l_PageNo: Integer;
@@ -61,7 +61,7 @@ codeunit 50101 "SWAPI Mng"
         l_CurrID := 1;
         while l_CurrID <= l_MaxID do begin
             l_Dialog.Update(2, l_CurrID);
-            if not RessourceWithCurrentIDExist(p_Resource, l_CurrID) then begin
+            if not ResourceWithCurrentIDExist(p_Resource, l_CurrID) then begin
                 l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrID);
                 l_JObject := GetJObjectFromUrl(l_Url);
                 if not (l_JObject.Keys().Count = 0) then
@@ -243,18 +243,18 @@ codeunit 50101 "SWAPI Mng"
 
     procedure GetAssociationFilter(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types"): Text
     var
-        l_RessourceAss: Record "SW Resource Association";
+        l_ResourceAss: Record "SW Resource Association";
         l_Filter: Text;
     begin
-        l_RessourceAss.Reset();
-        l_RessourceAss.SetRange(ResourceType, p_ResourceType);
-        l_RessourceAss.SetRange(ResourceID, p_ID);
-        l_RessourceAss.SetRange(AssociatedResourceType, p_AssociatedResourceType);
-        if not l_RessourceAss.FindSet() then
+        l_ResourceAss.Reset();
+        l_ResourceAss.SetRange(ResourceType, p_ResourceType);
+        l_ResourceAss.SetRange(ResourceID, p_ID);
+        l_ResourceAss.SetRange(AssociatedResourceType, p_AssociatedResourceType);
+        if not l_ResourceAss.FindSet() then
             exit;
         repeat
-            l_Filter := StrSubstNo('%1|%2', l_RessourceAss.AssRessourceID, l_Filter)
-        until l_RessourceAss.Next() = 0;
+            l_Filter := StrSubstNo('%1|%2', l_ResourceAss.AssResourceID, l_Filter)
+        until l_ResourceAss.Next() = 0;
         l_Filter := l_Filter.TrimEnd('|');
         exit(l_Filter)
     end;
@@ -349,7 +349,7 @@ codeunit 50101 "SWAPI Mng"
         l_ResourceAss.Reset();
         if l_ResourceAss.FindSet() then
             repeat
-                l_ResourceAss.Validate(AssociatedResourceUrl);
+                l_ResourceAss.Validate(AssResourceID);
                 l_ResourceAss.Modify();
             until l_ResourceAss.Next() = 0;
     end;
@@ -385,18 +385,35 @@ codeunit 50101 "SWAPI Mng"
         end;
     end;
 
-    local procedure FillSingleResourceAssociation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssValue: Text[100])
+    local procedure FillSingleResourceAssociation(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssType: Enum "SW Resource Types"; p_AssUrl: Text[100])
     var
         l_ResourceAssociation: Record "SW Resource Association";
+        l_AssResourceID: Integer;
     begin
-        if not l_ResourceAssociation.Get(p_ResourceType, p_ID, p_AssType, p_AssValue) then begin
+        l_AssResourceID := GetAssIDFromAssUrl(p_AssUrl, p_AssType);
+        if not l_ResourceAssociation.Get(p_ResourceType, p_ID, p_AssType, l_AssResourceID) then begin
             l_ResourceAssociation.Init();
             l_ResourceAssociation.ResourceType := p_ResourceType;
             l_ResourceAssociation.ResourceID := p_ID;
             l_ResourceAssociation.AssociatedResourceType := p_AssType;
-            l_ResourceAssociation.Validate(AssociatedResourceUrl, p_AssValue);
+            l_ResourceAssociation.AssResourceID := l_AssResourceID;
             l_ResourceAssociation.Insert();
         end;
+    end;
+
+    local procedure GetAssIDFromAssUrl(p_AssUrl: Text; p_AssType: Enum "SW Resource Types"): Integer
+    var
+        l_AssResourceID: Integer;
+        l_RemoveTxt: Text;
+    begin
+        p_AssUrl := p_AssUrl.TrimEnd('/');
+        l_RemoveTxt := StrSubstNo('%1/%2/', g_APISetup.Endpoint, p_AssType);
+        p_AssUrl := p_AssUrl.Replace(l_RemoveTxt, '');
+
+        if Evaluate(l_AssResourceID, p_AssUrl) then
+            exit(l_AssResourceID)
+        else
+            Error('%1 is not a valid ID', l_AssResourceID);
     end;
 
     local procedure GetInnerJsonToken(p_JObject: JsonObject; p_Member: Text): JsonToken
@@ -478,7 +495,7 @@ codeunit 50101 "SWAPI Mng"
         exit(l_Result);
     end;
 
-    local procedure RessourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean
+    local procedure ResourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean
     var
         l_RecRef: RecordRef;
         l_IDFieldRef: FieldRef;

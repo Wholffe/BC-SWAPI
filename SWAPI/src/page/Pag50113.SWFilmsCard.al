@@ -34,8 +34,8 @@ page 50113 "SW Films Card"
                 Caption = 'Details';
                 field(OpeningCrawl; Rec.OpeningCrawl)
                 {
-                    MultiLine = true;
                     Importance = Additional;
+                    MultiLine = true;
                 }
                 field(Director; Rec.Director)
                 {
@@ -48,27 +48,27 @@ page 50113 "SW Films Card"
                 {
                 }
             }
-            part(SpeciesResourceAssPart; SWRessourceAssListPart)
+            part(SpeciesResourceAssPart; SWResourceAssListPart)
             {
                 Caption = 'Species';
                 SubPageLink = ResourceType = const("SW Resource Types"::films), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::species);
             }
-            part(StarshipsResourceAssPart; SWRessourceAssListPart)
+            part(StarshipsResourceAssPart; SWResourceAssListPart)
             {
                 Caption = 'Starships';
                 SubPageLink = ResourceType = const("SW Resource Types"::films), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::starships);
             }
-            part(VehiclesResourceAssPart; SWRessourceAssListPart)
+            part(VehiclesResourceAssPart; SWResourceAssListPart)
             {
                 Caption = 'Vehicles';
                 SubPageLink = ResourceType = const("SW Resource Types"::films), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::vehicles);
             }
-            part(CharactersResourceAssPart; SWRessourceAssListPart)
+            part(CharactersResourceAssPart; SWResourceAssListPart)
             {
                 Caption = 'Characters';
                 SubPageLink = ResourceType = const("SW Resource Types"::films), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::people);
             }
-            part(PlanetsResourceAssPart; SWRessourceAssListPart)
+            part(PlanetsResourceAssPart; SWResourceAssListPart)
             {
                 Caption = 'Planets';
                 SubPageLink = ResourceType = const("SW Resource Types"::films), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::planets);

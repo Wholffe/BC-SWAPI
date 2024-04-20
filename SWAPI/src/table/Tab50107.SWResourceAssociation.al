@@ -17,50 +17,41 @@ table 50107 "SW Resource Association"
         {
             Caption = 'Associated Resource Type';
         }
-        field(4; AssociatedResourceUrl; Text[100])
+        field(5; AssResourceID; Integer)
         {
-            Caption = 'Associated Resource Url';
+            Caption = 'Associated Resource ID';
             trigger OnValidate()
             var
                 l_FieldList: Record Field;
                 l_APIMng: Codeunit "SWAPI Mng";
                 l_RecRef: RecordRef;
-                l_UrlRef: FieldRef;
+                l_IDRef: FieldRef;
                 l_FieldNo: Integer;
                 l_TableNo: Integer;
             begin
                 l_TableNo := l_APIMng.GetRecRefTableNoFromResourceEnum(Rec.AssociatedResourceType);
-                l_FieldList.SetRange(TableNo, l_TableNo);
-                l_FieldList.SetRange(FieldName, 'Url');
-                l_FieldList.FindFirst();
-                l_FieldNo := l_FieldList."No.";
                 l_RecRef.Open(l_TableNo);
-                l_UrlRef := l_RecRef.Field(l_FieldNo);
-                l_UrlRef.SetRange(Rec.AssociatedResourceUrl);
+                l_IDRef := l_RecRef.Field(1);
+                l_IDRef.SetRange(Rec.AssResourceID);
                 if l_RecRef.FindFirst() then begin
-                    AssRessourceID := l_RecRef.Field(1).Value;
-                    AssRessourceName := l_RecRef.Field(2).Value;
-                    AssRessourceValue := l_RecRef.Field(3).Value;
+                    AssResourceName := l_RecRef.Field(2).Value;
+                    AssResourceValue := l_RecRef.Field(3).Value;
                 end;
                 l_RecRef.Close();
             end;
         }
-        field(5; AssRessourceID; Integer)
+        field(6; AssResourceName; Text[100])
         {
-            Caption = 'Associated Ressource ID';
+            Caption = 'Associated Resource Name';
         }
-        field(6; AssRessourceName; Text[100])
+        field(7; AssResourceValue; Text[100])
         {
-            Caption = 'Associated Ressource Name';
-        }
-        field(7; AssRessourceValue; Text[100])
-        {
-            Caption = 'Associated Ressource Value';
+            Caption = 'Associated Resource Value';
         }
     }
     keys
     {
-        key(PK; ResourceType, ResourceID, AssociatedResourceType, AssociatedResourceUrl)
+        key(PK; ResourceType, ResourceID, AssociatedResourceType, AssResourceID)
         {
             Clustered = true;
         }
