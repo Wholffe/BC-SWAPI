@@ -4,11 +4,11 @@ page 50104 "SW Planets List"
 {
     ApplicationArea = All;
     Caption = 'SW Planets List';
+    CardPageId = 50116;
+    Editable = false;
     PageType = List;
     SourceTable = "SW Planets";
     UsageCategory = Lists;
-    Editable = false;
-    CardPageId = 50116;
 
     layout
     {

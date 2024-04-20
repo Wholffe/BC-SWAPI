@@ -4,11 +4,11 @@ page 50106 "SW Starships List"
 {
     ApplicationArea = All;
     Caption = 'SW Starships List';
+    CardPageId = 50118;
+    Editable = false;
     PageType = List;
     SourceTable = "SW Starships";
     UsageCategory = Lists;
-    Editable = false;
-    CardPageId = 50118;
 
     layout
     {

@@ -4,11 +4,11 @@ page 50105 "SW Species List"
 {
     ApplicationArea = All;
     Caption = 'SW Species List';
+    CardPageId = 50117;
+    Editable = false;
     PageType = List;
     SourceTable = "SW Species";
     UsageCategory = Lists;
-    Editable = false;
-    CardPageId = 50117;
 
     layout
     {

@@ -82,10 +82,11 @@ page 50114 "SW Films Card"
                 }
                 field(Created; Rec.Created)
                 {
-
+                    Importance = Additional;
                 }
                 field(Edited; Rec.Edited)
                 {
+                    Importance = Additional;
                 }
             }
         }

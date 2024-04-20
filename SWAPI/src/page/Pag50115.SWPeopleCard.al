@@ -18,20 +18,23 @@ page 50115 "SW People Card"
 
                 field(ID; Rec.ID)
                 {
+                    Visible = false;
                 }
                 field(Name; Rec.Name)
+                {
+                    Importance = Promoted;
+                }
+                field(BirthYear; Rec.BirthYear)
+                {
+                }
+                field(Gender; Rec.Gender)
                 {
                 }
             }
             group(Details)
             {
-                field(BirthYear; Rec.BirthYear)
-                {
-                }
+
                 field(EyeColor; Rec.EyeColor)
-                {
-                }
-                field(Gender; Rec.Gender)
                 {
                 }
                 field(HairColor; Rec.HairColor)
@@ -80,10 +83,11 @@ page 50115 "SW People Card"
                 }
                 field(Created; Rec.Created)
                 {
-
+                    Importance = Additional;
                 }
                 field(Edited; Rec.Edited)
                 {
+                    Importance = Additional;
                 }
             }
         }

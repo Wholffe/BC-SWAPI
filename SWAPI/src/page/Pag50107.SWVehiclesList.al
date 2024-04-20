@@ -4,11 +4,11 @@ page 50107 "SW Vehicles List"
 {
     ApplicationArea = All;
     Caption = 'SW Vehicles List';
+    CardPageId = 50119;
+    Editable = false;
     PageType = List;
     SourceTable = "SW Vehicles";
     UsageCategory = Lists;
-    Editable = false;
-    CardPageId = 50119;
 
     layout
     {

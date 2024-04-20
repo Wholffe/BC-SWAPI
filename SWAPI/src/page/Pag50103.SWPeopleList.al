@@ -4,11 +4,11 @@ page 50103 "SW People List"
 {
     ApplicationArea = All;
     Caption = 'SW People List';
+    CardPageId = 50115;
+    Editable = false;
     PageType = List;
     SourceTable = "SW People";
     UsageCategory = Lists;
-    Editable = false;
-    CardPageId = 50115;
 
     layout
     {

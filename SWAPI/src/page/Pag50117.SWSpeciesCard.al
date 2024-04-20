@@ -17,52 +17,45 @@ page 50117 "SW Species Card"
 
                 field(ID; Rec.ID)
                 {
-                    ToolTip = 'Specifies the value of the ID field.';
+                    Visible = false;
                 }
                 field(Name; Rec.Name)
                 {
-                    ToolTip = 'Specifies the value of the Name field.';
+                    Importance = Promoted;
+                }
+                field(Classification; Rec.Classification)
+                {
                 }
             }
             group(Details)
             {
                 Caption = 'Details';
 
-                field(Classification; Rec.Classification)
-                {
-                    ToolTip = 'Specifies the value of the Classification field.';
-                }
                 field(Designation; Rec.Designation)
                 {
-                    ToolTip = 'Specifies the value of the Designation field.';
                 }
                 field(AverageHeight; Rec.AverageHeight)
                 {
-                    ToolTip = 'Specifies the value of the Average height field.';
                 }
                 field(AverageLifeSpan; Rec.AverageLifeSpan)
                 {
-                    ToolTip = 'Specifies the value of the Average life span field.';
                 }
                 field(EyeColor; Rec.EyeColor)
                 {
-                    ToolTip = 'Specifies the value of the Eye color field.';
                 }
                 field(HairColors; Rec.HairColors)
                 {
-                    ToolTip = 'Specifies the value of the Hair colors field.';
                 }
                 field(SkinColors; Rec.SkinColors)
                 {
-                    ToolTip = 'Specifies the value of the Skin colors field.';
                 }
                 field(Language; Rec.Language)
                 {
-                    ToolTip = 'Specifies the value of the Language field.';
+                    Importance = Promoted;
                 }
                 field(Homeworld; Rec.Homeworld)
                 {
-                    ToolTip = 'Specifies the value of the Homeworld field.';
+                    Importance = Promoted;
                 }
             }
             part(PeopleResourceAssPart; SWResourceAssListPart)
@@ -81,15 +74,14 @@ page 50117 "SW Species Card"
 
                 field(Url; Rec.Url)
                 {
-                    ToolTip = 'Specifies the value of the Url field.';
                 }
                 field(Created; Rec.Created)
                 {
-                    ToolTip = 'Specifies the value of the Created field.';
+                    Importance = Additional;
                 }
                 field(Edited; Rec.Edited)
                 {
-                    ToolTip = 'Specifies the value of the Edited field.';
+                    Importance = Additional;
                 }
             }
         }
