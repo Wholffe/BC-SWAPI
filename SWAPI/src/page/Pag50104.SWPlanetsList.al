@@ -1,12 +1,14 @@
 namespace SWAPI.SWAPI;
 
-page 50106 "SW Species List"
+page 50104 "SW Planets List"
 {
     ApplicationArea = All;
-    Caption = 'SW Species List';
+    Caption = 'SW Planets List';
     PageType = List;
-    SourceTable = "SW Species";
+    SourceTable = "SW Planets";
     UsageCategory = Lists;
+    Editable = false;
+    CardPageId = 50116;
 
     layout
     {
@@ -20,53 +22,42 @@ page 50106 "SW Species List"
                 field(Name; Rec.Name)
                 {
                 }
-                field(Classification; Rec.Classification)
+                field(Diameter; Rec.Diameter)
                 {
                 }
-                field(Designation; Rec.Designation)
+                field(RotationPeriod; Rec.RotationPeriod)
                 {
                 }
-                field(AverageHeight; Rec.AverageHeight)
+                field(OrbitalPeriod; Rec.OrbitalPeriod)
                 {
                 }
-                field(AverageLifeSpan; Rec.AverageLifeSpan)
+                field(Gravity; Rec.Gravity)
                 {
                 }
-                field(EyeColor; Rec.EyeColor)
+                field(Population; Rec.Population)
                 {
                 }
-                field(HairColors; Rec.HairColors)
+                field(Climate; Rec.Climate)
                 {
                 }
-                field(SkinColors; Rec.SkinColors)
+                field(Terrain; Rec.Terrain)
                 {
                 }
-                field(Language; Rec.Language)
+                field(SurfaceWater; Rec.SurfaceWater)
                 {
                 }
-                field(Homeworld; Rec.Homeworld)
-                {
-                    trigger OnDrillDown()
-                    var
-                        l_Planets: Record "SW Planets";
-                    begin
-                        l_Planets.SetRange(Name, Rec.Homeworld);
-                        if l_Planets.FindSet() then
-                            Page.Run(Page::"SW Planets List", l_Planets);
-                    end;
-                }
-                field(People; Rec.People)
+                field(Residents; Rec.Residents)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::species, Rec.ID, Enum::"SW Resource Types"::people);
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::planets, Rec.ID, Enum::"SW Resource Types"::people);
                     end;
                 }
                 field(Films; Rec.Films)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::species, Rec.ID, Enum::"SW Resource Types"::films);
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::planets, Rec.ID, Enum::"SW Resource Types"::films);
                     end;
                 }
                 field(Url; Rec.Url)
@@ -85,16 +76,16 @@ page 50106 "SW Species List"
     {
         area(Processing)
         {
-            action(FillSWSpecies)
+            action(FillSWPlanets)
             {
                 ApplicationArea = All;
-                Caption = 'Fill SW Species';
+                Caption = 'Fill SW Planets';
 
                 trigger OnAction()
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
+                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets);
                 end;
             }
         }

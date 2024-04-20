@@ -1,6 +1,6 @@
 namespace SWAPI.SWAPI;
 
-page 50113 "SW Films Card"
+page 50114 "SW Films Card"
 {
     ApplicationArea = All;
     Caption = 'SW Films Card';
@@ -72,6 +72,21 @@ page 50113 "SW Films Card"
             {
                 Caption = 'Planets';
                 SubPageLink = ResourceType = const("SW Resource Types"::films), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::planets);
+            }
+            group(Meta)
+            {
+                Caption = 'Meta';
+
+                field(Url; Rec.Url)
+                {
+                }
+                field(Created; Rec.Created)
+                {
+
+                }
+                field(Edited; Rec.Edited)
+                {
+                }
             }
         }
     }

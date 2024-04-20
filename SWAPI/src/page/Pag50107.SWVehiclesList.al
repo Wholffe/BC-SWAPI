@@ -1,12 +1,14 @@
 namespace SWAPI.SWAPI;
 
-page 50105 "SW Vehicles List"
+page 50107 "SW Vehicles List"
 {
     ApplicationArea = All;
     Caption = 'SW Vehicles List';
     PageType = List;
     SourceTable = "SW Vehicles";
     UsageCategory = Lists;
+    Editable = false;
+    CardPageId = 50119;
 
     layout
     {
@@ -50,7 +52,7 @@ page 50105 "SW Vehicles List"
                 field(Consumables; Rec.Consumables)
                 {
                 }
-                field(Film; Rec.Film)
+                field(Films; Rec.Films)
                 {
                     trigger OnDrillDown()
                     begin

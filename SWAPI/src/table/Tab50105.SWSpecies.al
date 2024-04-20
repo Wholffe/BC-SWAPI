@@ -91,16 +91,19 @@ table 50105 "SW Species"
         field(14; Url; Text[100])
         {
             Caption = 'Url';
+            Editable = false;
             ToolTip = 'The hypermedia URL of this resource.';
         }
         field(15; Created; DateTime)
         {
             Caption = 'Created';
+            Editable = false;
             ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
         }
         field(16; Edited; DateTime)
         {
             Caption = 'Edited';
+            Editable = false;
             ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }

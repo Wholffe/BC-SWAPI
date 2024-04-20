@@ -1,12 +1,14 @@
 namespace SWAPI.SWAPI;
 
-page 50102 "SW People List"
+page 50105 "SW Species List"
 {
     ApplicationArea = All;
-    Caption = 'SW People List';
+    Caption = 'SW Species List';
     PageType = List;
-    SourceTable = "SW People";
+    SourceTable = "SW Species";
     UsageCategory = Lists;
+    Editable = false;
+    CardPageId = 50117;
 
     layout
     {
@@ -20,28 +22,31 @@ page 50102 "SW People List"
                 field(Name; Rec.Name)
                 {
                 }
-                field("BirthYear "; Rec.BirthYear)
+                field(Classification; Rec.Classification)
+                {
+                }
+                field(Designation; Rec.Designation)
+                {
+                }
+                field(AverageHeight; Rec.AverageHeight)
+                {
+                }
+                field(AverageLifeSpan; Rec.AverageLifeSpan)
                 {
                 }
                 field(EyeColor; Rec.EyeColor)
                 {
                 }
-                field(Gender; Rec.Gender)
+                field(HairColors; Rec.HairColors)
                 {
                 }
-                field("HairColor "; Rec.HairColor)
+                field(SkinColors; Rec.SkinColors)
                 {
                 }
-                field(Height; Rec.Height)
+                field(Language; Rec.Language)
                 {
                 }
-                field(Mass; Rec.Mass)
-                {
-                }
-                field("SkinColor "; Rec.SkinColor)
-                {
-                }
-                field("Homeworld "; Rec.Homeworld)
+                field(Homeworld; Rec.Homeworld)
                 {
                     trigger OnDrillDown()
                     var
@@ -52,33 +57,18 @@ page 50102 "SW People List"
                             Page.Run(Page::"SW Planets List", l_Planets);
                     end;
                 }
+                field(People; Rec.People)
+                {
+                    trigger OnDrillDown()
+                    begin
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::species, Rec.ID, Enum::"SW Resource Types"::people);
+                    end;
+                }
                 field(Films; Rec.Films)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::films);
-                    end;
-                }
-                field(Species; Rec.Species)
-                {
-                    trigger OnDrillDown()
-                    begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::species);
-                    end;
-                }
-                field(Starships; Rec.Starships)
-                {
-                    trigger OnDrillDown()
-                    begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::starships);
-                    end;
-                }
-                field(Vehicles; Rec.Vehicles)
-                {
-                    DrillDownPageId = "SW Resource Association List";
-                    trigger OnDrillDown()
-                    begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::vehicles);
+                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::species, Rec.ID, Enum::"SW Resource Types"::films);
                     end;
                 }
                 field(Url; Rec.Url)
@@ -97,16 +87,16 @@ page 50102 "SW People List"
     {
         area(Processing)
         {
-            action(FillSWPeople)
+            action(FillSWSpecies)
             {
                 ApplicationArea = All;
-                Caption = 'Fill SW People';
+                Caption = 'Fill SW Species';
 
                 trigger OnAction()
                 var
                     l_SWAPIMng: Codeunit "SWAPI Mng";
                 begin
-                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
+                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
                 end;
             }
         }

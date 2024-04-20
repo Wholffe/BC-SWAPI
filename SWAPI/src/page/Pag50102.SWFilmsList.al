@@ -1,10 +1,10 @@
 namespace SWAPI.SWAPI;
 
-page 50103 "SW Films List"
+page 50102 "SW Films List"
 {
     ApplicationArea = All;
     Caption = 'SW Films List';
-    CardPageId = 50113;
+    CardPageId = 50114;
     Editable = false;
     PageType = List;
     SourceTable = "SW Films";

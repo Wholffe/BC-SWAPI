@@ -72,10 +72,10 @@ table 50104 "SW Vehicles"
             Caption = 'Consumables';
             ToolTip = 'The maximum length of time that this vehicle can provide consumables for its entire crew without having to resupply.';
         }
-        field(13; Film; Integer)
+        field(13; Films; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(vehicles), ResourceID = field(ID), AssociatedResourceType = const(films)));
-            Caption = 'Film';
+            Caption = 'Films';
             Editable = false;
             FieldClass = FlowField;
             ToolTip = 'The number of films that this vehicle has appeared in.';
@@ -91,16 +91,19 @@ table 50104 "SW Vehicles"
         field(15; Url; Text[100])
         {
             Caption = 'Url';
+            Editable = false;
             ToolTip = 'The hypermedia URL of this resource.';
         }
         field(16; Created; DateTime)
         {
             Caption = 'Created';
+            Editable = false;
             ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
         }
         field(17; Edited; DateTime)
         {
             Caption = 'Edited';
+            Editable = false;
             ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }

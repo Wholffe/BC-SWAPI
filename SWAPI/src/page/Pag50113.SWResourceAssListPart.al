@@ -1,6 +1,6 @@
 namespace SWAPI.SWAPI;
 
-page 50114 SWResourceAssListPart
+page 50113 SWResourceAssListPart
 {
     ApplicationArea = All;
     Caption = 'Resource Association Part';

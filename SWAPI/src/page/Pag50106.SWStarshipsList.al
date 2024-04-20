@@ -1,12 +1,14 @@
 namespace SWAPI.SWAPI;
 
-page 50104 "SW Starships List"
+page 50106 "SW Starships List"
 {
     ApplicationArea = All;
     Caption = 'SW Starships List';
     PageType = List;
     SourceTable = "SW Starships";
     UsageCategory = Lists;
+    Editable = false;
+    CardPageId = 50118;
 
     layout
     {

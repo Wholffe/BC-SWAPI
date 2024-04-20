@@ -104,16 +104,19 @@ table 50103 "SW Starships"
         field(17; Url; Text[100])
         {
             Caption = 'Url';
+            Editable = false;
             ToolTip = 'The hypermedia URL of this resource.';
         }
         field(18; Created; DateTime)
         {
             Caption = 'Created';
+            Editable = false;
             ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
         }
         field(19; Edited; DateTime)
         {
             Caption = 'Edited';
+            Editable = false;
             ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }
