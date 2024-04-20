@@ -18,35 +18,27 @@ page 50103 "SW Films List"
             {
                 field(ID; Rec.ID)
                 {
-                    ToolTip = 'Specifies the value of the ID field.';
                 }
                 field(Title; Rec.Title)
                 {
-                    ToolTip = 'Specifies the value of the Title field.';
                 }
                 field(EpisodeID; Rec.EpisodeID)
                 {
-                    ToolTip = 'Specifies the value of the Episode ID field.';
                 }
                 field(OpeningCrawl; Rec.OpeningCrawl)
                 {
-                    ToolTip = 'Specifies the value of the Opening crawl field.';
                 }
                 field(Director; Rec.Director)
                 {
-                    ToolTip = 'Specifies the value of the Director field.';
                 }
                 field(Producer; Rec.Producer)
                 {
-                    ToolTip = 'Specifies the value of the Producer field.';
                 }
                 field(ReleaseDate; Rec.ReleaseDate)
                 {
-                    ToolTip = 'Specifies the value of the Release date field.';
                 }
                 field(Species; Rec.Species)
                 {
-                    ToolTip = 'Specifies the value of the Species field.';
                     trigger OnDrillDown()
                     begin
                         g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::species);
@@ -54,7 +46,6 @@ page 50103 "SW Films List"
                 }
                 field(Starships; Rec.Starships)
                 {
-                    ToolTip = 'Specifies the value of the Starships field.';
                     trigger OnDrillDown()
                     begin
                         g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::starships);
@@ -62,7 +53,6 @@ page 50103 "SW Films List"
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
-                    ToolTip = 'Specifies the value of the Vehicles field.';
                     trigger OnDrillDown()
                     begin
                         g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::vehicles);
@@ -71,7 +61,6 @@ page 50103 "SW Films List"
                 }
                 field(Characters; Rec.Characters)
                 {
-                    ToolTip = 'Specifies the value of the Characters field.';
                     trigger OnDrillDown()
                     begin
                         g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::people);
@@ -79,7 +68,6 @@ page 50103 "SW Films List"
                 }
                 field(Planets; Rec.Planets)
                 {
-                    ToolTip = 'Specifies the value of the Planets field.';
                     trigger OnDrillDown()
                     begin
                         g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::planets);
@@ -87,15 +75,12 @@ page 50103 "SW Films List"
                 }
                 field(Url; Rec.Url)
                 {
-                    ToolTip = 'Specifies the value of the Url field.';
                 }
                 field(Created; Rec.Created)
                 {
-                    ToolTip = 'Specifies the value of the Created field.';
                 }
                 field(Edited; Rec.Edited)
                 {
-                    ToolTip = 'Specifies the value of the Edited field.';
                 }
             }
         }

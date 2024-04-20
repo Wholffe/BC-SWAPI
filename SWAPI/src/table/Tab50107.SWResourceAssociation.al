@@ -17,7 +17,7 @@ table 50107 "SW Resource Association"
         {
             Caption = 'Associated Resource Type';
         }
-        field(5; AssResourceID; Integer)
+        field(4; AssResourceID; Integer)
         {
             Caption = 'Associated Resource ID';
             trigger OnValidate()
@@ -40,11 +40,11 @@ table 50107 "SW Resource Association"
                 l_RecRef.Close();
             end;
         }
-        field(6; AssResourceName; Text[100])
+        field(5; AssResourceName; Text[100])
         {
             Caption = 'Associated Resource Name';
         }
-        field(7; AssResourceValue; Text[100])
+        field(6; AssResourceValue; Text[100])
         {
             Caption = 'Associated Resource Value';
         }

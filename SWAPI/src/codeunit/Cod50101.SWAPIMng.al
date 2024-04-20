@@ -172,7 +172,7 @@ codeunit 50101 "SWAPI Mng"
             l_Species.HairColors := GetJsonTextField(p_JObject, 'hair_colors');
             l_Species.SkinColors := GetJsonTextField(p_JObject, 'skin_colors');
             l_Species.Language := GetJsonTextField(p_JObject, 'language');
-            l_Species.Homeworld := GetJsonTextField(p_JObject, 'homeworld');
+            l_Species.Validate(Homeworld, GetJsonTextField(p_JObject, 'homeworld'));
             l_Species.Url := GetJsonTextField(p_JObject, 'url');
             l_Species.Created := GetJsonDateTimeField(p_JObject, 'created');
             l_Species.Edited := GetJsonDateTimeField(p_JObject, 'edited');
@@ -376,12 +376,12 @@ codeunit 50101 "SWAPI Mng"
     var
         l_InnerJsonObject: JsonToken;
         l_JToken: JsonToken;
-        l_AssValue: Text[100];
+        l_AssUrl: Text[100];
     begin
         l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
         foreach l_JToken in l_InnerJsonObject.AsArray() do begin
-            l_AssValue := l_JToken.AsValue().AsText();
-            FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssValue);
+            l_AssUrl := l_JToken.AsValue().AsText();
+            FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssUrl);
         end;
     end;
 
@@ -490,7 +490,7 @@ codeunit 50101 "SWAPI Mng"
         if l_JToken.AsValue().IsNull() then
             exit('');
         l_Result := l_JToken.AsValue().AsText();
-        if l_Result in ['unknown', 'n/a'] then
+        if l_Result in ['unknown'] then
             exit('');
         exit(l_Result);
     end;

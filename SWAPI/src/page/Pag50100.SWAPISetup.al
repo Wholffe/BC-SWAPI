@@ -20,8 +20,6 @@ page 50100 SWAPISetup
 
                 field(endpoint; Rec.Endpoint)
                 {
-                    Caption = 'Endpoint';
-                    ToolTip = 'Specifies the value of the endpoint URL field.';
                 }
             }
         }
@@ -99,6 +97,17 @@ page 50100 SWAPISetup
                     begin
                         if Confirm(l_ConfirmMsg) then
                             g_APISetupMng.ClearAllSWData();
+                    end;
+                }
+                action(DeleteSingleResource)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Delete Single Resource';
+                    Image = Delete;
+
+                    trigger OnAction()
+                    begin
+                        g_APISetupMng.DeleteSingleResource();
                     end;
                 }
             }

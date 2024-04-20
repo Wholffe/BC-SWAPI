@@ -11,8 +11,9 @@ table 50100 SWAPISetup
         }
         field(2; Endpoint; Text[100])
         {
-            Caption = 'RequestURL';
+            Caption = 'Endpoint';
             InitValue = 'https://swapi.dev/api';
+            ToolTip = 'The endpoint URL requests were taken from.';
 
             trigger OnValidate()
             begin
