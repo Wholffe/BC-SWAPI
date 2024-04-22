@@ -62,7 +62,7 @@ codeunit 50101 "SWAPI Mng"
         while l_CurrID <= l_MaxID do begin
             l_Dialog.Update(2, l_CurrID);
             if not ResourceWithCurrentIDExist(p_Resource, l_CurrID) then begin
-                l_Url := StrSubstNo('%1/%2', l_ResourceRouteUrl, l_CurrID);
+                l_Url := StrSubstNo('%1%2', l_ResourceRouteUrl, l_CurrID);
                 l_JObject := GetJObjectFromUrl(l_Url);
                 if not (l_JObject.Keys().Count = 0) then
                     StartFillJObjectContentInSWResource(p_Resource, l_CurrID, l_JObject)
@@ -262,9 +262,18 @@ codeunit 50101 "SWAPI Mng"
     procedure GetCategoryCount(p_Url: Text): Integer
     var
         l_JObject: JsonObject;
+        l_Count: Integer;
+        l_TotalCountIdentifier: List of [Text];
+        l_Element: Text;
     begin
+        l_TotalCountIdentifier.Add('count');
+        l_TotalCountIdentifier.Add('total_records');
         l_JObject := GetJObjectFromUrl(p_Url);
-        exit(GetJsonIntegerField(l_JObject, 'count'))
+        foreach l_Element in l_TotalCountIdentifier do begin
+            l_Count := GetJsonIntegerField(l_JObject, l_Element);
+            if l_Count <> 0 then
+                exit(l_Count);
+        end;
     end;
 
     procedure GetEnumFromText(p_Text: Text): Enum "SW Resource Types"
@@ -330,6 +339,7 @@ codeunit 50101 "SWAPI Mng"
     var
         l_SWAPISetup: Record SWAPISetup;
     begin
+        l_SWAPISetup.FindFirst();
         exit(StrSubstNo('%1/%2/', l_SWAPISetup.Endpoint, p_ResourceType))
     end;
 
@@ -374,12 +384,16 @@ codeunit 50101 "SWAPI Mng"
 
     local procedure FillResourceAssociation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
     var
-        l_InnerJsonObject: JsonToken;
+        l_InnerJsonToken: JsonToken;
+        l_InnerJsonTokenContent: Text;
         l_JToken: JsonToken;
         l_AssUrl: Text[100];
     begin
-        l_InnerJsonObject := GetInnerJsonToken(p_JObject, p_Member);
-        foreach l_JToken in l_InnerJsonObject.AsArray() do begin
+        l_InnerJsonToken := GetInnerJsonToken(p_JObject, p_Member);
+        l_InnerJsonToken.WriteTo(l_InnerJsonTokenContent);
+        if l_InnerJsonTokenContent = '' then
+            exit;
+        foreach l_JToken in l_InnerJsonToken.AsArray() do begin
             l_AssUrl := l_JToken.AsValue().AsText();
             FillSingleResourceAssociation(p_ResourceType, p_ID, GetEnumFromText(p_Member), l_AssUrl);
         end;
@@ -407,6 +421,7 @@ codeunit 50101 "SWAPI Mng"
         l_RemoveTxt: Text;
     begin
         p_AssUrl := p_AssUrl.TrimEnd('/');
+        g_APISetup.FindFirst();
         l_RemoveTxt := StrSubstNo('%1/%2/', g_APISetup.Endpoint, p_AssType);
         p_AssUrl := p_AssUrl.Replace(l_RemoveTxt, '');
 

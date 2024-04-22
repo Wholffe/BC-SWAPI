@@ -99,6 +99,7 @@ codeunit 50100 "SWAPI Setup Mng"
         l_Client: HttpClient;
         l_Response: HttpResponseMessage;
     begin
+        l_SWAPISetup.FindFirst();
         if not l_Client.Get(l_SWAPISetup.Endpoint, l_Response) then
             Error('Connection failed, %1', l_Response.HttpStatusCode);
 
