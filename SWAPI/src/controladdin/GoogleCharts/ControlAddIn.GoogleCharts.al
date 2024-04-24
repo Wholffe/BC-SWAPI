@@ -7,4 +7,5 @@ controladdin GoogleCharts
 
     event ControlReady();
     procedure DrawBarChart(p_Data: JsonArray);
+    procedure DrawCircleChart(p_Data: JsonArray);
 }

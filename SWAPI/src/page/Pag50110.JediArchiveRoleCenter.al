@@ -11,21 +11,27 @@ page 50110 JediArchiveRoleCenter
     {
         area(RoleCenter)
         {
-            group(Group1)
+            part(Part1; SWHeadlineRCJedi)
             {
-                part(Part1; SWHeadlineRCJedi)
-                {
-                    ApplicationArea = All;
-                }
-                part(Part2; SWResourceEntriesPart)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Resources';
-                }
+                ApplicationArea = All;
+            }
+            part(Part2; SWResourceEntriesPart)
+            {
+                ApplicationArea = All;
+                Caption = 'Resources';
+            }
+            group(Chart)
+            {
+                Caption = 'Statistic';
                 part(Part3; ResourceEntriesChart)
                 {
                     ApplicationArea = All;
-                    Caption = 'Resource entry graph';
+                    Caption = 'Distribution of resources';
+                }
+                part(Part4; FilmDistributionChart)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Distribution of resources by movie';
                 }
             }
         }
@@ -45,6 +51,15 @@ page 50110 JediArchiveRoleCenter
                 ApplicationArea = All;
                 Caption = 'Resource Association';
                 RunObject = page "SW Resource Association List";
+            }
+        }
+        area(Processing)
+        {
+            action(ManageArchive)
+            {
+                ApplicationArea = All;
+                Caption = 'Manage Archive';
+                RunObject = page SWAPISetup;
             }
         }
     }

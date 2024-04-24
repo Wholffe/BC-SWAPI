@@ -55,6 +55,37 @@ codeunit 50102 SWChartsMng
         exit(l_JArray)
     end;
 
+    procedure GetFilmCircleChartParam(): JsonArray
+    var
+        l_InnerJArray: JsonArray;
+        l_JArray: JsonArray;
+        l_Films: Record "SW Films";
+        l_CurrentFilmID: Integer;
+    begin
+        l_InnerJArray.Add(g_FilmsL);
+        l_InnerJArray.Add(g_EntriesL);
+        l_JArray.Add(l_InnerJArray);
+        clear(l_InnerJArray);
+
+        for l_CurrentFilmID := 1 to l_Films.Count do begin
+            l_Films.Get(l_CurrentFilmID);
+            l_InnerJArray.Add(l_Films.Title);
+            l_InnerJArray.Add(GetNumberResourceAssFilm(l_CurrentFilmID));
+            l_JArray.Add(l_InnerJArray);
+            clear(l_InnerJArray);
+        end;
+        exit(l_JArray)
+    end;
+
+    procedure GetNumberResourceAssFilm(p_FilmNo: Integer): Integer
+    var
+        l_ResourceAss: Record "SW Resource Association";
+    begin
+        l_ResourceAss.SetRange(ResourceType, "SW Resource Types"::films);
+        l_ResourceAss.SetRange(ResourceID, p_FilmNo);
+        exit(l_ResourceAss.Count);
+    end;
+
     procedure GetSWFilmCount(): Integer
     var
         l_Films: Record "SW Films";
@@ -95,5 +126,12 @@ codeunit 50102 SWChartsMng
         l_Vehicles: Record "SW Vehicles";
     begin
         exit(l_Vehicles.Count)
+    end;
+
+    procedure GetResourceAssCount(): Integer
+    var
+        l_ResourceAss: Record "SW Resource Association";
+    begin
+        exit(l_ResourceAss.Count)
     end;
 }

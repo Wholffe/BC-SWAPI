@@ -1,4 +1,6 @@
 namespace SWAPI.SWAPI;
+using System.Reflection;
+using System.Environment.Configuration;
 
 page 50100 SWAPISetup
 {
@@ -178,6 +180,27 @@ page 50100 SWAPISetup
                 trigger OnAction()
                 begin
                     Page.Run(Page::"SW Vehicles List");
+                end;
+            }
+            action(JEDIPROFILE)
+            {
+                ApplicationArea = All;
+                Caption = 'JEDI PROFILE';
+                Image = Navigate;
+
+                trigger OnAction()
+                var
+                    l_AllProfile: Record "All Profile";
+                    l_Scope: Option;
+                    l_ProfileID: Code[30];
+                    l_AppID: Guid;
+                begin
+                    l_Scope := l_AllProfile.Scope::Tenant;
+                    l_AppID := '19634c52-6192-4152-b77f-d46543ad13c3';
+                    l_ProfileID := 'JEDIPROFILE';
+
+                    l_AllProfile.Get(l_Scope, l_AppID, l_ProfileID);
+                    Page.Run(Page::"Profile Card", l_AllProfile);
                 end;
             }
         }
