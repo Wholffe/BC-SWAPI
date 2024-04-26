@@ -191,9 +191,9 @@ page 50100 SWAPISetup
                 trigger OnAction()
                 var
                     l_AllProfile: Record "All Profile";
-                    l_Scope: Option;
                     l_ProfileID: Code[30];
                     l_AppID: Guid;
+                    l_Scope: Option;
                 begin
                     l_Scope := l_AllProfile.Scope::Tenant;
                     l_AppID := '19634c52-6192-4152-b77f-d46543ad13c3';

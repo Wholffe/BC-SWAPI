@@ -12,20 +12,37 @@ codeunit 50100 "SWAPI Setup Mng"
         g_Species: Record "SW Species";
         g_Starships: Record "SW Starships";
         g_Vehicles: Record "SW Vehicles";
-        g_APIMng: Codeunit "SWAPI Mng";
+        g_DataImportMng: Codeunit "SWAPI Data Import Mng";
+        g_JMng: Codeunit "SW Json Mng";
+        g_SWResourceHelper: Codeunit "SW Resource Type Helper";
+        g_APIMng: Codeunit "SW Utility Mng";
 
     procedure ClearAllSWData()
     var
         l_Notification: Notification;
         l_NotificationL: Label 'Sector is Clear.';
     begin
+        g_Films.Reset();
         g_Films.DeleteAll();
+
+        g_People.Reset();
         g_People.DeleteAll();
+
+        g_Planets.Reset();
         g_Planets.DeleteAll();
+
+        g_Species.Reset();
         g_Species.DeleteAll();
+
+        g_Starships.Reset();
         g_Starships.DeleteAll();
+
+        g_Vehicles.Reset();
         g_Vehicles.DeleteAll();
+
+        g_ResourceAss.Reset();
         g_ResourceAss.DeleteAll();
+
         l_Notification.Message(l_NotificationL);
         l_Notification.Send();
     end;
@@ -65,12 +82,12 @@ codeunit 50100 "SWAPI Setup Mng"
 
     procedure FillAllResources()
     begin
-        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
-        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets); //planets before people bec of people Homeworld Validate trigger
-        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
-        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
-        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
-        g_APIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
+        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
+        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets); //planets before people bec of people Homeworld Validate trigger
+        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
+        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
+        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
+        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
         g_APIMng.ValidateAllResourcesAss();
     end;
 
@@ -83,7 +100,7 @@ codeunit 50100 "SWAPI Setup Mng"
         l_Url: Text;
     begin
         l_Url := StrSubstNo('%1', p_Rec.Endpoint);
-        l_JObject := g_APIMng.GetJObjectFromUrl(l_Url);
+        l_JObject := g_JMng.GetJObjectFromUrl(l_Url);
         l_ContentTxt := StrSubstNo('%1', l_JObject);
         for l_ElementNo := 1 to 6 do begin
             l_ExpectedRootElement := GetExpectedRootContent(p_Rec, l_ElementNo);
@@ -117,8 +134,8 @@ codeunit 50100 "SWAPI Setup Mng"
     begin
         l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
         if l_ResourceDialog.RunModal() = Action::OK then begin
-            l_Url := g_APIMng.GetUrlFromEnum(l_ResourceDialog.GetResourceType());
-            l_Count := g_APIMng.GetCategoryCount(l_Url);
+            l_Url := g_SWResourceHelper.GetUrlFromEnum(l_ResourceDialog.GetResourceType());
+            l_Count := g_APIMng.GetCategoryCountFromUrl(l_Url);
             Message('Url: %1, Count: %2', l_Url, l_Count);
         end;
     end;

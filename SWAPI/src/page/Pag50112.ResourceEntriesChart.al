@@ -19,12 +19,12 @@ page 50112 ResourceEntriesChart
                 var
                     l_Data: JsonArray;
                 begin
-                    l_Data := g_ChartsMng.GetResourceEntriesChartParam();
+                    l_Data := g_DataStatisticsMng.GetResourceEntriesChartParam();
                     CurrPage.Chart.DrawBarChart(l_Data);
                 end;
             }
         }
     }
     var
-        g_ChartsMng: Codeunit SWChartsMng;
+        g_DataStatisticsMng: Codeunit "SW Data Statistics Mng";
 }

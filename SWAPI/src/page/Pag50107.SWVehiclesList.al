@@ -56,24 +56,27 @@ page 50107 "SW Vehicles List"
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::films);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::films);
                     end;
                 }
                 field(Pilots; Rec.Pilots)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::people);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::people);
                     end;
                 }
                 field(Url; Rec.Url)
                 {
+                    Visible = false;
                 }
                 field(Created; Rec.Created)
                 {
+                    Visible = false;
                 }
                 field(Edited; Rec.Edited)
                 {
+                    Visible = false;
                 }
             }
         }
@@ -89,13 +92,13 @@ page 50107 "SW Vehicles List"
 
                 trigger OnAction()
                 var
-                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                    l_DataImporter: Codeunit "SWAPI Data Import Mng";
                 begin
-                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
+                    l_DataImporter.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
                 end;
             }
         }
     }
     var
-        g_APIMng: Codeunit "SWAPI Mng";
+        g_PageMng: Codeunit "SW Page Mng";
 }

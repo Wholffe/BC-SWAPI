@@ -19,12 +19,12 @@ page 50120 FilmDistributionChart
                 var
                     l_Data: JsonArray;
                 begin
-                    l_Data := g_ChartsMng.GetFilmCircleChartParam();
+                    l_Data := g_DataStatisticsMng.GetFilmCircleChartParam();
                     CurrPage.Chart.DrawCircleChart(l_Data);
                 end;
             }
         }
     }
     var
-        g_ChartsMng: Codeunit SWChartsMng;
+        g_DataStatisticsMng: Codeunit "SW Data Statistics Mng";
 }

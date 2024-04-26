@@ -41,21 +41,21 @@ page 50102 "SW Films List"
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::species);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::species);
                     end;
                 }
                 field(Starships; Rec.Starships)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::starships);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::starships);
                     end;
                 }
                 field(Vehicles; Rec.Vehicles)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::vehicles);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::vehicles);
                     end;
 
                 }
@@ -63,24 +63,27 @@ page 50102 "SW Films List"
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::people);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::people);
                     end;
                 }
                 field(Planets; Rec.Planets)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::planets);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::films, Rec.ID, Enum::"SW Resource Types"::planets);
                     end;
                 }
                 field(Url; Rec.Url)
                 {
+                    Visible = false;
                 }
                 field(Created; Rec.Created)
                 {
+                    Visible = false;
                 }
                 field(Edited; Rec.Edited)
                 {
+                    Visible = false;
                 }
             }
         }
@@ -96,13 +99,13 @@ page 50102 "SW Films List"
 
                 trigger OnAction()
                 var
-                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                    l_DataImporter: Codeunit "SWAPI Data Import Mng";
                 begin
-                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
+                    l_DataImporter.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
                 end;
             }
         }
     }
     var
-        g_APIMng: Codeunit "SWAPI Mng";
+        g_PageMng: Codeunit "SW Page Mng";
 }

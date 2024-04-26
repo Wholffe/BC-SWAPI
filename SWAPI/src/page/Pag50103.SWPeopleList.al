@@ -58,21 +58,21 @@ page 50103 "SW People List"
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::films);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::films);
                     end;
                 }
                 field(Species; Rec.Species)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::species);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::species);
                     end;
                 }
                 field(Starships; Rec.Starships)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::starships);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::starships);
                     end;
                 }
                 field(Vehicles; Rec.Vehicles)
@@ -80,17 +80,20 @@ page 50103 "SW People List"
                     DrillDownPageId = "SW Resource Association List";
                     trigger OnDrillDown()
                     begin
-                        g_APIMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::vehicles);
+                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::vehicles);
                     end;
                 }
                 field(Url; Rec.Url)
                 {
+                    Visible = false;
                 }
                 field(Created; Rec.Created)
                 {
+                    Visible = false;
                 }
                 field(Edited; Rec.Edited)
                 {
+                    Visible = false;
                 }
             }
         }
@@ -106,13 +109,13 @@ page 50103 "SW People List"
 
                 trigger OnAction()
                 var
-                    l_SWAPIMng: Codeunit "SWAPI Mng";
+                    l_DataImporter: Codeunit "SWAPI Data Import Mng";
                 begin
-                    l_SWAPIMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
+                    l_DataImporter.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
                 end;
             }
         }
     }
     var
-        g_APIMng: Codeunit "SWAPI Mng";
+        g_PageMng: Codeunit "SW Page Mng";
 }

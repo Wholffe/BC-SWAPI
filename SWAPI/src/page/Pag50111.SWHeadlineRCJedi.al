@@ -34,9 +34,9 @@ page 50111 SWHeadlineRCJedi
     var
         g_GreetingTxt: Label 'Welcome to the Jedi Temple Archives.';
         g_JocastaTxt: Label 'If an item does not appear in our records, then it does not exist!';
+        g_PlanetEntriesNotFoundText: Label 'There are currently no entries about planet population.';
         g_PlanetKnownCounterText: Label 'There are currently %1 people on %2.';
         g_PlanetUnknownCounterText: Label 'The population number of %1 is currently unknown.';
-        g_PlanetEntriesNotFoundText: Label 'There are currently no entries about planet population.';
 
     local procedure GetRandomPlanetText(): Text
     var

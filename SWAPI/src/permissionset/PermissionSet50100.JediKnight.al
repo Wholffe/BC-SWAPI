@@ -18,12 +18,18 @@ permissionset 50100 "Jedi Knight"
         tabledata "SW Starships" = RIMD,
         table "SW Vehicles" = X,
         tabledata "SW Vehicles" = RIMD,
-        codeunit "SWAPI Mng" = X,
+        codeunit "SWAPI Data Import Mng" = X,
         codeunit "SWAPI Setup Mng" = X,
-        codeunit SWChartsMng = X,
+        codeunit "SW Data Statistics Mng" = X,
+        codeunit "SW Json Mng" = X,
+        codeunit "SW Page Mng" = X,
+        codeunit "SW Resource Type Helper" = X,
+        codeunit "SW Utility Mng" = X,
+        page FilmDistributionChart = X,
         page JediArchiveRoleCenter = X,
         page ResourceEntriesChart = X,
         page SWAPISetup = X,
+        page "SW Films Card" = X,
         page "SW Films List" = X,
         page SWHeadlineRCJedi = X,
         page "SW People Card" = X,
@@ -39,6 +45,5 @@ permissionset 50100 "Jedi Knight"
         page "SW Starships Card" = X,
         page "SW Starships List" = X,
         page "SW Vehicle Card" = X,
-        page "SW Vehicles List" = X,
-        page "SW Films Card" = X;
+        page "SW Vehicles List" = X;
 }

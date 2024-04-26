@@ -91,7 +91,4 @@ page 50114 "SW Films Card"
             }
         }
     }
-
-    var
-        g_APIMng: Codeunit "SWAPI Mng";
 }

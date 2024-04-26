@@ -49,9 +49,9 @@ page 50108 "SW Resource Association List"
 
                 trigger OnAction()
                 var
-                    l_APIMng: Codeunit "SWAPI Mng";
+                    l_UtilityMng: Codeunit "SW Utility Mng";
                 begin
-                    l_APIMng.ValidateAllResourcesAss();
+                    l_UtilityMng.ValidateAllResourcesAss();
                 end;
             }
         }

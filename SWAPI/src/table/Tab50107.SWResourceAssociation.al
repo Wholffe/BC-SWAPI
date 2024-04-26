@@ -23,13 +23,13 @@ table 50107 "SW Resource Association"
             trigger OnValidate()
             var
                 l_FieldList: Record Field;
-                l_APIMng: Codeunit "SWAPI Mng";
+                l_SWResourceHelper: Codeunit "SW Resource Type Helper";
                 l_RecRef: RecordRef;
                 l_IDRef: FieldRef;
                 l_FieldNo: Integer;
                 l_TableNo: Integer;
             begin
-                l_TableNo := l_APIMng.GetRecRefTableNoFromResourceEnum(Rec.AssociatedResourceType);
+                l_TableNo := l_SWResourceHelper.GetRecRefTableNoFromResourceEnum(Rec.AssociatedResourceType);
                 l_RecRef.Open(l_TableNo);
                 l_IDRef := l_RecRef.Field(1);
                 l_IDRef.SetRange(Rec.AssResourceID);

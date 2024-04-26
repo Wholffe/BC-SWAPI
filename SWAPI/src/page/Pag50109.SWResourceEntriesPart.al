@@ -22,14 +22,14 @@ page 50109 SWResourceEntriesPart
                 field(TotalEntries; GetTotalEntries())
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the total number of resource entries.';
                     Caption = 'Total Entries';
+                    ToolTip = 'Specifies the total number of resource entries.';
                 }
                 field(AverageLifeSpan; GetAverageLifeSpan())
                 {
                     ApplicationArea = Basic, Suite;
-                    ToolTip = 'Specifies the sum of your overdue payments to vendors.';
                     Caption = 'Average Life Span';
+                    ToolTip = 'Specifies the sum of your overdue payments to vendors.';
 
                     trigger OnDrillDown()
                     var
@@ -43,8 +43,8 @@ page 50109 SWResourceEntriesPart
                 field(TotalStarshipPrice; GetTotalStarshipCostInMillionCredits())
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the cost of all starships resources in million credits.';
                     Caption = 'Total starship price';
+                    ToolTip = 'Specifies the cost of all starships resources in million credits.';
 
                     trigger OnDrillDown()
                     var
@@ -61,7 +61,7 @@ page 50109 SWResourceEntriesPart
             {
                 Caption = 'Resource Entries';
 
-                field(SWFilmsEntries; g_ChartsMng.GetSWFilmCount())
+                field(SWFilmsEntries; g_DataStatisticsMng.GetSWFilmCount())
                 {
                     ApplicationArea = All;
                     Caption = 'SW Films Entries';
@@ -70,7 +70,7 @@ page 50109 SWResourceEntriesPart
                         Page.Run(Page::"SW Films List");
                     end;
                 }
-                field(SWPeopleEntries; g_ChartsMng.GetSWPeopleCount())
+                field(SWPeopleEntries; g_DataStatisticsMng.GetSWPeopleCount())
                 {
                     ApplicationArea = All;
                     Caption = 'SW People Entries';
@@ -79,7 +79,7 @@ page 50109 SWResourceEntriesPart
                         Page.Run(Page::"SW People List");
                     end;
                 }
-                field(SWPlanetEntries; g_ChartsMng.GetSWPlanetCount())
+                field(SWPlanetEntries; g_DataStatisticsMng.GetSWPlanetCount())
                 {
                     ApplicationArea = All;
                     Caption = 'SW Planet Entries';
@@ -88,7 +88,7 @@ page 50109 SWResourceEntriesPart
                         Page.Run(Page::"SW Planets List");
                     end;
                 }
-                field(SWSpeciesEntries; g_ChartsMng.GetSWSpeciesCount())
+                field(SWSpeciesEntries; g_DataStatisticsMng.GetSWSpeciesCount())
                 {
                     ApplicationArea = All;
                     Caption = 'SW Species Entries';
@@ -97,7 +97,7 @@ page 50109 SWResourceEntriesPart
                         Page.Run(Page::"SW Species List");
                     end;
                 }
-                field(SWStarshipEntries; g_ChartsMng.GetSWStarshipCount())
+                field(SWStarshipEntries; g_DataStatisticsMng.GetSWStarshipCount())
                 {
                     ApplicationArea = All;
                     Caption = 'SW Starships Entries';
@@ -106,7 +106,7 @@ page 50109 SWResourceEntriesPart
                         Page.Run(Page::"SW Starships List");
                     end;
                 }
-                field(SWVehicleEntries; g_ChartsMng.GetSWVehicleCount())
+                field(SWVehicleEntries; g_DataStatisticsMng.GetSWVehicleCount())
                 {
                     ApplicationArea = All;
                     Caption = 'SW Vehicle Entries';
@@ -120,7 +120,7 @@ page 50109 SWResourceEntriesPart
             {
                 Caption = 'Resource Assosiations';
 
-                field(ResourceAss; g_ChartsMng.GetResourceAssCount())
+                field(ResourceAss; g_DataStatisticsMng.GetResourceAssCount())
                 {
                     ApplicationArea = All;
                     Caption = 'Resource Association';
@@ -132,17 +132,35 @@ page 50109 SWResourceEntriesPart
             }
         }
     }
+
+    var
+        g_DataStatisticsMng: Codeunit "SW Data Statistics Mng";
+
+    local procedure GetAverageLifeSpan(): Decimal
+    var
+        l_Species: Record "SW Species";
+        l_TotalLifeSpan: Integer;
+    begin
+        if l_Species.FindFirst() then
+            repeat
+                if l_Species.AverageLifeSpan <> 0 then
+                    l_TotalLifeSpan += l_Species.AverageLifeSpan;
+            until l_Species.Next() = 0;
+        if l_TotalLifeSpan <> 0 then
+            exit(l_TotalLifeSpan / l_Species.Count);
+    end;
+
     local procedure GetTotalEntries(): Integer
     var
         l_Count: Integer;
     begin
         l_Count :=
-            g_ChartsMng.GetSWFilmCount() +
-            g_ChartsMng.GetSWPeopleCount() +
-            g_ChartsMng.GetSWPlanetCount() +
-            g_ChartsMng.GetSWSpeciesCount() +
-            g_ChartsMng.GetSWStarshipCount() +
-            g_ChartsMng.GetSWVehicleCount();
+            g_DataStatisticsMng.GetSWFilmCount() +
+            g_DataStatisticsMng.GetSWPeopleCount() +
+            g_DataStatisticsMng.GetSWPlanetCount() +
+            g_DataStatisticsMng.GetSWSpeciesCount() +
+            g_DataStatisticsMng.GetSWStarshipCount() +
+            g_DataStatisticsMng.GetSWVehicleCount();
         exit(l_Count);
     end;
 
@@ -157,20 +175,4 @@ page 50109 SWResourceEntriesPart
             until l_Starships.Next() = 0;
         exit(l_CostTotal / 1000000);
     end;
-
-    local procedure GetAverageLifeSpan(): Decimal
-    var
-        l_Species: Record "SW Species";
-        l_TotalLifeSpan: Integer;
-    begin
-        if l_Species.FindFirst() then
-            repeat
-                if l_Species.AverageLifeSpan <> 0 then
-                    l_TotalLifeSpan += l_Species.AverageLifeSpan;
-            until l_Species.Next() = 0;
-        exit(l_TotalLifeSpan / l_Species.Count);
-    end;
-
-    var
-        g_ChartsMng: Codeunit SWChartsMng;
 }
