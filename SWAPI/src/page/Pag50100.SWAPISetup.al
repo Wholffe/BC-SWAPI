@@ -83,6 +83,17 @@ page 50100 SWAPISetup
                         g_APISetupMng.FillAllResources();
                     end;
                 }
+                action(FillSingleResource)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Fill Single Resources';
+                    Image = Insert;
+
+                    trigger OnAction()
+                    begin
+                        g_APISetupMng.FillSingleResource();
+                    end;
+                }
             }
             group(Delete)
             {

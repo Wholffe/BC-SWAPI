@@ -3,7 +3,6 @@ namespace SWAPI.SWAPI;
 codeunit 50103 "SWAPI Data Import Mng"
 {
     var
-        g_APISetup: Record SWAPISetup;
         g_JMng: Codeunit "SW Json Mng";
         g_SWResourceMng: Codeunit "SW Resource Type Helper";
         g_SWUtilityMng: Codeunit "SW Utility Mng";
@@ -271,12 +270,13 @@ codeunit 50103 "SWAPI Data Import Mng"
 
     local procedure GetAssIDFromAssUrl(p_AssUrl: Text; p_AssType: Enum "SW Resource Types"): Integer
     var
+        l_APISetup: Record SWAPISetup;
         l_AssResourceID: Integer;
         l_RemoveTxt: Text;
     begin
         p_AssUrl := p_AssUrl.TrimEnd('/');
-        g_APISetup.FindFirst();
-        l_RemoveTxt := StrSubstNo('%1/%2/', g_APISetup.Endpoint, p_AssType);
+        l_APISetup.FindFirst();
+        l_RemoveTxt := StrSubstNo('%1/%2/', l_APISetup.Endpoint, p_AssType);
         p_AssUrl := p_AssUrl.Replace(l_RemoveTxt, '');
 
         if Evaluate(l_AssResourceID, p_AssUrl) then

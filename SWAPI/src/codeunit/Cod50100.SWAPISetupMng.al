@@ -5,13 +5,6 @@ using System.Media;
 codeunit 50100 "SWAPI Setup Mng"
 {
     var
-        g_Films: Record "SW Films";
-        g_People: Record "SW People";
-        g_Planets: Record "SW Planets";
-        g_ResourceAss: Record "SW Resource Association";
-        g_Species: Record "SW Species";
-        g_Starships: Record "SW Starships";
-        g_Vehicles: Record "SW Vehicles";
         g_DataImportMng: Codeunit "SWAPI Data Import Mng";
         g_JMng: Codeunit "SW Json Mng";
         g_SWResourceHelper: Codeunit "SW Resource Type Helper";
@@ -19,29 +12,23 @@ codeunit 50100 "SWAPI Setup Mng"
 
     procedure ClearAllSWData()
     var
+        l_Films: Record "SW Films";
+        l_People: Record "SW People";
+        l_Planets: Record "SW Planets";
+        l_ResourceAss: Record "SW Resource Association";
+        l_Species: Record "SW Species";
+        l_Starships: Record "SW Starships";
+        l_Vehicles: Record "SW Vehicles";
         l_Notification: Notification;
         l_NotificationL: Label 'Sector is Clear.';
     begin
-        g_Films.Reset();
-        g_Films.DeleteAll();
-
-        g_People.Reset();
-        g_People.DeleteAll();
-
-        g_Planets.Reset();
-        g_Planets.DeleteAll();
-
-        g_Species.Reset();
-        g_Species.DeleteAll();
-
-        g_Starships.Reset();
-        g_Starships.DeleteAll();
-
-        g_Vehicles.Reset();
-        g_Vehicles.DeleteAll();
-
-        g_ResourceAss.Reset();
-        g_ResourceAss.DeleteAll();
+        l_Films.DeleteAll();
+        l_People.DeleteAll();
+        l_Planets.DeleteAll();
+        l_Species.DeleteAll();
+        l_Starships.DeleteAll();
+        l_Vehicles.DeleteAll();
+        l_ResourceAss.DeleteAll();
 
         l_Notification.Message(l_NotificationL);
         l_Notification.Send();
@@ -49,31 +36,24 @@ codeunit 50100 "SWAPI Setup Mng"
 
     procedure DeleteSingleResource()
     var
+        l_ResourceAss: Record "SW Resource Association";
         l_ResourceDialog: Page "SW Resource StandardDialog";
         l_Notification: Notification;
+        l_RecRef: RecordRef;
         l_Resource: Enum "SW Resource Types";
         l_Count: Integer;
+        l_TableNo: Integer;
         l_NotificationL: Label '%1 deleted.';
     begin
         l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
         if l_ResourceDialog.RunModal() = Action::OK then begin
             l_Resource := l_ResourceDialog.GetResourceType();
-            case l_Resource of
-                "SW Resource Types"::films:
-                    g_Films.DeleteAll();
-                "SW Resource Types"::people:
-                    g_People.DeleteAll();
-                "SW Resource Types"::planets:
-                    g_Planets.DeleteAll();
-                "SW Resource Types"::species:
-                    g_Species.DeleteAll();
-                "SW Resource Types"::vehicles:
-                    g_Vehicles.DeleteAll();
-                "SW Resource Types"::starships:
-                    g_Starships.DeleteAll();
-            end;
-            g_ResourceAss.SetRange(ResourceType, l_Resource);
-            g_ResourceAss.DeleteAll();
+            l_TableNo := g_SWResourceHelper.GetRecRefTableNoFromResourceEnum(l_Resource);
+            l_RecRef.Open(l_TableNo);
+            l_RecRef.DeleteAll();
+            l_RecRef.Close();
+            l_ResourceAss.SetRange(ResourceType, l_Resource);
+            l_ResourceAss.DeleteAll();
             g_APIMng.ValidateAllResourcesAss();
             l_Notification.Message(StrSubstNo(l_NotificationL, l_Resource));
             l_Notification.Send();
@@ -89,6 +69,18 @@ codeunit 50100 "SWAPI Setup Mng"
         g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
         g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
         g_APIMng.ValidateAllResourcesAss();
+    end;
+
+    procedure FillSingleResource()
+    var
+        l_ResourceDialog: Page "SW Resource StandardDialog";
+        l_Resource: Enum "SW Resource Types";
+    begin
+        l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
+        if l_ResourceDialog.RunModal() = Action::OK then begin
+            l_Resource := l_ResourceDialog.GetResourceType();
+            g_DataImportMng.FillAllResourcesOfAKind(l_Resource);
+        end;
     end;
 
     procedure IsValidEndpointRoot(p_Rec: Record SWAPISetup): Boolean

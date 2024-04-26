@@ -29,7 +29,7 @@ page 50109 SWResourceEntriesPart
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Average Life Span';
-                    ToolTip = 'Specifies the sum of your overdue payments to vendors.';
+                    ToolTip = 'Specifies average life span of all species resources.';
 
                     trigger OnDrillDown()
                     var
