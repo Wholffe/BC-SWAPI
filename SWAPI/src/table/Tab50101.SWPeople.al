@@ -75,9 +75,9 @@ table 50101 "SW People"
             FieldClass = FlowField;
             ToolTip = 'The number of film resources that this person has been in.';
         }
-        field(12; Species; Integer)
+        field(12; Species; Text[100])
         {
-            CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(species)));
+            CalcFormula = lookup("SW Resource Association".AssResourceName where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(species)));
             Caption = 'Species';
             Editable = false;
             FieldClass = FlowField;

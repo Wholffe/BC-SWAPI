@@ -16,6 +16,8 @@ codeunit 50104 "SW Page Mng"
         l_VarRecRef: Variant;
     begin
         l_Filter := GetAssociationFilter(p_ResourceType, p_ID, p_AssociatedResourceType);
+        if l_Filter = '' then
+            exit;
         l_RecRefTableNo := g_SWResourceHelper.GetRecRefTableNoFromResourceEnum(p_AssociatedResourceType);
         l_RecRef.Open(g_SWResourceHelper.GetRecRefTableNoFromResourceEnum(p_AssociatedResourceType));
         l_FieldRef := l_RecRef.Field(1);
@@ -39,7 +41,7 @@ codeunit 50104 "SW Page Mng"
         Page.Run(l_PageNo, l_VarRecRef);
     end;
 
-    procedure GetAssociationFilter(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types"): Text
+    local procedure GetAssociationFilter(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types"): Text
     var
         l_ResourceAss: Record "SW Resource Association";
         l_Filter: Text;

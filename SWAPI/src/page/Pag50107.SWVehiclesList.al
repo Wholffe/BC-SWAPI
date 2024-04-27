@@ -56,14 +56,14 @@ page 50107 "SW Vehicles List"
                 {
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::films);
+                        g_PageMng.DrillDownPage("SW Resource Types"::vehicles, Rec.ID, "SW Resource Types"::films);
                     end;
                 }
                 field(Pilots; Rec.Pilots)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::vehicles, Rec.ID, Enum::"SW Resource Types"::people);
+                        g_PageMng.DrillDownPage("SW Resource Types"::vehicles, Rec.ID, "SW Resource Types"::people);
                     end;
                 }
                 field(Url; Rec.Url)
@@ -94,7 +94,7 @@ page 50107 "SW Vehicles List"
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
                 begin
-                    l_DataImporter.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
+                    l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::vehicles);
                 end;
             }
         }

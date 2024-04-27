@@ -33,6 +33,7 @@ page 50115 "SW People Card"
             }
             group(Details)
             {
+                Caption = 'Details';
 
                 field(EyeColor; Rec.EyeColor)
                 {
@@ -51,18 +52,17 @@ page 50115 "SW People Card"
                 }
                 field(Homeworld; Rec.Homeworld)
                 {
+                    Editable = false;
+                }
+                field(Species; Rec.Species)
+                {
+                    Editable = false;
                 }
             }
-
             part(FilmsResourceAssPart; SWResourceAssListPart)
             {
                 Caption = 'Films';
                 SubPageLink = ResourceType = const("SW Resource Types"::people), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::films);
-            }
-            part(SpeciesResourceAssPart; SWResourceAssListPart)
-            {
-                Caption = 'Species';
-                SubPageLink = ResourceType = const("SW Resource Types"::people), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::species);
             }
             part(StarshipsResourceAssPart; SWResourceAssListPart)
             {

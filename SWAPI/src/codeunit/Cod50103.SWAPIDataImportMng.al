@@ -6,8 +6,6 @@ codeunit 50103 "SWAPI Data Import Mng"
         g_JMng: Codeunit "SW Json Mng";
         g_SWResourceMng: Codeunit "SW Resource Type Helper";
         g_SWUtilityMng: Codeunit "SW Utility Mng";
-        g_AlreadyImportedL: Label 'You have already imported %1. Take a seat.';
-        g_ImportSuccessfullL: Label '%1 imported successfully.';
 
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
     var
@@ -44,7 +42,25 @@ codeunit 50103 "SWAPI Data Import Mng"
         OnAfterFillAllResourcesOfAKind(p_Resource);
     end;
 
-    procedure FillJObjectContentInSWFilms(p_ID: Integer; p_JObject: JsonObject)
+    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
+    var
+        l_RecRef: RecordRef;
+        l_MaxID: Integer;
+        l_ResourceRouteUrl: Text;
+    begin
+        l_ResourceRouteUrl := g_SWResourceMng.GetUrlFromEnum(p_Resource);
+        l_MaxID := g_SWUtilityMng.GetCategoryCountFromUrl(l_ResourceRouteUrl);
+        l_RecRef.Open(g_SWResourceMng.GetRecRefTableNoFromResourceEnum(p_Resource));
+        if not (l_RecRef.Count = l_MaxID) then begin
+            l_RecRef.Close();
+            exit;
+        end;
+        l_RecRef.Close();
+        OnAfterDataAlreadyImported(p_Resource);
+        exit(true)
+    end;
+
+    local procedure FillJObjectContentInSWFilms(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Films: Record "SW Films";
     begin
@@ -70,7 +86,7 @@ codeunit 50103 "SWAPI Data Import Mng"
         Commit();
     end;
 
-    procedure FillJObjectContentInSWPeople(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWPeople(p_ID: Integer; p_JObject: JsonObject)
     var
         l_People: Record "SW People";
     begin
@@ -98,7 +114,7 @@ codeunit 50103 "SWAPI Data Import Mng"
         Commit();
     end;
 
-    procedure FillJObjectContentInSWPlanets(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWPlanets(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Planets: Record "SW Planets";
     begin
@@ -124,7 +140,7 @@ codeunit 50103 "SWAPI Data Import Mng"
         Commit();
     end;
 
-    procedure FillJObjectContentInSWSpecies(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWSpecies(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Species: Record "SW Species";
     begin
@@ -151,7 +167,7 @@ codeunit 50103 "SWAPI Data Import Mng"
         Commit();
     end;
 
-    procedure FillJObjectContentInSWStarships(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWStarships(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Starships: Record "SW Starships";
     begin
@@ -181,7 +197,7 @@ codeunit 50103 "SWAPI Data Import Mng"
         Commit();
     end;
 
-    procedure FillJObjectContentInSWVehicles(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWVehicles(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Vehicles: Record "SW Vehicles";
     begin
@@ -207,32 +223,6 @@ codeunit 50103 "SWAPI Data Import Mng"
         FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::vehicles, p_ID);
         FillResourceAssociation(p_JObject, 'pilots', Enum::"SW Resource Types"::vehicles, p_ID);
         Commit();
-    end;
-
-    procedure SendStatusNotification(p_StatusL: Text)
-    var
-        l_StatusNotification: Notification;
-    begin
-        l_StatusNotification.Message(p_StatusL);
-        l_StatusNotification.Send();
-    end;
-
-    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
-    var
-        l_RecRef: RecordRef;
-        l_MaxID: Integer;
-        l_ResourceRouteUrl: Text;
-    begin
-        l_ResourceRouteUrl := g_SWResourceMng.GetUrlFromEnum(p_Resource);
-        l_MaxID := g_SWUtilityMng.GetCategoryCountFromUrl(l_ResourceRouteUrl);
-        l_RecRef.Open(g_SWResourceMng.GetRecRefTableNoFromResourceEnum(p_Resource));
-        if not (l_RecRef.Count = l_MaxID) then begin
-            l_RecRef.Close();
-            exit;
-        end;
-        SendStatusNotification(StrSubstNo(g_AlreadyImportedL, p_Resource));
-        l_RecRef.Close();
-        exit(true)
     end;
 
     local procedure FillResourceAssociation(p_JObject: JsonObject; p_Member: Text; p_ResourceType: Enum "SW Resource Types"; p_ID: Integer)
@@ -319,10 +309,9 @@ codeunit 50103 "SWAPI Data Import Mng"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"SWAPI Data Import Mng", 'OnAfterFillAllResourcesOfAKind', '', false, false)]
-    local procedure SendStatus(p_Resource: Enum "SW Resource Types")
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterDataAlreadyImported(p_Resource: Enum "SW Resource Types")
     begin
-        SendStatusNotification(StrSubstNo(g_ImportSuccessfullL, p_Resource));
     end;
 
     [IntegrationEvent(false, false)]

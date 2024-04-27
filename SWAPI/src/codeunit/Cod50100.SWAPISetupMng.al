@@ -19,8 +19,6 @@ codeunit 50100 "SWAPI Setup Mng"
         l_Species: Record "SW Species";
         l_Starships: Record "SW Starships";
         l_Vehicles: Record "SW Vehicles";
-        l_Notification: Notification;
-        l_NotificationL: Label 'Sector is Clear.';
     begin
         l_Films.DeleteAll();
         l_People.DeleteAll();
@@ -29,21 +27,17 @@ codeunit 50100 "SWAPI Setup Mng"
         l_Starships.DeleteAll();
         l_Vehicles.DeleteAll();
         l_ResourceAss.DeleteAll();
-
-        l_Notification.Message(l_NotificationL);
-        l_Notification.Send();
+        OnAfterClearAllSWData();
     end;
 
     procedure DeleteSingleResource()
     var
         l_ResourceAss: Record "SW Resource Association";
         l_ResourceDialog: Page "SW Resource StandardDialog";
-        l_Notification: Notification;
         l_RecRef: RecordRef;
         l_Resource: Enum "SW Resource Types";
         l_Count: Integer;
         l_TableNo: Integer;
-        l_NotificationL: Label '%1 deleted.';
     begin
         l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
         if l_ResourceDialog.RunModal() = Action::OK then begin
@@ -55,9 +49,9 @@ codeunit 50100 "SWAPI Setup Mng"
             l_ResourceAss.SetRange(ResourceType, l_Resource);
             l_ResourceAss.DeleteAll();
             g_APIMng.ValidateAllResourcesAss();
-            l_Notification.Message(StrSubstNo(l_NotificationL, l_Resource));
-            l_Notification.Send();
         end;
+
+        OnAfterDeleteSingleResource(l_Resource);
     end;
 
     procedure FillAllResources()
@@ -163,5 +157,15 @@ codeunit 50100 "SWAPI Setup Mng"
             'https://github.com/Wholffe/BC-SWAPI',
             Enum::"Video Category"::Connect,
             'https://github.com/Wholffe/BC-SWAPI')
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterClearAllSWData()
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterDeleteSingleResource(p_Resource: Enum "SW Resource Types")
+    begin
     end;
 }

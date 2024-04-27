@@ -49,6 +49,8 @@ page 50103 "SW People List"
                     var
                         l_Planets: Record "SW Planets";
                     begin
+                        if Rec.Homeworld = '' then
+                            exit;
                         l_Planets.SetRange(Name, Rec.Homeworld);
                         if l_Planets.FindSet() then
                             Page.Run(Page::"SW Planets List", l_Planets);
@@ -58,21 +60,21 @@ page 50103 "SW People List"
                 {
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::films);
+                        g_PageMng.DrillDownPage("SW Resource Types"::people, Rec.ID, "SW Resource Types"::films);
                     end;
                 }
                 field(Species; Rec.Species)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::species);
+                        g_PageMng.DrillDownPage("SW Resource Types"::people, Rec.ID, "SW Resource Types"::species);
                     end;
                 }
                 field(Starships; Rec.Starships)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::starships);
+                        g_PageMng.DrillDownPage("SW Resource Types"::people, Rec.ID, "SW Resource Types"::starships);
                     end;
                 }
                 field(Vehicles; Rec.Vehicles)
@@ -80,7 +82,7 @@ page 50103 "SW People List"
                     DrillDownPageId = "SW Resource Association List";
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::people, Rec.ID, Enum::"SW Resource Types"::vehicles);
+                        g_PageMng.DrillDownPage("SW Resource Types"::people, Rec.ID, "SW Resource Types"::vehicles);
                     end;
                 }
                 field(Url; Rec.Url)
@@ -111,7 +113,7 @@ page 50103 "SW People List"
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
                 begin
-                    l_DataImporter.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
+                    l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::people);
                 end;
             }
         }

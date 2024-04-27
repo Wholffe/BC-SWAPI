@@ -26,7 +26,7 @@ page 50116 "SW Planet Card"
             }
             group(Details)
             {
-                Caption = 'Meta';
+                Caption = 'Details';
 
                 field(Diameter; Rec.Diameter)
                 {

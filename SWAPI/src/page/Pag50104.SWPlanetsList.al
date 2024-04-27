@@ -50,14 +50,14 @@ page 50104 "SW Planets List"
                 {
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::planets, Rec.ID, Enum::"SW Resource Types"::people);
+                        g_PageMng.DrillDownPage("SW Resource Types"::planets, Rec.ID, "SW Resource Types"::people);
                     end;
                 }
                 field(Films; Rec.Films)
                 {
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::planets, Rec.ID, Enum::"SW Resource Types"::films);
+                        g_PageMng.DrillDownPage("SW Resource Types"::planets, Rec.ID, "SW Resource Types"::films);
                     end;
                 }
                 field(Url; Rec.Url)
@@ -88,7 +88,7 @@ page 50104 "SW Planets List"
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
                 begin
-                    l_DataImporter.FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets);
+                    l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::planets);
                 end;
             }
         }

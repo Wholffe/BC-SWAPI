@@ -60,7 +60,7 @@ page 50106 "SW Starships List"
                     DrillDownPageId = "SW Resource Association List";
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::starships, Rec.ID, Enum::"SW Resource Types"::films);
+                        g_PageMng.DrillDownPage("SW Resource Types"::starships, Rec.ID, "SW Resource Types"::films);
                     end;
                 }
                 field(Pilots; Rec.Pilots)
@@ -68,7 +68,7 @@ page 50106 "SW Starships List"
                     DrillDownPageId = "SW Resource Association List";
                     trigger OnDrillDown()
                     begin
-                        g_PageMng.DrilldownPage(Enum::"SW Resource Types"::starships, Rec.ID, Enum::"SW Resource Types"::people);
+                        g_PageMng.DrillDownPage("SW Resource Types"::starships, Rec.ID, "SW Resource Types"::people);
                     end;
                 }
                 field(Url; Rec.Url)
@@ -99,7 +99,7 @@ page 50106 "SW Starships List"
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
                 begin
-                    l_DataImporter.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
+                    l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::starships);
                 end;
             }
         }
