@@ -3,11 +3,11 @@ namespace SWAPI.SWAPI;
 codeunit 50107 "SW Status Notification Mng"
 {
     var
+        g_SWResourceHelper: Codeunit "SW Resource Type Helper";
         g_AllResourcesDeletedL: Label 'Sector is Clear. All resources deleted.';
         g_AlreadyImportedL: Label 'You have already imported %1. Take a seat.';
         g_ImportSuccessfullL: Label '%1 imported successfully.';
         g_SingleResourceDeletedL: Label '%1 deleted.';
-        g_SWResourceHelper: Codeunit "SW Resource Type Helper";
 
     procedure GetAlreadyImportedL(p_Resource: Enum "SW Resource Types"): Text
     begin

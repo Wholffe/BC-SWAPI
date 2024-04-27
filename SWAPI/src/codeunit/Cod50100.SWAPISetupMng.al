@@ -39,7 +39,7 @@ codeunit 50100 "SWAPI Setup Mng"
         l_Count: Integer;
         l_TableNo: Integer;
     begin
-        l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
+        l_ResourceDialog.Setup("SW Resource Types"::films);
         if l_ResourceDialog.RunModal() = Action::OK then begin
             l_Resource := l_ResourceDialog.GetResourceType();
             l_TableNo := g_SWResourceHelper.GetRecRefTableNoFromResourceEnum(l_Resource);
@@ -50,18 +50,17 @@ codeunit 50100 "SWAPI Setup Mng"
             l_ResourceAss.DeleteAll();
             g_APIMng.ValidateAllResourcesAss();
         end;
-
         OnAfterDeleteSingleResource(l_Resource);
     end;
 
     procedure FillAllResources()
     begin
-        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::films);
-        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::planets); //planets before people bec of people Homeworld Validate trigger
-        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::people);
-        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::species);
-        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::starships);
-        g_DataImportMng.FillAllResourcesOfAKind(Enum::"SW Resource Types"::vehicles);
+        g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::films);
+        g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::planets); //planets before people bec of people Homeworld Validate trigger
+        g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::people);
+        g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::species);
+        g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::starships);
+        g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::vehicles);
         g_APIMng.ValidateAllResourcesAss();
     end;
 
@@ -70,7 +69,7 @@ codeunit 50100 "SWAPI Setup Mng"
         l_ResourceDialog: Page "SW Resource StandardDialog";
         l_Resource: Enum "SW Resource Types";
     begin
-        l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
+        l_ResourceDialog.Setup("SW Resource Types"::films);
         if l_ResourceDialog.RunModal() = Action::OK then begin
             l_Resource := l_ResourceDialog.GetResourceType();
             g_DataImportMng.FillAllResourcesOfAKind(l_Resource);
@@ -118,7 +117,7 @@ codeunit 50100 "SWAPI Setup Mng"
         l_Count: Integer;
         l_Url: Text;
     begin
-        l_ResourceDialog.Setup(Enum::"SW Resource Types"::films);
+        l_ResourceDialog.Setup("SW Resource Types"::films);
         if l_ResourceDialog.RunModal() = Action::OK then begin
             l_Url := g_SWResourceHelper.GetUrlFromEnum(l_ResourceDialog.GetResourceType());
             l_Count := g_APIMng.GetCategoryCountFromUrl(l_Url);
@@ -153,9 +152,9 @@ codeunit 50100 "SWAPI Setup Mng"
             1,
             ObjectType::Page,
             Page::SWAPISetup,
-            Enum::"Assisted Setup Group"::Connect,
+            "Assisted Setup Group"::Connect,
             'https://github.com/Wholffe/BC-SWAPI',
-            Enum::"Video Category"::Connect,
+            "Video Category"::Connect,
             'https://github.com/Wholffe/BC-SWAPI')
     end;
 

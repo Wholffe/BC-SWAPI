@@ -78,11 +78,11 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_Films.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
             l_Films.Insert();
         end;
-        FillResourceAssociation(p_JObject, 'species', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssociation(p_JObject, 'starships', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssociation(p_JObject, 'vehicles', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssociation(p_JObject, 'characters', Enum::"SW Resource Types"::films, p_ID);
-        FillResourceAssociation(p_JObject, 'planets', Enum::"SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'species', "SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'starships', "SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'vehicles', "SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'characters', "SW Resource Types"::films, p_ID);
+        FillResourceAssociation(p_JObject, 'planets', "SW Resource Types"::films, p_ID);
         Commit();
     end;
 
@@ -107,10 +107,10 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_People.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
             l_People.Insert();
         end;
-        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::people, p_ID);
-        FillResourceAssociation(p_JObject, 'species', Enum::"SW Resource Types"::people, p_ID);
-        FillResourceAssociation(p_JObject, 'starships', Enum::"SW Resource Types"::people, p_ID);
-        FillResourceAssociation(p_JObject, 'vehicles', Enum::"SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'species', "SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'starships', "SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'vehicles', "SW Resource Types"::people, p_ID);
         Commit();
     end;
 
@@ -135,8 +135,8 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_Planets.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
             l_Planets.Insert();
         end;
-        FillResourceAssociation(p_JObject, 'residents', Enum::"SW Resource Types"::planets, p_ID);
-        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::planets, p_ID);
+        FillResourceAssociation(p_JObject, 'residents', "SW Resource Types"::planets, p_ID);
+        FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::planets, p_ID);
         Commit();
     end;
 
@@ -162,8 +162,8 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_Species.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
             l_Species.Insert();
         end;
-        FillResourceAssociation(p_JObject, 'people', Enum::"SW Resource Types"::species, p_ID);
-        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::species, p_ID);
+        FillResourceAssociation(p_JObject, 'people', "SW Resource Types"::species, p_ID);
+        FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::species, p_ID);
         Commit();
     end;
 
@@ -192,8 +192,8 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_Starships.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
             l_Starships.Insert();
         end;
-        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::starships, p_ID);
-        FillResourceAssociation(p_JObject, 'pilots', Enum::"SW Resource Types"::starships, p_ID);
+        FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::starships, p_ID);
+        FillResourceAssociation(p_JObject, 'pilots', "SW Resource Types"::starships, p_ID);
         Commit();
     end;
 
@@ -220,8 +220,8 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_Vehicles.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
             l_Vehicles.Insert();
         end;
-        FillResourceAssociation(p_JObject, 'films', Enum::"SW Resource Types"::vehicles, p_ID);
-        FillResourceAssociation(p_JObject, 'pilots', Enum::"SW Resource Types"::vehicles, p_ID);
+        FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::vehicles, p_ID);
+        FillResourceAssociation(p_JObject, 'pilots', "SW Resource Types"::vehicles, p_ID);
         Commit();
     end;
 
@@ -294,18 +294,20 @@ codeunit 50103 "SWAPI Data Import Mng"
     local procedure StartFillJObjectContentInSWResource(p_Resource: Enum "SW Resource Types"; l_ID: Integer; l_JObject: JsonObject)
     begin
         case p_Resource of
-            Enum::"SW Resource Types"::films:
+            "SW Resource Types"::films:
                 FillJObjectContentInSWFilms(l_ID, l_JObject);
-            Enum::"SW Resource Types"::people:
+            "SW Resource Types"::people:
                 FillJObjectContentInSWPeople(l_ID, l_JObject);
-            Enum::"SW Resource Types"::planets:
+            "SW Resource Types"::planets:
                 FillJObjectContentInSWPlanets(l_ID, l_JObject);
-            Enum::"SW Resource Types"::species:
+            "SW Resource Types"::species:
                 FillJObjectContentInSWSpecies(l_ID, l_JObject);
-            Enum::"SW Resource Types"::starships:
+            "SW Resource Types"::starships:
                 FillJObjectContentInSWStarships(l_ID, l_JObject);
-            Enum::"SW Resource Types"::vehicles:
+            "SW Resource Types"::vehicles:
                 FillJObjectContentInSWVehicles(l_ID, l_JObject);
+            else
+                Error('%1 is not a valid enum to import.', p_Resource);
         end;
     end;
 

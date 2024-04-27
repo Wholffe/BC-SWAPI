@@ -2,16 +2,10 @@ namespace SWAPI.SWAPI;
 
 codeunit 50106 "SW Data Statistics Mng"
 {
-
     var
+        g_SWResourceHelper: Codeunit "SW Resource Type Helper";
         g_EntriesL: Label 'Entries';
-        g_FilmsL: Label 'Films';
-        g_PeopleL: Label 'People';
-        g_PlanetsL: Label 'Planets';
         g_ResourceL: Label 'Resource';
-        g_SpeciesL: Label 'Species';
-        g_StarshipsL: Label 'Starships';
-        g_VehiclesL: Label 'Vehicles';
 
     procedure GetFilmCircleChartParam(): JsonArray
     var
@@ -20,7 +14,7 @@ codeunit 50106 "SW Data Statistics Mng"
         l_InnerJArray: JsonArray;
         l_JArray: JsonArray;
     begin
-        l_InnerJArray.Add(g_FilmsL);
+        l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::films));
         l_InnerJArray.Add(g_EntriesL);
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
@@ -61,32 +55,32 @@ codeunit 50106 "SW Data Statistics Mng"
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add(g_FilmsL);
+        l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::films));
         l_InnerJArray.Add(GetSWFilmCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add(g_PeopleL);
+        l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::people));
         l_InnerJArray.Add(GetSWPeopleCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add(g_PlanetsL);
+        l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::planets));
         l_InnerJArray.Add(GetSWPlanetCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add(g_SpeciesL);
+        l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::species));
         l_InnerJArray.Add(GetSWSpeciesCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add(g_StarshipsL);
+        l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::starships));
         l_InnerJArray.Add(GetSWStarshipCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        l_InnerJArray.Add(g_VehiclesL);
+        l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::vehicles));
         l_InnerJArray.Add(GetSWVehicleCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
