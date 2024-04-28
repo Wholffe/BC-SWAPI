@@ -20,7 +20,7 @@ page 50114 "SW Films Card"
                 {
                     Visible = false;
                 }
-                field(Title; Rec.Title)
+                field(Name; Rec.Name)
                 {
                     Importance = Promoted;
                 }

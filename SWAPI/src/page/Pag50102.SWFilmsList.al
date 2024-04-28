@@ -19,7 +19,7 @@ page 50102 "SW Films List"
                 field(ID; Rec.ID)
                 {
                 }
-                field(Title; Rec.Title)
+                field(Name; Rec.Name)
                 {
                 }
                 field(EpisodeID; Rec.EpisodeID)

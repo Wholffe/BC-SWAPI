@@ -12,7 +12,7 @@ table 50102 "SW Films"
             Editable = false;
             ToolTip = 'The ID and PK from this resource';
         }
-        field(2; Title; Text[100])
+        field(2; Name; Text[100])
         {
             Caption = 'Title';
             ToolTip = 'The title of this film.';
@@ -108,8 +108,17 @@ table 50102 "SW Films"
             Clustered = true;
         }
     }
+
+    var
+        g_SWUtilityMng: Codeunit "SW Utility Mng";
+
     trigger OnModify()
     begin
         Rec.Edited := CurrentDateTime;
+    end;
+
+    trigger OnDelete()
+    begin
+        g_SWUtilityMng.DeleteAssRecords(Rec);
     end;
 }

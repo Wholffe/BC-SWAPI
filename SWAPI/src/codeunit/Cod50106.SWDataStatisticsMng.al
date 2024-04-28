@@ -21,7 +21,7 @@ codeunit 50106 "SW Data Statistics Mng"
 
         for l_CurrentFilmID := 1 to l_Films.Count do begin
             l_Films.Get(l_CurrentFilmID);
-            l_InnerJArray.Add(l_Films.Title);
+            l_InnerJArray.Add(l_Films.Name);
             l_InnerJArray.Add(GetNumberResourceAssFilm(l_CurrentFilmID));
             l_JArray.Add(l_InnerJArray);
             clear(l_InnerJArray);

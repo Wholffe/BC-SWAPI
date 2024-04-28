@@ -127,8 +127,17 @@ table 50103 "SW Starships"
             Clustered = true;
         }
     }
+
+    var
+        g_SWUtilityMng: Codeunit "SW Utility Mng";
+
     trigger OnModify()
     begin
         Rec.Edited := CurrentDateTime;
+    end;
+
+    trigger OnDelete()
+    begin
+        g_SWUtilityMng.DeleteAssRecords(Rec);
     end;
 }

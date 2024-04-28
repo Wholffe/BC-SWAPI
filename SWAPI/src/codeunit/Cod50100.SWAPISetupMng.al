@@ -8,7 +8,7 @@ codeunit 50100 "SWAPI Setup Mng"
         g_DataImportMng: Codeunit "SWAPI Data Import Mng";
         g_JMng: Codeunit "SW Json Mng";
         g_SWResourceHelper: Codeunit "SW Resource Type Helper";
-        g_APIMng: Codeunit "SW Utility Mng";
+        g_SWUtilityMng: Codeunit "SW Utility Mng";
 
     procedure ClearAllSWData()
     var
@@ -48,7 +48,7 @@ codeunit 50100 "SWAPI Setup Mng"
             l_RecRef.Close();
             l_ResourceAss.SetRange(ResourceType, l_Resource);
             l_ResourceAss.DeleteAll();
-            g_APIMng.ValidateAllResourcesAss();
+            g_SWUtilityMng.ValidateAllResourcesAss();
         end;
         OnAfterDeleteSingleResource(l_Resource);
     end;
@@ -61,7 +61,7 @@ codeunit 50100 "SWAPI Setup Mng"
         g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::species);
         g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::starships);
         g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::vehicles);
-        g_APIMng.ValidateAllResourcesAss();
+        g_SWUtilityMng.ValidateAllResourcesAss();
     end;
 
     procedure FillSingleResource()
@@ -74,6 +74,21 @@ codeunit 50100 "SWAPI Setup Mng"
             l_Resource := l_ResourceDialog.GetResourceType();
             g_DataImportMng.FillAllResourcesOfAKind(l_Resource);
         end;
+    end;
+
+    local procedure GetExpectedRootContent(p_Rec: Record SWAPISetup; p_ElementNo: Integer): Text
+    var
+        l_ExpectedContentArray: array[6] of Text;
+        l_ExpectedRootElement: Text;
+    begin
+        l_ExpectedContentArray[1] := StrSubstNo('people":"%1/people', p_Rec.Endpoint);
+        l_ExpectedContentArray[2] := StrSubstNo('films":"%1/films', p_Rec.Endpoint);
+        l_ExpectedContentArray[3] := StrSubstNo('species":"%1/species', p_Rec.Endpoint);
+        l_ExpectedContentArray[4] := StrSubstNo('vehicles":"%1/vehicles', p_Rec.Endpoint);
+        l_ExpectedContentArray[5] := StrSubstNo('starships":"%1/starships', p_Rec.Endpoint);
+        l_ExpectedContentArray[6] := StrSubstNo('planets":"%1/planets', p_Rec.Endpoint);
+        l_ExpectedRootElement := l_ExpectedContentArray[p_ElementNo];
+        exit(l_ExpectedContentArray[p_ElementNo]);
     end;
 
     procedure IsValidEndpointRoot(p_Rec: Record SWAPISetup): Boolean
@@ -120,24 +135,9 @@ codeunit 50100 "SWAPI Setup Mng"
         l_ResourceDialog.Setup("SW Resource Types"::films);
         if l_ResourceDialog.RunModal() = Action::OK then begin
             l_Url := g_SWResourceHelper.GetUrlFromEnum(l_ResourceDialog.GetResourceType());
-            l_Count := g_APIMng.GetCategoryCountFromUrl(l_Url);
+            l_Count := g_SWUtilityMng.GetCategoryCountFromUrl(l_Url);
             Message('Url: %1, Count: %2', l_Url, l_Count);
         end;
-    end;
-
-    local procedure GetExpectedRootContent(p_Rec: Record SWAPISetup; p_ElementNo: Integer): Text
-    var
-        l_ExpectedContentArray: array[6] of Text;
-        l_ExpectedRootElement: Text;
-    begin
-        l_ExpectedContentArray[1] := StrSubstNo('people":"%1/people', p_Rec.Endpoint);
-        l_ExpectedContentArray[2] := StrSubstNo('films":"%1/films', p_Rec.Endpoint);
-        l_ExpectedContentArray[3] := StrSubstNo('species":"%1/species', p_Rec.Endpoint);
-        l_ExpectedContentArray[4] := StrSubstNo('vehicles":"%1/vehicles', p_Rec.Endpoint);
-        l_ExpectedContentArray[5] := StrSubstNo('starships":"%1/starships', p_Rec.Endpoint);
-        l_ExpectedContentArray[6] := StrSubstNo('planets":"%1/planets', p_Rec.Endpoint);
-        l_ExpectedRootElement := l_ExpectedContentArray[p_ElementNo];
-        exit(l_ExpectedContentArray[p_ElementNo]);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Guided Experience", 'OnRegisterAssistedSetup', '', true, true)]

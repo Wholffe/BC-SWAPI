@@ -4,6 +4,30 @@ codeunit 50101 "SW Utility Mng"
 {
     var
         g_JMng: Codeunit "SW Json Mng";
+        g_SWResourceHelper: Codeunit "SW Resource Type Helper";
+
+    procedure DeleteAssRecords(p_Rec: Variant)
+    var
+        l_ResourceAss: Record "SW Resource Association";
+        l_RecordRef: RecordRef;
+        l_ResourceType: Enum "SW Resource Types";
+        l_ID: Integer;
+        l_TableNo: Integer;
+    begin
+        if not p_Rec.IsRecord then
+            exit;
+        l_RecordRef.GetTable(p_Rec);
+        l_TableNo := l_RecordRef.Number();
+        l_ID := l_RecordRef.Field(1).Value;
+        l_RecordRef.Close();
+        l_ResourceType := g_SWResourceHelper.GetResourceEnumFromRecRefTableNo(l_TableNo);
+        l_ResourceAss.SetRange(ResourceType, l_ResourceType);
+        l_ResourceAss.SetRange(ResourceID, l_ID);
+        if l_ResourceAss.FindSet() then
+            repeat
+                l_ResourceAss.Delete();
+            until l_ResourceAss.Next() = 0;
+    end;
 
     procedure GetCategoryCountFromUrl(p_Url: Text): Integer
     var

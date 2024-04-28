@@ -36,18 +36,38 @@ page 50113 SWResourceAssListPart
     {
         area(Processing)
         {
-            action(AddAssociation)
+            action(Details)
             {
                 ApplicationArea = All;
-                Caption = 'Add Association';
+                Caption = 'Details';
 
                 trigger OnAction()
                 begin
+                    g_PageMng.DrillDownPage(Rec.ResourceType, Rec.ResourceID, Rec.AssociatedResourceType);
+                end;
+            }
+            action(EditAssociation)
+            {
+                ApplicationArea = All;
+                Caption = 'Edit association';
+
+                trigger OnAction()
+                var
+                    l_ResourceAss: Record "SW Resource Association";
+                    l_ResourceAssList: Page "SW Resource Association List";
+                begin
+                    l_ResourceAss.SetRange(ResourceType, Rec.ResourceType);
+                    l_ResourceAss.SetRange(ResourceID, Rec.ResourceID);
+                    l_ResourceAss.SetRange(AssociatedResourceType, Rec.AssociatedResourceType);
+                    l_ResourceAssList.SetupPage(false, l_ResourceAss);
+                    l_ResourceAssList.RunModal();
                 end;
             }
         }
     }
     var
+        g_PageMng: Codeunit "SW Page Mng";
+        g_SWResourceHelper: Codeunit "SW Resource Type Helper";
         g_AssResourceNameCaption: Text;
         g_AssResourceValueCaption: Text;
 

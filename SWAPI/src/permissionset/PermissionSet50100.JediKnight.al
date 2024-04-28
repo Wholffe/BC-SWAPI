@@ -24,6 +24,7 @@ permissionset 50100 "Jedi Knight"
         codeunit "SW Json Mng" = X,
         codeunit "SW Page Mng" = X,
         codeunit "SW Resource Type Helper" = X,
+        codeunit "SW Status Notification Mng" = X,
         codeunit "SW Utility Mng" = X,
         page FilmDistributionChart = X,
         page JediArchiveRoleCenter = X,

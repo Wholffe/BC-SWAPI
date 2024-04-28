@@ -73,6 +73,26 @@ codeunit 50105 "SW Resource Type Helper"
         end;
     end;
 
+    procedure GetResourceEnumFromRecRefTableNo(p_TableNo: Integer): Enum "SW Resource Types"
+    begin
+        case p_TableNo of
+            GetRecRefTableNoFromResourceEnum("SW Resource Types"::films):
+                exit("SW Resource Types"::films);
+            GetRecRefTableNoFromResourceEnum("SW Resource Types"::people):
+                exit("SW Resource Types"::people);
+            GetRecRefTableNoFromResourceEnum("SW Resource Types"::planets):
+                exit("SW Resource Types"::planets);
+            GetRecRefTableNoFromResourceEnum("SW Resource Types"::species):
+                exit("SW Resource Types"::species);
+            GetRecRefTableNoFromResourceEnum("SW Resource Types"::starships):
+                exit("SW Resource Types"::starships);
+            GetRecRefTableNoFromResourceEnum("SW Resource Types"::vehicles):
+                exit("SW Resource Types"::vehicles);
+            else
+                Error('No Enum for TableNo %1.', p_TableNo);
+        end;
+    end;
+
     procedure GetResourceL(p_Resource: Enum "SW Resource Types"): Text
     begin
         case p_Resource of

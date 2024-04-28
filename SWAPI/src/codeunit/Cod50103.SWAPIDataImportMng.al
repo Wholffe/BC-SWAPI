@@ -7,6 +7,24 @@ codeunit 50103 "SWAPI Data Import Mng"
         g_SWResourceMng: Codeunit "SW Resource Type Helper";
         g_SWUtilityMng: Codeunit "SW Utility Mng";
 
+    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
+    var
+        l_RecRef: RecordRef;
+        l_MaxID: Integer;
+        l_ResourceRouteUrl: Text;
+    begin
+        l_ResourceRouteUrl := g_SWResourceMng.GetUrlFromEnum(p_Resource);
+        l_MaxID := g_SWUtilityMng.GetCategoryCountFromUrl(l_ResourceRouteUrl);
+        l_RecRef.Open(g_SWResourceMng.GetRecRefTableNoFromResourceEnum(p_Resource));
+        if not (l_RecRef.Count = l_MaxID) then begin
+            l_RecRef.Close();
+            exit;
+        end;
+        l_RecRef.Close();
+        OnAfterDataAlreadyImported(p_Resource);
+        exit(true)
+    end;
+
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
     var
         l_Dialog: Dialog;
@@ -42,24 +60,6 @@ codeunit 50103 "SWAPI Data Import Mng"
         OnAfterFillAllResourcesOfAKind(p_Resource);
     end;
 
-    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
-    var
-        l_RecRef: RecordRef;
-        l_MaxID: Integer;
-        l_ResourceRouteUrl: Text;
-    begin
-        l_ResourceRouteUrl := g_SWResourceMng.GetUrlFromEnum(p_Resource);
-        l_MaxID := g_SWUtilityMng.GetCategoryCountFromUrl(l_ResourceRouteUrl);
-        l_RecRef.Open(g_SWResourceMng.GetRecRefTableNoFromResourceEnum(p_Resource));
-        if not (l_RecRef.Count = l_MaxID) then begin
-            l_RecRef.Close();
-            exit;
-        end;
-        l_RecRef.Close();
-        OnAfterDataAlreadyImported(p_Resource);
-        exit(true)
-    end;
-
     local procedure FillJObjectContentInSWFilms(p_ID: Integer; p_JObject: JsonObject)
     var
         l_Films: Record "SW Films";
@@ -67,7 +67,7 @@ codeunit 50103 "SWAPI Data Import Mng"
         if not l_Films.Get(p_ID) then begin
             l_Films.Init();
             l_Films.ID := p_ID;
-            l_Films.Title := g_JMng.GetJsonTextField(p_JObject, 'title');
+            l_Films.Name := g_JMng.GetJsonTextField(p_JObject, 'title');
             l_Films.EpisodeID := g_JMng.GetJsonIntegerField(p_JObject, 'episode_id');
             l_Films.OpeningCrawl := g_JMng.GetJsonTextField(p_JObject, 'opening_crawl');
             l_Films.Director := g_JMng.GetJsonTextField(p_JObject, 'director');

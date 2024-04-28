@@ -12,6 +12,12 @@ table 50107 "SW Resource Association"
         field(2; ResourceID; Integer)
         {
             Caption = 'Resource ID';
+            TableRelation = if (ResourceType = const(films)) "SW Films".ID
+            else if (ResourceType = const(people)) "SW People".ID
+            else if (ResourceType = const(planets)) "SW Planets".ID
+            else if (ResourceType = const(species)) "SW Species".ID
+            else if (ResourceType = const(starships)) "SW Starships".ID
+            else if (ResourceType = const(vehicles)) "SW Vehicles".ID;
         }
         field(3; AssociatedResourceType; Enum "SW Resource Types")
         {
@@ -20,6 +26,7 @@ table 50107 "SW Resource Association"
         field(4; AssResourceID; Integer)
         {
             Caption = 'Associated Resource ID';
+
             trigger OnValidate()
             var
                 l_FieldList: Record Field;
@@ -43,10 +50,12 @@ table 50107 "SW Resource Association"
         field(5; AssResourceName; Text[100])
         {
             Caption = 'Associated Resource Name';
+            Editable = false;
         }
         field(6; AssResourceValue; Text[100])
         {
             Caption = 'Associated Resource Value';
+            Editable = false;
         }
     }
     keys
