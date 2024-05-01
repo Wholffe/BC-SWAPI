@@ -50,9 +50,20 @@ page 50115 "SW People Card"
                 field(SkinColor; Rec.SkinColor)
                 {
                 }
-                field(Homeworld; Rec.Homeworld)
+                field(HomeworldID; Rec.HomeworldID)
                 {
-                    Editable = false;
+                }
+                field(HomeworldName; Rec.HomeworldName)
+                {
+                    trigger OnDrillDown()
+                    var
+                        l_Planets: Record "SW Planets";
+                    begin
+                        if l_Planets.Get(Rec.HomeworldID) then begin
+                            l_Planets.SetRecFilter();
+                            Page.Run(Page::"SW Planets List", l_Planets);
+                        end;
+                    end;
                 }
                 field(Species; Rec.Species)
                 {

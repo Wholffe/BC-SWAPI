@@ -100,8 +100,10 @@ page 50102 "SW Films List"
                 trigger OnAction()
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
+                    l_SWUtilityMng: Codeunit "SW Utility Mng";
                 begin
                     l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::films);
+                    l_SWUtilityMng.ValidateAllResourcesAss();
                 end;
             }
         }

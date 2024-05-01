@@ -70,6 +70,12 @@ page 50108 "SW Resource Association List"
         end;
     end;
 
+    procedure SetupPage(p_IsVisible: Boolean; var p_ResourceAss: Record "SW Resource Association")
+    begin
+        g_IsVisible := p_IsVisible;
+        Rec.CopyFilters(p_ResourceAss);
+    end;
+
     local procedure SetAssResourceIDFromLookupPage(var Text: Text): Boolean
     var
         l_SWResourceHelper: Codeunit "SW Resource Type Helper";
@@ -88,11 +94,5 @@ page 50108 "SW Resource Association List"
             l_RecRef.Close();
             exit(true);
         end;
-    end;
-
-    procedure SetupPage(p_IsVisible: Boolean; var p_ResourceAss: Record "SW Resource Association")
-    begin
-        g_IsVisible := p_IsVisible;
-        Rec.CopyFilters(p_ResourceAss);
     end;
 }

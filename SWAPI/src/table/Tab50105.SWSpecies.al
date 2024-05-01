@@ -59,18 +59,19 @@ table 50105 "SW Species"
             Caption = 'Language';
             ToolTip = 'The language commonly spoken by this species.';
         }
-        field(11; Homeworld; Text[100])
+        field(11; HomeworldID; Integer)
         {
-            Caption = 'Homeworld';
+            BlankZero = true;
+            Caption = 'Homeworld ID';
+            TableRelation = "SW Planets".ID;
             ToolTip = 'The name of a planet resource, a planet that this person was born on or inhabits.';
-            trigger OnValidate()
-            var
-                l_Planets: Record "SW Planets";
-            begin
-                l_Planets.SetRange(Url, Rec.Homeworld);
-                if l_Planets.FindFirst() then
-                    Rec.Homeworld := l_Planets.Name;
-            end;
+        }
+        field(17; HomeworldName; Text[100])
+        {
+            CalcFormula = lookup("SW Planets".Name where(ID = field(HomeworldID)));
+            Caption = 'Homeworld';
+            Editable = false;
+            FieldClass = FlowField;
         }
         field(12; People; Integer)
         {

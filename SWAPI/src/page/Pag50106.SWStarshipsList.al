@@ -98,8 +98,10 @@ page 50106 "SW Starships List"
                 trigger OnAction()
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
+                    l_SWUtilityMng: Codeunit "SW Utility Mng";
                 begin
                     l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::starships);
+                    l_SWUtilityMng.ValidateAllResourcesAss();
                 end;
             }
         }

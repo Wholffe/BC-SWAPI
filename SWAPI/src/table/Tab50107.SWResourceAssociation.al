@@ -26,6 +26,13 @@ table 50107 "SW Resource Association"
         field(4; AssResourceID; Integer)
         {
             Caption = 'Associated Resource ID';
+            TableRelation = if (ResourceType = const(films)) "SW Films".ID
+            else if (ResourceType = const(people)) "SW People".ID
+            else if (ResourceType = const(planets)) "SW Planets".ID
+            else if (ResourceType = const(species)) "SW Species".ID
+            else if (ResourceType = const(starships)) "SW Starships".ID
+            else if (ResourceType = const(vehicles)) "SW Vehicles".ID;
+            ValidateTableRelation = false;
 
             trigger OnValidate()
             var
@@ -43,6 +50,9 @@ table 50107 "SW Resource Association"
                 if l_RecRef.FindFirst() then begin
                     AssResourceName := l_RecRef.Field(2).Value;
                     AssResourceValue := l_RecRef.Field(3).Value;
+                end else begin
+                    AssResourceName := '';
+                    AssResourceValue := '';
                 end;
                 l_RecRef.Close();
             end;

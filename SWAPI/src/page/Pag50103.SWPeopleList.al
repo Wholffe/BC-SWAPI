@@ -43,17 +43,20 @@ page 50103 "SW People List"
                 field("SkinColor "; Rec.SkinColor)
                 {
                 }
-                field("Homeworld "; Rec.Homeworld)
+                field("HomeworldID"; Rec.HomeworldID)
+                {
+                    Visible = false;
+                }
+                field(HomeworldName; Rec.HomeworldName)
                 {
                     trigger OnDrillDown()
                     var
                         l_Planets: Record "SW Planets";
                     begin
-                        if Rec.Homeworld = '' then
-                            exit;
-                        l_Planets.SetRange(Name, Rec.Homeworld);
-                        if l_Planets.FindSet() then
+                        if l_Planets.Get(Rec.HomeworldID) then begin
+                            l_Planets.SetRecFilter();
                             Page.Run(Page::"SW Planets List", l_Planets);
+                        end;
                     end;
                 }
                 field(Films; Rec.Films)
@@ -112,8 +115,10 @@ page 50103 "SW People List"
                 trigger OnAction()
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
+                    l_SWUtilityMng: Codeunit "SW Utility Mng";
                 begin
                     l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::people);
+                    l_SWUtilityMng.ValidateAllResourcesAss();
                 end;
             }
         }

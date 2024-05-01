@@ -53,9 +53,21 @@ page 50117 "SW Species Card"
                 {
                     Importance = Promoted;
                 }
-                field(Homeworld; Rec.Homeworld)
+                field(HomeworldID; Rec.HomeworldID)
+                {
+                }
+                field(HomeworldName; Rec.HomeworldName)
                 {
                     Importance = Promoted;
+                    trigger OnDrillDown()
+                    var
+                        l_Planets: Record "SW Planets";
+                    begin
+                        if l_Planets.Get(Rec.HomeworldID) then begin
+                            l_Planets.SetRecFilter();
+                            Page.Run(Page::"SW Planets List", l_Planets);
+                        end;
+                    end;
                 }
             }
             part(PeopleResourceAssPart; SWResourceAssListPart)

@@ -93,8 +93,10 @@ page 50107 "SW Vehicles List"
                 trigger OnAction()
                 var
                     l_DataImporter: Codeunit "SWAPI Data Import Mng";
+                    l_SWUtilityMng: Codeunit "SW Utility Mng";
                 begin
                     l_DataImporter.FillAllResourcesOfAKind("SW Resource Types"::vehicles);
+                    l_SWUtilityMng.ValidateAllResourcesAss();
                 end;
             }
         }

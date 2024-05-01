@@ -7,24 +7,6 @@ codeunit 50103 "SWAPI Data Import Mng"
         g_SWResourceMng: Codeunit "SW Resource Type Helper";
         g_SWUtilityMng: Codeunit "SW Utility Mng";
 
-    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
-    var
-        l_RecRef: RecordRef;
-        l_MaxID: Integer;
-        l_ResourceRouteUrl: Text;
-    begin
-        l_ResourceRouteUrl := g_SWResourceMng.GetUrlFromEnum(p_Resource);
-        l_MaxID := g_SWUtilityMng.GetCategoryCountFromUrl(l_ResourceRouteUrl);
-        l_RecRef.Open(g_SWResourceMng.GetRecRefTableNoFromResourceEnum(p_Resource));
-        if not (l_RecRef.Count = l_MaxID) then begin
-            l_RecRef.Close();
-            exit;
-        end;
-        l_RecRef.Close();
-        OnAfterDataAlreadyImported(p_Resource);
-        exit(true)
-    end;
-
 
     /// <summary>
     /// Fills all resources of a specified Star Wars resource type.
@@ -63,9 +45,26 @@ codeunit 50103 "SWAPI Data Import Mng"
             end;
             l_CurrID := l_CurrID + 1;
         end;
-        g_SWUtilityMng.ValidateAllResourcesAss();
         l_Dialog.Close();
         OnAfterFillAllResourcesOfAKind(p_Resource);
+    end;
+
+    local procedure DataAlreadyImported(p_Resource: Enum "SW Resource Types"): Boolean
+    var
+        l_RecRef: RecordRef;
+        l_MaxID: Integer;
+        l_ResourceRouteUrl: Text;
+    begin
+        l_ResourceRouteUrl := g_SWResourceMng.GetUrlFromEnum(p_Resource);
+        l_MaxID := g_SWUtilityMng.GetCategoryCountFromUrl(l_ResourceRouteUrl);
+        l_RecRef.Open(g_SWResourceMng.GetRecRefTableNoFromResourceEnum(p_Resource));
+        if not (l_RecRef.Count = l_MaxID) then begin
+            l_RecRef.Close();
+            exit;
+        end;
+        l_RecRef.Close();
+        OnAfterDataAlreadyImported(p_Resource);
+        exit(true)
     end;
 
     local procedure FillJObjectContentInSWFilms(p_ID: Integer; p_JObject: JsonObject)
@@ -109,7 +108,7 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_People.Height := g_JMng.GetJsonIntegerField(p_JObject, 'height');
             l_People.Mass := g_JMng.GetJsonIntegerField(p_JObject, 'mass');
             l_People.SkinColor := g_JMng.GetJsonTextField(p_JObject, 'skin_color');
-            l_People.Validate(Homeworld, g_JMng.GetJsonTextField(p_JObject, 'homeworld'));
+            l_People.HomeworldID := GetAssIDFromAssUrl(g_JMng.GetJsonTextField(p_JObject, 'homeworld'), "SW Resource Types"::planets);
             l_People.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
             l_People.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
             l_People.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
@@ -164,7 +163,7 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_Species.HairColors := g_JMng.GetJsonTextField(p_JObject, 'hair_colors');
             l_Species.SkinColors := g_JMng.GetJsonTextField(p_JObject, 'skin_colors');
             l_Species.Language := g_JMng.GetJsonTextField(p_JObject, 'language');
-            l_Species.Validate(Homeworld, g_JMng.GetJsonTextField(p_JObject, 'homeworld'));
+            l_Species.HomeworldID := GetAssIDFromAssUrl(g_JMng.GetJsonTextField(p_JObject, 'homeworld'), "SW Resource Types"::planets);
             l_Species.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
             l_Species.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
             l_Species.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
@@ -280,7 +279,7 @@ codeunit 50103 "SWAPI Data Import Mng"
         if Evaluate(l_AssResourceID, p_AssUrl) then
             exit(l_AssResourceID)
         else
-            Error('%1 is not a valid ID', l_AssResourceID);
+            exit(0);
     end;
 
     local procedure ResourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean
