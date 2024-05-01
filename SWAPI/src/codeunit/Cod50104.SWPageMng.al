@@ -5,6 +5,12 @@ codeunit 50104 "SW Page Mng"
     var
         g_SWResourceHelper: Codeunit "SW Resource Type Helper";
 
+    /// <summary>
+    /// Navigates to a page showing associations between the primary SW resource type and the specified associated resource type.
+    /// </summary>
+    /// <param name="p_ResourceType">The resource type of the record from which you are calling this function from.</param>
+    /// <param name="p_ID">The ID of the record from which you are calling this function from.</param>
+    /// <param name="p_AssociatedResourceType">The resource type for which you want to view associations.</param>
     procedure DrillDownPage(p_ResourceType: Enum "SW Resource Types"; p_ID: Integer; p_AssociatedResourceType: Enum "SW Resource Types")
     var
         l_RecRef: RecordRef;

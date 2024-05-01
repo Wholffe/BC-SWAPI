@@ -10,6 +10,10 @@ codeunit 50105 "SW Resource Type Helper"
         g_StarshipsL: Label 'Starships';
         g_VehiclesL: Label 'Vehicles';
 
+    /// <summary>
+    /// Get the enum of the SW resource type based on the specified text.
+    /// </summary>
+    /// <exception cref="Error">Thrown when no matching enumeration value is found for the provided text.</exception>
     procedure GetEnumFromText(p_Text: Text): Enum "SW Resource Types"
     begin
         case p_Text of
@@ -30,6 +34,10 @@ codeunit 50105 "SW Resource Type Helper"
         end;
     end;
 
+    /// <summary>
+    /// Get the list page number associated with the specified SW resource type enumeration.
+    /// </summary>
+    /// <exception cref="Error">Thrown when no matching l_PageNo is found for the provided enum.</exception>
     procedure GetListPageNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
     var
         l_PageNo: Integer;
@@ -53,6 +61,10 @@ codeunit 50105 "SW Resource Type Helper"
         exit(l_PageNo);
     end;
 
+    /// <summary>
+    /// Get the table number corresponding to the specified SW resource type.
+    /// </summary>
+    /// <exception cref="Error">Thrown when no matching TableNo is found for the provided enum.</exception>
     procedure GetRecRefTableNoFromResourceEnum(p_Resource: Enum "SW Resource Types"): Integer
     begin
         case p_Resource of
@@ -73,6 +85,10 @@ codeunit 50105 "SW Resource Type Helper"
         end;
     end;
 
+    /// <summary>
+    /// Get the corresponding resource enum from a given table number.
+    /// </summary>
+    /// <exception cref="Error">Thrown when no matching TableNo is found for the provided enum.</exception>
     procedure GetResourceEnumFromRecRefTableNo(p_TableNo: Integer): Enum "SW Resource Types"
     begin
         case p_TableNo of
@@ -113,6 +129,9 @@ codeunit 50105 "SW Resource Type Helper"
         end;
     end;
 
+    /// <summary>
+    /// Get the URL corresponding to the specified SW resource type enum.
+    /// </summary>
     procedure GetUrlFromEnum(p_ResourceType: Enum "SW Resource Types"): Text
     var
         l_APISetup: Record SWAPISetup;

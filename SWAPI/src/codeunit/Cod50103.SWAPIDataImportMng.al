@@ -25,6 +25,14 @@ codeunit 50103 "SWAPI Data Import Mng"
         exit(true)
     end;
 
+
+    /// <summary>
+    /// Fills all resources of a specified Star Wars resource type.
+    /// </summary>
+    /// <param name="p_Resource">The resource type you want to fill the database with.</param>
+    /// <remarks>
+    ///     This function retrieves data for the specified resource type from the corresponding API route and fills the database with the retrieved data.
+    /// </remarks>
     procedure FillAllResourcesOfAKind(p_Resource: Enum "SW Resource Types")
     var
         l_Dialog: Dialog;

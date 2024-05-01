@@ -5,6 +5,62 @@ Business Central SWAPI Integration
 
 **BC-SWAPI** is a project that seamlessly integrates data from the Star Wars API (SWAPI) into Microsoft Dynamics 365 Business Central. Here's what you need to know:
 
+```mermaid
+erDiagram
+    Films {
+        Integer ID PK
+        Integer Species
+        Integer Starships
+        Integer Vehicles
+        Integer Characters
+        Integer Planets
+    }
+    People {
+        Integer ID PK
+        Integer Films
+        Integer Species
+        Integer Starships
+        Integer Vehicles
+    }
+    Planets {
+        Integer ID PK
+        Integer Residents
+        Integer Films
+    }
+    Species {
+        Integer ID PK
+        Integer Homeworld
+        Integer People
+        Integer Films
+    }
+    Starships {
+        Integer ID PK
+        Integer Films
+        Integer Pilots
+    }
+    Vehicles {
+        Integer ID PK
+        Integer Films
+        Integer Pilots
+    }
+    "Resource Assosiation" {
+        Enum Resource PK
+        Integer ID PK,FK
+        Enum AssResource PK
+        Integer AssID PK,FK
+    }
+    
+    Films }|--|{ "Resource Assosiation" : has
+    People }|--|{ "Resource Assosiation" : has
+    Planets }|--|{ "Resource Assosiation" : has
+    Species }|--|{ "Resource Assosiation" : has
+    Species }|--|| Planets : Homeworld
+    Starships }|--|{ "Resource Assosiation" : has
+    Vehicles }|--|{ "Resource Assosiation" : has
+```
+
+This ER diagram outlines the database structure implemented for managing the utilized data. It includes entities like Films, People, Planets, Species, Starships, and Vehicles, each with their corresponding attributes. Additionally, there's a 'Resource Association' table facilitating the many-to-many relationship between Films and other resources such as People, Planets, Species, Starships, and Vehicles.
+
 ### About SWAPI
 - SWAPI (Star Wars API) is based on the original data set from [swapi.dev](https://swapi.dev/), which in turn was sourced from [swapi.co](https://swapi.dev/about).
 - The data includes information about People, Films, Species, Starships, Vehicles, and Planets from the Star Wars universe.

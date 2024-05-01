@@ -30,6 +30,14 @@ codeunit 50100 "SWAPI Setup Mng"
         OnAfterClearAllSWData();
     end;
 
+    /// <summary>
+    /// Initiates the process to delete all records of a specified resource type.
+    /// </summary>
+    /// <remarks>
+    ///     This procedure prompts the user to select a resource type using a standard dialog.
+    ///     Upon selecting a resource type and confirming, it deletes all records of that type from the database
+    ///     along with their associated resource associations. After deletion, it validates all resource associations.
+    /// </remarks>
     procedure DeleteSingleResource()
     var
         l_ResourceAss: Record "SW Resource Association";
@@ -53,6 +61,19 @@ codeunit 50100 "SWAPI Setup Mng"
         OnAfterDeleteSingleResource(l_Resource);
     end;
 
+    /// <summary>
+    /// Fills all available SW resources in the database.
+    /// </summary>
+    /// <remarks>
+    ///     This procedure fills the database with resources in the following order:
+    ///     1. Films
+    ///     2. Planets
+    ///     3. People
+    ///     4. Species
+    ///     5. Starships
+    ///     6. Vehicles
+    ///     After filling all resources, it validates all resource associations.
+    /// </remarks>
     procedure FillAllResources()
     begin
         g_DataImportMng.FillAllResourcesOfAKind("SW Resource Types"::films);
@@ -64,6 +85,13 @@ codeunit 50100 "SWAPI Setup Mng"
         g_SWUtilityMng.ValidateAllResourcesAss();
     end;
 
+    /// <summary>
+    /// Initiates the process to fill a single resource.
+    /// </summary>
+    /// <remarks>
+    ///     This procedure prompts the user to select a resource type using a standard dialog.
+    ///     Upon selecting a resource type and confirming, it triggers the process to fill all resources of that type.
+    /// </remarks>
     procedure FillSingleResource()
     var
         l_ResourceDialog: Page "SW Resource StandardDialog";
@@ -110,6 +138,9 @@ codeunit 50100 "SWAPI Setup Mng"
         exit(true);
     end;
 
+    /// <summary>
+    /// Tests the API connection by sending a ping request and then displays 'Pong' as a confirmation message.
+    /// </summary>
     procedure PingAPIConnection()
     var
         l_SWAPISetup: Record SWAPISetup;
@@ -126,6 +157,9 @@ codeunit 50100 "SWAPI Setup Mng"
         Message('Pong');
     end;
 
+    /// <summary>
+    /// Displays the number of entries available for a selected resource type based on the associated URL as a confirmation message.
+    /// </summary>
     procedure ShowNumberOfRequestEntries()
     var
         l_ResourceDialog: Page "SW Resource StandardDialog";

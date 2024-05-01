@@ -29,6 +29,13 @@ codeunit 50107 "SW Status Notification Mng"
         exit(StrSubstNo(g_SingleResourceDeletedL, g_SWResourceHelper.GetResourceL(p_Resource)))
     end;
 
+    /// <summary>
+    /// Sends a status notification with the specified message.
+    /// </summary>
+    /// <param name="p_StatusL">The message to include in the status notification.</param>
+    /// <remarks>
+    ///     This procedure sends a notification containing the provided message if GUI is allowed and the message is not empty.
+    /// </remarks>
     local procedure SendStatusNotification(p_StatusL: Text)
     var
         l_StatusNotification: Notification;

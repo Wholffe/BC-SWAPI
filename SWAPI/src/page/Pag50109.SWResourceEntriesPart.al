@@ -118,7 +118,7 @@ page 50109 SWResourceEntriesPart
             }
             cuegroup(ResourceAssEntries)
             {
-                Caption = 'Resource Assosiations';
+                Caption = 'Resource Associations';
 
                 field(ResourceAss; g_DataStatisticsMng.GetResourceAssCount())
                 {

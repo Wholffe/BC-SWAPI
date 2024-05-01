@@ -6,6 +6,10 @@ codeunit 50101 "SW Utility Mng"
         g_JMng: Codeunit "SW Json Mng";
         g_SWResourceHelper: Codeunit "SW Resource Type Helper";
 
+    /// <summary>
+    /// Deletes associated records from a given resource record.
+    /// </summary>
+    ///<param name="p_Rec">The variant representing the record to delete. Records must have a valid result for the function GetResourceEnumFromRecRefTableNo///</param>
     procedure DeleteAssRecords(p_Rec: Variant)
     var
         l_ResourceAss: Record "SW Resource Association";
@@ -29,6 +33,11 @@ codeunit 50101 "SW Utility Mng"
             until l_ResourceAss.Next() = 0;
     end;
 
+    /// <summary>
+    /// Retrieves the count of a category from the provided URL.
+    /// </summary>
+    /// <param name="p_Url">The URL to fetch data from.</param>
+    /// <returns>The count of the category found in the JSON response.</returns>
     procedure GetCategoryCountFromUrl(p_Url: Text): Integer
     var
         l_Count: Integer;
@@ -46,6 +55,9 @@ codeunit 50101 "SW Utility Mng"
         end;
     end;
 
+    /// <summary>
+    /// Validate the field "AssResourceID" of all records in "SW Resource Association"
+    /// </summary>
     procedure ValidateAllResourcesAss()
     var
         l_ResourceAss: Record "SW Resource Association";

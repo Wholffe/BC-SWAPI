@@ -46,12 +46,6 @@ page 50110 JediArchiveRoleCenter
                 Caption = 'API Setup';
                 RunObject = page SWAPISetup;
             }
-            action(ResourceAssociation)
-            {
-                ApplicationArea = All;
-                Caption = 'Resource Association';
-                RunObject = page "SW Resource Association List";
-            }
         }
         area(Processing)
         {
