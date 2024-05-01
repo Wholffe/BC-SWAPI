@@ -85,7 +85,25 @@ table 50103 "SW Starships"
             Caption = 'Consumables';
             ToolTip = 'The maximum length of time that this starship can provide consumables for its entire crew without having to resupply.';
         }
-        field(15; Films; Integer)
+        field(15; Url; Text[100])
+        {
+            Caption = 'Url';
+            Editable = false;
+            ToolTip = 'The hypermedia URL of this resource.';
+        }
+        field(16; Created; DateTime)
+        {
+            Caption = 'Created';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
+        }
+        field(17; Edited; DateTime)
+        {
+            Caption = 'Edited';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
+        }
+        field(100; Films; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(starships), ResourceID = field(ID), AssociatedResourceType = const(films)));
             Caption = 'Films';
@@ -93,31 +111,13 @@ table 50103 "SW Starships"
             FieldClass = FlowField;
             ToolTip = 'The number of films that this starship has appeared in.';
         }
-        field(16; Pilots; Integer)
+        field(101; Pilots; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(starships), ResourceID = field(ID), AssociatedResourceType = const(people)));
             Caption = 'Pilots';
             Editable = false;
             FieldClass = FlowField;
             ToolTip = 'The number of people that this starship has piloted by.';
-        }
-        field(17; Url; Text[100])
-        {
-            Caption = 'Url';
-            Editable = false;
-            ToolTip = 'The hypermedia URL of this resource.';
-        }
-        field(18; Created; DateTime)
-        {
-            Caption = 'Created';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
-        }
-        field(19; Edited; DateTime)
-        {
-            Caption = 'Edited';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }
     keys

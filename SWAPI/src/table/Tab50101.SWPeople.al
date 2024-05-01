@@ -56,19 +56,37 @@ table 50101 "SW People"
         }
         field(10; HomeworldID; Integer)
         {
-            Caption = 'Homeworld ID';
-            ToolTip = 'The name of a planet resource, a planet that this person was born on or inhabits.';
             BlankZero = true;
+            Caption = 'Homeworld ID';
             TableRelation = "SW Planets".ID;
+            ToolTip = 'The name of a planet resource, a planet that this person was born on or inhabits.';
         }
-        field(18; HomeworldName; Text[100])
+        field(11; Url; Text[100])
+        {
+            Caption = 'Url';
+            Editable = false;
+            ToolTip = 'The hypermedia URL of this resource.';
+        }
+        field(12; Created; DateTime)
+        {
+            Caption = 'Created';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
+        }
+        field(13; Edited; DateTime)
+        {
+            Caption = 'Edited';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
+        }
+        field(100; HomeworldName; Text[100])
         {
             CalcFormula = lookup("SW Planets".Name where(ID = field(HomeworldID)));
             Caption = 'Homeworld';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(11; Species; Text[100])
+        field(101; Species; Text[100])
         {
             CalcFormula = lookup("SW Resource Association".AssResourceName where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(species)));
             Caption = 'Species';
@@ -76,7 +94,7 @@ table 50101 "SW People"
             FieldClass = FlowField;
             ToolTip = 'The number of species resources that this person belongs to.';
         }
-        field(12; Films; Integer)
+        field(102; Films; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(films)));
             Caption = 'Films';
@@ -84,7 +102,7 @@ table 50101 "SW People"
             FieldClass = FlowField;
             ToolTip = 'The number of film resources that this person has been in.';
         }
-        field(13; Starships; Integer)
+        field(103; Starships; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(starships)));
             Caption = 'Starships';
@@ -92,31 +110,13 @@ table 50101 "SW People"
             FieldClass = FlowField;
             ToolTip = 'The number of starship resources that this person has piloted.';
         }
-        field(14; Vehicles; Integer)
+        field(104; Vehicles; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(vehicles)));
             Caption = 'Vehicles';
             Editable = false;
             FieldClass = FlowField;
             ToolTip = 'The number of vehicle resources that this person has piloted.';
-        }
-        field(15; Url; Text[100])
-        {
-            Caption = 'Url';
-            Editable = false;
-            ToolTip = 'The hypermedia URL of this resource.';
-        }
-        field(16; Created; DateTime)
-        {
-            Caption = 'Created';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
-        }
-        field(17; Edited; DateTime)
-        {
-            Caption = 'Edited';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }
     keys

@@ -66,14 +66,32 @@ table 50105 "SW Species"
             TableRelation = "SW Planets".ID;
             ToolTip = 'The name of a planet resource, a planet that this person was born on or inhabits.';
         }
-        field(17; HomeworldName; Text[100])
+        field(12; Url; Text[100])
+        {
+            Caption = 'Url';
+            Editable = false;
+            ToolTip = 'The hypermedia URL of this resource.';
+        }
+        field(13; Created; DateTime)
+        {
+            Caption = 'Created';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
+        }
+        field(14; Edited; DateTime)
+        {
+            Caption = 'Edited';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
+        }
+        field(100; HomeworldName; Text[100])
         {
             CalcFormula = lookup("SW Planets".Name where(ID = field(HomeworldID)));
             Caption = 'Homeworld';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(12; People; Integer)
+        field(101; People; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(species), ResourceID = field(ID), AssociatedResourceType = const(people)));
             Caption = 'People';
@@ -81,31 +99,13 @@ table 50105 "SW Species"
             FieldClass = FlowField;
             ToolTip = 'The number of people that are a part of this species.';
         }
-        field(13; Films; Integer)
+        field(102; Films; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(species), ResourceID = field(ID), AssociatedResourceType = const(films)));
             Caption = 'Films';
             Editable = false;
             FieldClass = FlowField;
             ToolTip = 'The number of films that this species has appeared in.';
-        }
-        field(14; Url; Text[100])
-        {
-            Caption = 'Url';
-            Editable = false;
-            ToolTip = 'The hypermedia URL of this resource.';
-        }
-        field(15; Created; DateTime)
-        {
-            Caption = 'Created';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
-        }
-        field(16; Edited; DateTime)
-        {
-            Caption = 'Edited';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }
     keys

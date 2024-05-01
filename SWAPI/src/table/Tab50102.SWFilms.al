@@ -42,7 +42,25 @@ table 50102 "SW Films"
             Caption = 'Release date';
             ToolTip = 'The ISO 8601 date format of film release at original creator country.';
         }
-        field(8; Species; Integer)
+        field(8; Url; Text[500])
+        {
+            Caption = 'Url';
+            Editable = false;
+            ToolTip = 'The hypermedia URL of this resource.';
+        }
+        field(9; Created; DateTime)
+        {
+            Caption = 'Created';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
+        }
+        field(10; Edited; DateTime)
+        {
+            Caption = 'Edited';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
+        }
+        field(100; Species; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(species)));
             Caption = 'Species';
@@ -50,7 +68,7 @@ table 50102 "SW Films"
             FieldClass = FlowField;
             ToolTip = 'The number of species resources that are in this film.';
         }
-        field(9; Starships; Integer)
+        field(101; Starships; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(starships)));
             Caption = 'Starships';
@@ -58,7 +76,7 @@ table 50102 "SW Films"
             FieldClass = FlowField;
             ToolTip = 'The number of starship resources that are in this film.';
         }
-        field(10; Vehicles; Integer)
+        field(102; Vehicles; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(vehicles)));
             Caption = 'Vehicles';
@@ -66,7 +84,7 @@ table 50102 "SW Films"
             FieldClass = FlowField;
             ToolTip = 'The number of vehicles resources that are in this film.';
         }
-        field(11; Characters; Integer)
+        field(103; Characters; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(people)));
             Caption = 'Characters';
@@ -74,31 +92,13 @@ table 50102 "SW Films"
             FieldClass = FlowField;
             ToolTip = 'The number of people resources that are in this film.';
         }
-        field(12; Planets; Integer)
+        field(104; Planets; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(films), ResourceID = field(ID), AssociatedResourceType = const(planets)));
             Caption = 'Planets';
             Editable = false;
             FieldClass = FlowField;
             ToolTip = 'The number of planet resources that are in this film.';
-        }
-        field(13; Url; Text[500])
-        {
-            Caption = 'Url';
-            Editable = false;
-            ToolTip = 'The hypermedia URL of this resource.';
-        }
-        field(14; Created; DateTime)
-        {
-            Caption = 'Created';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
-        }
-        field(15; Edited; DateTime)
-        {
-            Caption = 'Edited';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }
     keys

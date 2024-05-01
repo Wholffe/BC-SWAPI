@@ -63,7 +63,25 @@ table 50106 "SW Planets"
             Caption = 'Surface water';
             ToolTip = 'The percentage of the planet surface that is naturally occurring water or bodies of water.';
         }
-        field(11; Residents; Integer)
+        field(11; Url; Text[100])
+        {
+            Caption = 'Url';
+            Editable = false;
+            ToolTip = 'The hypermedia URL of this resource.';
+        }
+        field(12; Created; DateTime)
+        {
+            Caption = 'Created';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
+        }
+        field(13; Edited; DateTime)
+        {
+            Caption = 'Edited';
+            Editable = false;
+            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
+        }
+        field(100; Residents; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(planets), ResourceID = field(ID), AssociatedResourceType = const(people)));
             Caption = 'Residents';
@@ -71,31 +89,13 @@ table 50106 "SW Planets"
             FieldClass = FlowField;
             ToolTip = 'The number of people resources that live on this planet.';
         }
-        field(12; Films; Integer)
+        field(101; Films; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(planets), ResourceID = field(ID), AssociatedResourceType = const(films)));
             Caption = 'Films';
             Editable = false;
             FieldClass = FlowField;
             ToolTip = 'The number of film resources that this planet has appeared in.';
-        }
-        field(13; Url; Text[100])
-        {
-            Caption = 'Url';
-            Editable = false;
-            ToolTip = 'The hypermedia URL of this resource.';
-        }
-        field(14; Created; DateTime)
-        {
-            Caption = 'Created';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
-        }
-        field(15; Edited; DateTime)
-        {
-            Caption = 'Edited';
-            Editable = false;
-            ToolTip = 'The ISO 8601 date format of the time that this resource was edited.';
         }
     }
     keys
