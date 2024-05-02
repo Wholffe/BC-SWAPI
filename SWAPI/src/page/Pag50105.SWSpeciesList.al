@@ -54,15 +54,15 @@ page 50105 "SW Species List"
                 {
                     trigger OnDrillDown()
                     var
-                        l_Planets: Record "SW Planets";
+                        l_Planet: Record "SW Planet";
                     begin
-                        if l_Planets.Get(Rec.HomeworldID) then begin
-                            l_Planets.SetRecFilter();
-                            Page.Run(Page::"SW Planets List", l_Planets);
+                        if l_Planet.Get(Rec.HomeworldID) then begin
+                            l_Planet.SetRecFilter();
+                            Page.Run(Page::"SW Planet List", l_Planet);
                         end;
                     end;
                 }
-                field(People; Rec.People)
+                field(Characters; Rec.Characters)
                 {
                     trigger OnDrillDown()
                     begin

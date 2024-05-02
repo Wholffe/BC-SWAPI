@@ -9,7 +9,7 @@ codeunit 50106 "SW Data Statistics Mng"
 
     procedure GetFilmCircleChartParam(): JsonArray
     var
-        l_Films: Record "SW Films";
+        l_Film: Record "SW Film";
         l_CurrentFilmID: Integer;
         l_InnerJArray: JsonArray;
         l_JArray: JsonArray;
@@ -19,9 +19,9 @@ codeunit 50106 "SW Data Statistics Mng"
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
-        for l_CurrentFilmID := 1 to l_Films.Count do begin
-            l_Films.Get(l_CurrentFilmID);
-            l_InnerJArray.Add(l_Films.Name);
+        for l_CurrentFilmID := 1 to l_Film.Count do begin
+            l_Film.Get(l_CurrentFilmID);
+            l_InnerJArray.Add(l_Film.Name);
             l_InnerJArray.Add(GetNumberResourceAssFilm(l_CurrentFilmID));
             l_JArray.Add(l_InnerJArray);
             clear(l_InnerJArray);
@@ -61,7 +61,7 @@ codeunit 50106 "SW Data Statistics Mng"
         clear(l_InnerJArray);
 
         l_InnerJArray.Add(g_SWResourceHelper.GetResourceL("SW Resource Types"::people));
-        l_InnerJArray.Add(GetSWPeopleCount());
+        l_InnerJArray.Add(GetSWCharacterCount());
         l_JArray.Add(l_InnerJArray);
         clear(l_InnerJArray);
 
@@ -87,25 +87,25 @@ codeunit 50106 "SW Data Statistics Mng"
         exit(l_JArray)
     end;
 
-    procedure GetSWFilmCount(): Integer
+    procedure GetSWCharacterCount(): Integer
     var
-        l_Films: Record "SW Films";
+        l_Character: Record "SW Character";
     begin
-        exit(l_Films.Count);
+        exit(l_Character.Count);
     end;
 
-    procedure GetSWPeopleCount(): Integer
+    procedure GetSWFilmCount(): Integer
     var
-        l_People: Record "SW People";
+        l_Film: Record "SW Film";
     begin
-        exit(l_People.Count);
+        exit(l_Film.Count);
     end;
 
     procedure GetSWPlanetCount(): Integer
     var
-        l_Planets: Record "SW Planets";
+        l_Planet: Record "SW Planet";
     begin
-        exit(l_Planets.Count);
+        exit(l_Planet.Count);
     end;
 
     procedure GetSWSpeciesCount(): Integer
@@ -117,15 +117,15 @@ codeunit 50106 "SW Data Statistics Mng"
 
     procedure GetSWStarshipCount(): Integer
     var
-        l_Starships: Record "SW Starships";
+        l_Starship: Record "SW Starship";
     begin
-        exit(l_Starships.Count)
+        exit(l_Starship.Count)
     end;
 
     procedure GetSWVehicleCount(): Integer
     var
-        l_Vehicles: Record "SW Vehicles";
+        l_Vehicle: Record "SW Vehicle";
     begin
-        exit(l_Vehicles.Count)
+        exit(l_Vehicle.Count)
     end;
 }

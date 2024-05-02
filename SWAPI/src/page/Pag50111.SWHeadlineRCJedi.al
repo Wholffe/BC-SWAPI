@@ -40,20 +40,20 @@ page 50111 SWHeadlineRCJedi
 
     local procedure GetRandomPlanetText(): Text
     var
-        l_Planets: Record "SW Planets";
+        l_Planet: Record "SW Planet";
         l_ID: Integer;
         l_Text: Text;
     begin
         l_ID := 0;
-        if l_Planets.Count = 0 then
+        if l_Planet.Count = 0 then
             exit(g_PlanetEntriesNotFoundText);
-        while not (l_Planets.Get(l_ID)) do
-            l_ID := Random(l_Planets.Count);
+        while not (l_Planet.Get(l_ID)) do
+            l_ID := Random(l_Planet.Count);
 
-        if l_Planets.Population = 0 then
-            l_Text := StrSubstNo(g_PlanetUnknownCounterText, l_Planets.Name)
+        if l_Planet.Population = 0 then
+            l_Text := StrSubstNo(g_PlanetUnknownCounterText, l_Planet.Name)
         else
-            l_Text := StrSubstNo(g_PlanetKnownCounterText, l_Planets.Population, l_Planets.Name);
+            l_Text := StrSubstNo(g_PlanetKnownCounterText, l_Planet.Population, l_Planet.Name);
         exit(l_Text)
     end;
 }

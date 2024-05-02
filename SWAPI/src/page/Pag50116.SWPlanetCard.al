@@ -5,7 +5,7 @@ page 50116 "SW Planet Card"
     ApplicationArea = All;
     Caption = 'SW Planet Card';
     PageType = Card;
-    SourceTable = "SW Planets";
+    SourceTable = "SW Planet";
 
     layout
     {

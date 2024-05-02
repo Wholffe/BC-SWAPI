@@ -48,12 +48,12 @@ page 50109 SWResourceEntriesPart
 
                     trigger OnDrillDown()
                     var
-                        l_Starships: Record "SW Starships";
+                        l_Starship: Record "SW Starship";
                     begin
-                        l_Starships.Reset();
-                        l_Starships.SetCurrentKey(CostInCredits);
-                        l_Starships.Ascending(false);
-                        Page.Run(Page::"SW Starships List", l_Starships);
+                        l_Starship.Reset();
+                        l_Starship.SetCurrentKey(CostInCredits);
+                        l_Starship.Ascending(false);
+                        Page.Run(Page::"SW Starship List", l_Starship);
                     end;
                 }
             }
@@ -64,19 +64,19 @@ page 50109 SWResourceEntriesPart
                 field(SWFilmsEntries; g_DataStatisticsMng.GetSWFilmCount())
                 {
                     ApplicationArea = All;
-                    Caption = 'SW Films Entries';
+                    Caption = 'SW Film Entries';
                     trigger OnDrillDown()
                     begin
-                        Page.Run(Page::"SW Films List");
+                        Page.Run(Page::"SW Film List");
                     end;
                 }
-                field(SWPeopleEntries; g_DataStatisticsMng.GetSWPeopleCount())
+                field(SWCharacterEntries; g_DataStatisticsMng.GetSWCharacterCount())
                 {
                     ApplicationArea = All;
-                    Caption = 'SW People Entries';
+                    Caption = 'SW Character Entries';
                     trigger OnDrillDown()
                     begin
-                        Page.Run(Page::"SW People List");
+                        Page.Run(Page::"SW Character List");
                     end;
                 }
                 field(SWPlanetEntries; g_DataStatisticsMng.GetSWPlanetCount())
@@ -85,7 +85,7 @@ page 50109 SWResourceEntriesPart
                     Caption = 'SW Planet Entries';
                     trigger OnDrillDown()
                     begin
-                        Page.Run(Page::"SW Planets List");
+                        Page.Run(Page::"SW Planet List");
                     end;
                 }
                 field(SWSpeciesEntries; g_DataStatisticsMng.GetSWSpeciesCount())
@@ -100,10 +100,10 @@ page 50109 SWResourceEntriesPart
                 field(SWStarshipEntries; g_DataStatisticsMng.GetSWStarshipCount())
                 {
                     ApplicationArea = All;
-                    Caption = 'SW Starships Entries';
+                    Caption = 'SW Starship Entries';
                     trigger OnDrillDown()
                     begin
-                        Page.Run(Page::"SW Starships List");
+                        Page.Run(Page::"SW Starship List");
                     end;
                 }
                 field(SWVehicleEntries; g_DataStatisticsMng.GetSWVehicleCount())
@@ -112,7 +112,7 @@ page 50109 SWResourceEntriesPart
                     Caption = 'SW Vehicle Entries';
                     trigger OnDrillDown()
                     begin
-                        Page.Run(Page::"SW Vehicles List");
+                        Page.Run(Page::"SW Vehicle List");
                     end;
                 }
             }
@@ -156,7 +156,7 @@ page 50109 SWResourceEntriesPart
     begin
         l_Count :=
             g_DataStatisticsMng.GetSWFilmCount() +
-            g_DataStatisticsMng.GetSWPeopleCount() +
+            g_DataStatisticsMng.GetSWCharacterCount() +
             g_DataStatisticsMng.GetSWPlanetCount() +
             g_DataStatisticsMng.GetSWSpeciesCount() +
             g_DataStatisticsMng.GetSWStarshipCount() +
@@ -166,13 +166,13 @@ page 50109 SWResourceEntriesPart
 
     local procedure GetTotalStarshipCostInMillionCredits(): Decimal
     var
-        l_Starships: Record "SW Starships";
+        l_Starship: Record "SW Starship";
         l_CostTotal: Integer;
     begin
-        if l_Starships.FindFirst() then
+        if l_Starship.FindFirst() then
             repeat
-                l_CostTotal += l_Starships.CostInCredits;
-            until l_Starships.Next() = 0;
+                l_CostTotal += l_Starship.CostInCredits;
+            until l_Starship.Next() = 0;
         exit(l_CostTotal / 1000000);
     end;
 }

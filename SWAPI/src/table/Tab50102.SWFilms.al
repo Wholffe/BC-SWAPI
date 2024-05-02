@@ -1,6 +1,6 @@
-table 50102 "SW Films"
+table 50102 "SW Film"
 {
-    Caption = 'SW Films';
+    Caption = 'SW Film';
     DataClassification = ToBeClassified;
 
     fields
@@ -90,7 +90,7 @@ table 50102 "SW Films"
             Caption = 'Characters';
             Editable = false;
             FieldClass = FlowField;
-            ToolTip = 'The number of people resources that are in this film.';
+            ToolTip = 'The number of characters resources that are in this film.';
         }
         field(104; Planets; Integer)
         {

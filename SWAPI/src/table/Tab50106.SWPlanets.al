@@ -1,6 +1,6 @@
-table 50106 "SW Planets"
+table 50106 "SW Planet"
 {
-    Caption = 'SW Planets';
+    Caption = 'SW Planet';
     DataClassification = ToBeClassified;
 
     fields
@@ -87,7 +87,7 @@ table 50106 "SW Planets"
             Caption = 'Residents';
             Editable = false;
             FieldClass = FlowField;
-            ToolTip = 'The number of people resources that live on this planet.';
+            ToolTip = 'The number of character resources that live on this planet.';
         }
         field(101; Films; Integer)
         {

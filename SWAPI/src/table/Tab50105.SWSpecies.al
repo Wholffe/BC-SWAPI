@@ -63,7 +63,7 @@ table 50105 "SW Species"
         {
             BlankZero = true;
             Caption = 'Homeworld ID';
-            TableRelation = "SW Planets".ID;
+            TableRelation = "SW Planet".ID;
         }
         field(12; Url; Text[100])
         {
@@ -85,19 +85,19 @@ table 50105 "SW Species"
         }
         field(100; HomeworldName; Text[100])
         {
-            CalcFormula = lookup("SW Planets".Name where(ID = field(HomeworldID)));
+            CalcFormula = lookup("SW Planet".Name where(ID = field(HomeworldID)));
             Caption = 'Homeworld';
             Editable = false;
             FieldClass = FlowField;
             ToolTip = 'The homeworld this person comes from.';
         }
-        field(101; People; Integer)
+        field(101; Characters; Integer)
         {
             CalcFormula = count("SW Resource Association" where(ResourceType = const(species), ResourceID = field(ID), AssociatedResourceType = const(people)));
-            Caption = 'People';
+            Caption = 'Characters';
             Editable = false;
             FieldClass = FlowField;
-            ToolTip = 'The number of people that are a part of this species.';
+            ToolTip = 'The number of characters that are a part of this species.';
         }
         field(102; Films; Integer)
         {

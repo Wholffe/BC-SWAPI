@@ -135,18 +135,18 @@ page 50100 SWAPISetup
 
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"SW Films List");
+                    Page.Run(Page::"SW Film List");
                 end;
             }
-            action(People)
+            action(Characters)
             {
                 ApplicationArea = All;
-                Caption = 'People';
+                Caption = 'Characters';
                 Image = Navigate;
 
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"SW People List");
+                    Page.Run(Page::"SW Character List");
                 end;
             }
             action(Planets)
@@ -157,7 +157,7 @@ page 50100 SWAPISetup
 
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"SW Planets List");
+                    Page.Run(Page::"SW Planet List");
                 end;
             }
             action(Species)
@@ -179,7 +179,7 @@ page 50100 SWAPISetup
 
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"SW Starships List");
+                    Page.Run(Page::"SW Starship List");
                 end;
             }
             action(Vehicles)
@@ -190,7 +190,7 @@ page 50100 SWAPISetup
 
                 trigger OnAction()
                 begin
-                    Page.Run(Page::"SW Vehicles List");
+                    Page.Run(Page::"SW Vehicle List");
                 end;
             }
             action(JEDIPROFILE)

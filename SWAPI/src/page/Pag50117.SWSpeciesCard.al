@@ -61,18 +61,18 @@ page 50117 "SW Species Card"
                     Importance = Promoted;
                     trigger OnDrillDown()
                     var
-                        l_Planets: Record "SW Planets";
+                        l_Planet: Record "SW Planet";
                     begin
-                        if l_Planets.Get(Rec.HomeworldID) then begin
-                            l_Planets.SetRecFilter();
-                            Page.Run(Page::"SW Planets List", l_Planets);
+                        if l_Planet.Get(Rec.HomeworldID) then begin
+                            l_Planet.SetRecFilter();
+                            Page.Run(Page::"SW Planet List", l_Planet);
                         end;
                     end;
                 }
             }
-            part(PeopleResourceAssPart; SWResourceAssListPart)
+            part(CharactersResourceAssPart; SWResourceAssListPart)
             {
-                Caption = 'People';
+                Caption = 'Characters';
                 SubPageLink = ResourceType = const("SW Resource Types"::species), ResourceID = field(ID), AssociatedResourceType = const("SW Resource Types"::people);
             }
             part(FilmsResourceAssPart; SWResourceAssListPart)

@@ -1,11 +1,11 @@
 namespace SWAPI.SWAPI;
 
-page 50114 "SW Films Card"
+page 50114 "SW Film Card"
 {
     ApplicationArea = All;
-    Caption = 'SW Films Card';
+    Caption = 'SW Film Card';
     PageType = Card;
-    SourceTable = "SW Films";
+    SourceTable = "SW Film";
     UsageCategory = Lists;
 
     layout

@@ -12,12 +12,12 @@ table 50107 "SW Resource Association"
         field(2; ResourceID; Integer)
         {
             Caption = 'Resource ID';
-            TableRelation = if (ResourceType = const(films)) "SW Films".ID
-            else if (ResourceType = const(people)) "SW People".ID
-            else if (ResourceType = const(planets)) "SW Planets".ID
+            TableRelation = if (ResourceType = const(films)) "SW Film".ID
+            else if (ResourceType = const(people)) "SW Character".ID
+            else if (ResourceType = const(planets)) "SW Planet".ID
             else if (ResourceType = const(species)) "SW Species".ID
-            else if (ResourceType = const(starships)) "SW Starships".ID
-            else if (ResourceType = const(vehicles)) "SW Vehicles".ID;
+            else if (ResourceType = const(starships)) "SW Starship".ID
+            else if (ResourceType = const(vehicles)) "SW Vehicle".ID;
         }
         field(3; AssociatedResourceType; Enum "SW Resource Types")
         {
@@ -26,12 +26,12 @@ table 50107 "SW Resource Association"
         field(4; AssResourceID; Integer)
         {
             Caption = 'Associated Resource ID';
-            TableRelation = if (ResourceType = const(films)) "SW Films".ID
-            else if (ResourceType = const(people)) "SW People".ID
-            else if (ResourceType = const(planets)) "SW Planets".ID
+            TableRelation = if (ResourceType = const(films)) "SW Film".ID
+            else if (ResourceType = const(people)) "SW Character".ID
+            else if (ResourceType = const(planets)) "SW Planet".ID
             else if (ResourceType = const(species)) "SW Species".ID
-            else if (ResourceType = const(starships)) "SW Starships".ID
-            else if (ResourceType = const(vehicles)) "SW Vehicles".ID;
+            else if (ResourceType = const(starships)) "SW Starship".ID
+            else if (ResourceType = const(vehicles)) "SW Vehicle".ID;
             ValidateTableRelation = false;
 
             trigger OnValidate()

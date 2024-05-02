@@ -7,7 +7,7 @@ Business Central SWAPI Integration
 
 ```mermaid
 erDiagram
-    Films {
+    Film {
         Integer ID PK
         Integer Species
         Integer Starships
@@ -15,7 +15,7 @@ erDiagram
         Integer Characters
         Integer Planets
     }
-    People {
+    Character {
         Integer ID PK
         Integer HomeworldID FK
         Integer SpeciesID FK
@@ -23,7 +23,7 @@ erDiagram
         Integer Starships
         Integer Vehicles
     }
-    Planets {
+    Planet {
         Integer ID PK
         Integer Residents
         Integer Films
@@ -31,15 +31,15 @@ erDiagram
     Species {
         Integer ID PK
         Integer HomeworldID FK
-        Integer People
+        Integer Characters
         Integer Films
     }
-    Starships {
+    Starship {
         Integer ID PK
         Integer Films
         Integer Pilots
     }
-    Vehicles {
+    Vehicle {
         Integer ID PK
         Integer Films
         Integer Pilots
@@ -51,18 +51,18 @@ erDiagram
         Integer AssID PK,FK
     }
     
-    Films }|--|{ "Resource Assosiation" : has
-    People }|--|{ "Resource Assosiation" : has
-    People }|--|| Planets : originatesFrom
-    People }|--|| Species : belongsTo
-    Planets }|--|{ "Resource Assosiation" : has
+    Film }|--|{ "Resource Assosiation" : has
+    Character }|--|{ "Resource Assosiation" : has
+    Character }|--|| Planet : originatesFrom
+    Character }|--|| Species : belongsTo
+    Planet }|--|{ "Resource Assosiation" : has
     Species }|--|{ "Resource Assosiation" : has
-    Species }|--|| Planets : originatesFrom
-    Starships }|--|{ "Resource Assosiation" : has
-    Vehicles }|--|{ "Resource Assosiation" : has
+    Species }|--|| Planet : originatesFrom
+    Starship }|--|{ "Resource Assosiation" : has
+    Vehicle }|--|{ "Resource Assosiation" : has
 ```
 
-This ER diagram outlines the database structure implemented for managing the utilized data. It includes entities like Films, People, Planets, Species, Starships, and Vehicles, each with their corresponding attributes. Additionally, there's a 'Resource Association' table facilitating the many-to-many relationship between Films and other resources such as People, Planets, Species, Starships, and Vehicles.
+This ER diagram outlines the database structure implemented for managing the utilized data. It includes entities like Film, Character, Planet, Species, Starship, and Vehicle, each with their corresponding attributes. Additionally, there's a 'Resource Association' table facilitating the many-to-many relationship between Film and other resources such as Character, Planet, Species, Starship, and Vehicle.
 
 ### About SWAPI
 - SWAPI (Star Wars API) is based on the original data set from [swapi.dev](https://swapi.dev/), which in turn was sourced from [swapi.co](https://swapi.dev/about).

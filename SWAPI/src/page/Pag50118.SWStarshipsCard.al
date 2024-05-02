@@ -1,11 +1,11 @@
 namespace SWAPI.SWAPI;
 
-page 50118 "SW Starships Card"
+page 50118 "SW Starship Card"
 {
     ApplicationArea = All;
-    Caption = 'SW Starships Card';
+    Caption = 'SW Starship Card';
     PageType = Card;
-    SourceTable = "SW Starships";
+    SourceTable = "SW Starship";
 
     layout
     {

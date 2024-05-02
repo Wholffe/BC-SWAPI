@@ -86,17 +86,17 @@ page 50113 SWResourceAssListPart
             exit;
         case Rec.AssociatedResourceType of
             "SW Resource Types"::films:
-                l_DBNo := Database::"SW Films";
+                l_DBNo := Database::"SW Film";
             "SW Resource Types"::people:
-                l_DBNo := Database::"SW People";
+                l_DBNo := Database::"SW Character";
             "SW Resource Types"::planets:
-                l_DBNo := Database::"SW Planets";
+                l_DBNo := Database::"SW Planet";
             "SW Resource Types"::species:
                 l_DBNo := Database::"SW Species";
             "SW Resource Types"::starships:
-                l_DBNo := Database::"SW Starships";
+                l_DBNo := Database::"SW Starship";
             "SW Resource Types"::vehicles:
-                l_DBNo := Database::"SW Vehicles";
+                l_DBNo := Database::"SW Vehicle";
         end;
         l_RecRef.Open(l_DBNo);
         g_AssResourceNameCaption := l_RecRef.Field(2).Caption;

@@ -1,11 +1,11 @@
 namespace SWAPI.SWAPI;
 
-page 50115 "SW People Card"
+page 50115 "SW Character Card"
 {
     ApplicationArea = All;
-    Caption = 'SW People Card';
+    Caption = 'SW Character Card';
     PageType = Card;
-    SourceTable = "SW People";
+    SourceTable = "SW Character";
     UsageCategory = Lists;
 
     layout
@@ -57,11 +57,11 @@ page 50115 "SW People Card"
                 {
                     trigger OnDrillDown()
                     var
-                        l_Planets: Record "SW Planets";
+                        l_Planet: Record "SW Planet";
                     begin
-                        if l_Planets.Get(Rec.HomeworldID) then begin
-                            l_Planets.SetRecFilter();
-                            Page.Run(Page::"SW Planets List", l_Planets);
+                        if l_Planet.Get(Rec.HomeworldID) then begin
+                            l_Planet.SetRecFilter();
+                            Page.Run(Page::"SW Planet List", l_Planet);
                         end;
                     end;
                 }

@@ -28,7 +28,7 @@ codeunit 50103 "SWAPI Data Import Mng"
     begin
         if DataAlreadyImported(p_Resource) then
             exit;
-        l_Dialog.Open(StrSubstNo(l_DialogL, p_Resource));
+        l_Dialog.Open(StrSubstNo(l_DialogL, g_SWResourceMng.GetTableNameFromResourceEnum(p_Resource)));
         l_ResourceRouteUrl := g_SWResourceMng.GetUrlFromEnum(p_Resource);
         l_MaxID := g_SWUtilityMng.GetCategoryCountFromUrl(l_ResourceRouteUrl);
         l_Dialog.Update(3, l_MaxID);
@@ -67,23 +67,51 @@ codeunit 50103 "SWAPI Data Import Mng"
         exit(true)
     end;
 
-    local procedure FillJObjectContentInSWFilms(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWCharacter(p_ID: Integer; p_JObject: JsonObject)
     var
-        l_Films: Record "SW Films";
+        l_Character: Record "SW Character";
     begin
-        if not l_Films.Get(p_ID) then begin
-            l_Films.Init();
-            l_Films.ID := p_ID;
-            l_Films.Name := g_JMng.GetJsonTextField(p_JObject, 'title');
-            l_Films.EpisodeID := g_JMng.GetJsonIntegerField(p_JObject, 'episode_id');
-            l_Films.OpeningCrawl := g_JMng.GetJsonTextField(p_JObject, 'opening_crawl');
-            l_Films.Director := g_JMng.GetJsonTextField(p_JObject, 'director');
-            l_Films.Producer := g_JMng.GetJsonTextField(p_JObject, 'producer');
-            l_Films.ReleaseDate := g_JMng.GetJsonDateField(p_JObject, 'release_date');
-            l_Films.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
-            l_Films.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
-            l_Films.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
-            l_Films.Insert();
+        if not l_Character.Get(p_ID) then begin
+            l_Character.Init();
+            l_Character.ID := p_ID;
+            l_Character.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
+            l_Character.BirthYear := g_JMng.GetJsonTextField(p_JObject, 'birth_year');
+            l_Character.EyeColor := g_JMng.GetJsonTextField(p_JObject, 'eye_color');
+            l_Character.Gender := g_JMng.GetJsonTextField(p_JObject, 'gender');
+            l_Character.HairColor := g_JMng.GetJsonTextField(p_JObject, 'hair_color');
+            l_Character.Height := g_JMng.GetJsonIntegerField(p_JObject, 'height');
+            l_Character.Mass := g_JMng.GetJsonIntegerField(p_JObject, 'mass');
+            l_Character.SkinColor := g_JMng.GetJsonTextField(p_JObject, 'skin_color');
+            l_Character.HomeworldID := GetAssIDFromAssUrl(g_JMng.GetJsonTextField(p_JObject, 'homeworld'), "SW Resource Types"::planets);
+            l_Character.SpeciesID := GetSpeciesID(p_JObject);
+            l_Character.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
+            l_Character.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
+            l_Character.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
+            l_Character.Insert();
+        end;
+        FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'starships', "SW Resource Types"::people, p_ID);
+        FillResourceAssociation(p_JObject, 'vehicles', "SW Resource Types"::people, p_ID);
+        Commit();
+    end;
+
+    local procedure FillJObjectContentInSWFilm(p_ID: Integer; p_JObject: JsonObject)
+    var
+        l_Film: Record "SW Film";
+    begin
+        if not l_Film.Get(p_ID) then begin
+            l_Film.Init();
+            l_Film.ID := p_ID;
+            l_Film.Name := g_JMng.GetJsonTextField(p_JObject, 'title');
+            l_Film.EpisodeID := g_JMng.GetJsonIntegerField(p_JObject, 'episode_id');
+            l_Film.OpeningCrawl := g_JMng.GetJsonTextField(p_JObject, 'opening_crawl');
+            l_Film.Director := g_JMng.GetJsonTextField(p_JObject, 'director');
+            l_Film.Producer := g_JMng.GetJsonTextField(p_JObject, 'producer');
+            l_Film.ReleaseDate := g_JMng.GetJsonDateField(p_JObject, 'release_date');
+            l_Film.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
+            l_Film.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
+            l_Film.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
+            l_Film.Insert();
         end;
         FillResourceAssociation(p_JObject, 'species', "SW Resource Types"::films, p_ID);
         FillResourceAssociation(p_JObject, 'starships', "SW Resource Types"::films, p_ID);
@@ -93,54 +121,26 @@ codeunit 50103 "SWAPI Data Import Mng"
         Commit();
     end;
 
-    local procedure FillJObjectContentInSWPeople(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWPlanet(p_ID: Integer; p_JObject: JsonObject)
     var
-        l_People: Record "SW People";
+        l_Planet: Record "SW Planet";
     begin
-        if not l_People.Get(p_ID) then begin
-            l_People.Init();
-            l_People.ID := p_ID;
-            l_People.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
-            l_People.BirthYear := g_JMng.GetJsonTextField(p_JObject, 'birth_year');
-            l_People.EyeColor := g_JMng.GetJsonTextField(p_JObject, 'eye_color');
-            l_People.Gender := g_JMng.GetJsonTextField(p_JObject, 'gender');
-            l_People.HairColor := g_JMng.GetJsonTextField(p_JObject, 'hair_color');
-            l_People.Height := g_JMng.GetJsonIntegerField(p_JObject, 'height');
-            l_People.Mass := g_JMng.GetJsonIntegerField(p_JObject, 'mass');
-            l_People.SkinColor := g_JMng.GetJsonTextField(p_JObject, 'skin_color');
-            l_People.HomeworldID := GetAssIDFromAssUrl(g_JMng.GetJsonTextField(p_JObject, 'homeworld'), "SW Resource Types"::planets);
-            l_People.SpeciesID := GetSpeciesID(p_JObject);
-            l_People.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
-            l_People.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
-            l_People.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
-            l_People.Insert();
-        end;
-        FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::people, p_ID);
-        FillResourceAssociation(p_JObject, 'starships', "SW Resource Types"::people, p_ID);
-        FillResourceAssociation(p_JObject, 'vehicles', "SW Resource Types"::people, p_ID);
-        Commit();
-    end;
-
-    local procedure FillJObjectContentInSWPlanets(p_ID: Integer; p_JObject: JsonObject)
-    var
-        l_Planets: Record "SW Planets";
-    begin
-        if not l_Planets.Get(p_ID) then begin
-            l_Planets.Init();
-            l_Planets.ID := p_ID;
-            l_Planets.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
-            l_Planets.Diameter := g_JMng.GetJsonIntegerField(p_JObject, 'diameter');
-            l_Planets.RotationPeriod := g_JMng.GetJsonIntegerField(p_JObject, 'rotation_period');
-            l_Planets.OrbitalPeriod := g_JMng.GetJsonIntegerField(p_JObject, 'orbital_period');
-            l_Planets.Gravity := g_JMng.GetJsonIntegerField(p_JObject, 'gravity');
-            l_Planets.Population := g_JMng.GetJsonIntegerField(p_JObject, 'population');
-            l_Planets.Climate := g_JMng.GetJsonTextField(p_JObject, 'climate');
-            l_Planets.Terrain := g_JMng.GetJsonTextField(p_JObject, 'terrain');
-            l_Planets.SurfaceWater := g_JMng.GetJsonIntegerField(p_JObject, 'surface_water');
-            l_Planets.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
-            l_Planets.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
-            l_Planets.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
-            l_Planets.Insert();
+        if not l_Planet.Get(p_ID) then begin
+            l_Planet.Init();
+            l_Planet.ID := p_ID;
+            l_Planet.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
+            l_Planet.Diameter := g_JMng.GetJsonIntegerField(p_JObject, 'diameter');
+            l_Planet.RotationPeriod := g_JMng.GetJsonIntegerField(p_JObject, 'rotation_period');
+            l_Planet.OrbitalPeriod := g_JMng.GetJsonIntegerField(p_JObject, 'orbital_period');
+            l_Planet.Gravity := g_JMng.GetJsonIntegerField(p_JObject, 'gravity');
+            l_Planet.Population := g_JMng.GetJsonIntegerField(p_JObject, 'population');
+            l_Planet.Climate := g_JMng.GetJsonTextField(p_JObject, 'climate');
+            l_Planet.Terrain := g_JMng.GetJsonTextField(p_JObject, 'terrain');
+            l_Planet.SurfaceWater := g_JMng.GetJsonIntegerField(p_JObject, 'surface_water');
+            l_Planet.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
+            l_Planet.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
+            l_Planet.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
+            l_Planet.Insert();
         end;
         FillResourceAssociation(p_JObject, 'residents', "SW Resource Types"::planets, p_ID);
         FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::planets, p_ID);
@@ -174,58 +174,58 @@ codeunit 50103 "SWAPI Data Import Mng"
         Commit();
     end;
 
-    local procedure FillJObjectContentInSWStarships(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWStarship(p_ID: Integer; p_JObject: JsonObject)
     var
-        l_Starships: Record "SW Starships";
+        l_Starship: Record "SW Starship";
     begin
-        if not l_Starships.Get(p_ID) then begin
-            l_Starships.Init();
-            l_Starships.ID := p_ID;
-            l_Starships.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
-            l_Starships.Model := g_JMng.GetJsonTextField(p_JObject, 'model');
-            l_Starships.StarshipClass := g_JMng.GetJsonTextField(p_JObject, 'starship_class');
-            l_Starships.Manufacturer := g_JMng.GetJsonTextField(p_JObject, 'manufacturer');
-            l_Starships.CostInCredits := g_JMng.GetJsonIntegerField(p_JObject, 'cost_in_credits');
-            l_Starships.Length := g_JMng.GetJsonIntegerField(p_JObject, 'length');
-            l_Starships.Crew := g_JMng.GetJsonIntegerField(p_JObject, 'crew');
-            l_Starships.Passengers := g_JMng.GetJsonIntegerField(p_JObject, 'passengers');
-            l_Starships.MaxAtmospheringSpeed := g_JMng.GetJsonIntegerField(p_JObject, 'max_atmosphering_speed');
-            l_Starships.HyperdriveRating := g_JMng.GetJsonDecimalField(p_JObject, 'hyperdrive_rating');
-            l_Starships.MGLT := g_JMng.GetJsonIntegerField(p_JObject, 'MGLT');
-            l_Starships.CargoCapacity := g_JMng.GetJsonIntegerField(p_JObject, 'cargo_capacity');
-            l_Starships.Consumables := g_JMng.GetJsonTextField(p_JObject, 'consumables');
-            l_Starships.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
-            l_Starships.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
-            l_Starships.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
-            l_Starships.Insert();
+        if not l_Starship.Get(p_ID) then begin
+            l_Starship.Init();
+            l_Starship.ID := p_ID;
+            l_Starship.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
+            l_Starship.Model := g_JMng.GetJsonTextField(p_JObject, 'model');
+            l_Starship.StarshipClass := g_JMng.GetJsonTextField(p_JObject, 'starship_class');
+            l_Starship.Manufacturer := g_JMng.GetJsonTextField(p_JObject, 'manufacturer');
+            l_Starship.CostInCredits := g_JMng.GetJsonIntegerField(p_JObject, 'cost_in_credits');
+            l_Starship.Length := g_JMng.GetJsonIntegerField(p_JObject, 'length');
+            l_Starship.Crew := g_JMng.GetJsonIntegerField(p_JObject, 'crew');
+            l_Starship.Passengers := g_JMng.GetJsonIntegerField(p_JObject, 'passengers');
+            l_Starship.MaxAtmospheringSpeed := g_JMng.GetJsonIntegerField(p_JObject, 'max_atmosphering_speed');
+            l_Starship.HyperdriveRating := g_JMng.GetJsonDecimalField(p_JObject, 'hyperdrive_rating');
+            l_Starship.MGLT := g_JMng.GetJsonIntegerField(p_JObject, 'MGLT');
+            l_Starship.CargoCapacity := g_JMng.GetJsonIntegerField(p_JObject, 'cargo_capacity');
+            l_Starship.Consumables := g_JMng.GetJsonTextField(p_JObject, 'consumables');
+            l_Starship.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
+            l_Starship.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
+            l_Starship.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
+            l_Starship.Insert();
         end;
         FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::starships, p_ID);
         FillResourceAssociation(p_JObject, 'pilots', "SW Resource Types"::starships, p_ID);
         Commit();
     end;
 
-    local procedure FillJObjectContentInSWVehicles(p_ID: Integer; p_JObject: JsonObject)
+    local procedure FillJObjectContentInSWVehicle(p_ID: Integer; p_JObject: JsonObject)
     var
-        l_Vehicles: Record "SW Vehicles";
+        l_Vehicle: Record "SW Vehicle";
     begin
-        if not l_Vehicles.Get(p_ID) then begin
-            l_Vehicles.Init();
-            l_Vehicles.ID := p_ID;
-            l_Vehicles.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
-            l_Vehicles.Model := g_JMng.GetJsonTextField(p_JObject, 'model');
-            l_Vehicles.VehicleClass := g_JMng.GetJsonTextField(p_JObject, 'vehicle_class');
-            l_Vehicles.Manufacturer := g_JMng.GetJsonTextField(p_JObject, 'manufacturer');
-            l_Vehicles.Lenght := g_JMng.GetJsonDecimalField(p_JObject, 'length');
-            l_Vehicles.CostInCredits := g_JMng.GetJsonIntegerField(p_JObject, 'cost_in_credits');
-            l_Vehicles.Crew := g_JMng.GetJsonIntegerField(p_JObject, 'crew');
-            l_Vehicles.Passengers := g_JMng.GetJsonIntegerField(p_JObject, 'passengers');
-            l_Vehicles.MaxAtmospheringSpeed := g_JMng.GetJsonIntegerField(p_JObject, 'max_atmosphering_speed');
-            l_Vehicles.CargoCapacity := g_JMng.GetJsonIntegerField(p_JObject, 'cargo_capacity');
-            l_Vehicles.Consumables := g_JMng.GetJsonTextField(p_JObject, 'consumables');
-            l_Vehicles.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
-            l_Vehicles.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
-            l_Vehicles.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
-            l_Vehicles.Insert();
+        if not l_Vehicle.Get(p_ID) then begin
+            l_Vehicle.Init();
+            l_Vehicle.ID := p_ID;
+            l_Vehicle.Name := g_JMng.GetJsonTextField(p_JObject, 'name');
+            l_Vehicle.Model := g_JMng.GetJsonTextField(p_JObject, 'model');
+            l_Vehicle.VehicleClass := g_JMng.GetJsonTextField(p_JObject, 'vehicle_class');
+            l_Vehicle.Manufacturer := g_JMng.GetJsonTextField(p_JObject, 'manufacturer');
+            l_Vehicle.Lenght := g_JMng.GetJsonDecimalField(p_JObject, 'length');
+            l_Vehicle.CostInCredits := g_JMng.GetJsonIntegerField(p_JObject, 'cost_in_credits');
+            l_Vehicle.Crew := g_JMng.GetJsonIntegerField(p_JObject, 'crew');
+            l_Vehicle.Passengers := g_JMng.GetJsonIntegerField(p_JObject, 'passengers');
+            l_Vehicle.MaxAtmospheringSpeed := g_JMng.GetJsonIntegerField(p_JObject, 'max_atmosphering_speed');
+            l_Vehicle.CargoCapacity := g_JMng.GetJsonIntegerField(p_JObject, 'cargo_capacity');
+            l_Vehicle.Consumables := g_JMng.GetJsonTextField(p_JObject, 'consumables');
+            l_Vehicle.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
+            l_Vehicle.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
+            l_Vehicle.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
+            l_Vehicle.Insert();
         end;
         FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::vehicles, p_ID);
         FillResourceAssociation(p_JObject, 'pilots', "SW Resource Types"::vehicles, p_ID);
@@ -317,17 +317,17 @@ codeunit 50103 "SWAPI Data Import Mng"
     begin
         case p_Resource of
             "SW Resource Types"::films:
-                FillJObjectContentInSWFilms(l_ID, l_JObject);
+                FillJObjectContentInSWFilm(l_ID, l_JObject);
             "SW Resource Types"::people:
-                FillJObjectContentInSWPeople(l_ID, l_JObject);
+                FillJObjectContentInSWCharacter(l_ID, l_JObject);
             "SW Resource Types"::planets:
-                FillJObjectContentInSWPlanets(l_ID, l_JObject);
+                FillJObjectContentInSWPlanet(l_ID, l_JObject);
             "SW Resource Types"::species:
                 FillJObjectContentInSWSpecies(l_ID, l_JObject);
             "SW Resource Types"::starships:
-                FillJObjectContentInSWStarships(l_ID, l_JObject);
+                FillJObjectContentInSWStarship(l_ID, l_JObject);
             "SW Resource Types"::vehicles:
-                FillJObjectContentInSWVehicles(l_ID, l_JObject);
+                FillJObjectContentInSWVehicle(l_ID, l_JObject);
             else
                 Error('%1 is not a valid enum to import.', p_Resource);
         end;

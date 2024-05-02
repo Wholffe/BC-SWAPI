@@ -1,6 +1,6 @@
-table 50101 "SW People"
+table 50101 "SW Character"
 {
-    Caption = 'SW People';
+    Caption = 'SW Character';
     DataClassification = ToBeClassified;
 
     fields
@@ -58,7 +58,7 @@ table 50101 "SW People"
         {
             BlankZero = true;
             Caption = 'Homeworld ID';
-            TableRelation = "SW Planets".ID;
+            TableRelation = "SW Planet".ID;
         }
         field(11; SpeciesID; Integer)
         {
@@ -86,7 +86,7 @@ table 50101 "SW People"
         }
         field(100; HomeworldName; Text[100])
         {
-            CalcFormula = lookup("SW Planets".Name where(ID = field(HomeworldID)));
+            CalcFormula = lookup("SW Planet".Name where(ID = field(HomeworldID)));
             Caption = 'Homeworld';
             Editable = false;
             FieldClass = FlowField;

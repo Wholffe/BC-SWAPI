@@ -1,13 +1,13 @@
 namespace SWAPI.SWAPI;
 
-page 50104 "SW Planets List"
+page 50104 "SW Planet List"
 {
     ApplicationArea = All;
-    Caption = 'SW Planets List';
+    Caption = 'SW Planet List';
     CardPageId = 50116;
     Editable = false;
     PageType = List;
-    SourceTable = "SW Planets";
+    SourceTable = "SW Planet";
     UsageCategory = Lists;
 
     layout

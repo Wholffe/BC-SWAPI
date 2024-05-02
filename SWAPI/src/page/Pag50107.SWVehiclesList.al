@@ -1,13 +1,13 @@
 namespace SWAPI.SWAPI;
 
-page 50107 "SW Vehicles List"
+page 50107 "SW Vehicle List"
 {
     ApplicationArea = All;
-    Caption = 'SW Vehicles List';
+    Caption = 'SW Vehicle List';
     CardPageId = 50119;
     Editable = false;
     PageType = List;
-    SourceTable = "SW Vehicles";
+    SourceTable = "SW Vehicle";
     UsageCategory = Lists;
 
     layout

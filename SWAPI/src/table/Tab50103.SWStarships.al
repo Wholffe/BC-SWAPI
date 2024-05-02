@@ -1,6 +1,6 @@
-table 50103 "SW Starships"
+table 50103 "SW Starship"
 {
-    Caption = 'SW Starships';
+    Caption = 'SW Starship';
     DataClassification = ToBeClassified;
 
     fields

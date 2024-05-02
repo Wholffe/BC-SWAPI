@@ -12,20 +12,20 @@ codeunit 50100 "SWAPI Setup Mng"
 
     procedure ClearAllSWData()
     var
-        l_Films: Record "SW Films";
-        l_People: Record "SW People";
-        l_Planets: Record "SW Planets";
+        l_Character: Record "SW Character";
+        l_Film: Record "SW Film";
+        l_Planet: Record "SW Planet";
         l_ResourceAss: Record "SW Resource Association";
         l_Species: Record "SW Species";
-        l_Starships: Record "SW Starships";
-        l_Vehicles: Record "SW Vehicles";
+        l_Starship: Record "SW Starship";
+        l_Vehicle: Record "SW Vehicle";
     begin
-        l_Films.DeleteAll();
-        l_People.DeleteAll();
-        l_Planets.DeleteAll();
+        l_Film.DeleteAll();
+        l_Character.DeleteAll();
+        l_Planet.DeleteAll();
         l_Species.DeleteAll();
-        l_Starships.DeleteAll();
-        l_Vehicles.DeleteAll();
+        l_Starship.DeleteAll();
+        l_Vehicle.DeleteAll();
         l_ResourceAss.DeleteAll();
         OnAfterClearAllSWData();
     end;
@@ -66,12 +66,12 @@ codeunit 50100 "SWAPI Setup Mng"
     /// </summary>
     /// <remarks>
     ///     This procedure fills the database with resources in the following order:
-    ///     1. Films
-    ///     2. Planets
-    ///     3. People
+    ///     1. Film
+    ///     2. Planet
+    ///     3. Character
     ///     4. Species
-    ///     5. Starships
-    ///     6. Vehicles
+    ///     5. Starship
+    ///     6. Vehicle
     ///     After filling all resources, it validates all resource associations.
     /// </remarks>
     procedure FillAllResources()
@@ -184,7 +184,7 @@ codeunit 50100 "SWAPI Setup Mng"
         l_GuidedExperience.InsertAssistedSetup(
             'SW API Setup',
             'Connect SWAPI to BC',
-            'Use the SWAPI to search for Star Wars Planets, Spaceships, Vehicles, People, Films and Species in Business Central',
+            'Use the SWAPI to search for Star Wars Planets, Spaceships, Vehicles, Characters, Films and Species in Business Central',
             1,
             ObjectType::Page,
             Page::SWAPISetup,

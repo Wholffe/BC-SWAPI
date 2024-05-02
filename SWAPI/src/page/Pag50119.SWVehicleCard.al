@@ -5,7 +5,7 @@ page 50119 "SW Vehicle Card"
     ApplicationArea = All;
     Caption = 'SW Vehicle Card';
     PageType = Card;
-    SourceTable = "SW Vehicles";
+    SourceTable = "SW Vehicle";
 
     layout
     {

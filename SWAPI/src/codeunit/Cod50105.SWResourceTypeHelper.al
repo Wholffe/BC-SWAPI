@@ -3,12 +3,12 @@ namespace SWAPI.SWAPI;
 codeunit 50105 "SW Resource Type Helper"
 {
     var
-        g_FilmsL: Label 'Films';
-        g_PeopleL: Label 'People';
-        g_PlanetsL: Label 'Planets';
+        g_CharacterL: Label 'Characters';
+        g_FilmL: Label 'Films';
+        g_PlanetL: Label 'Planets';
         g_SpeciesL: Label 'Species';
-        g_StarshipsL: Label 'Starships';
-        g_VehiclesL: Label 'Vehicles';
+        g_StarshipL: Label 'Starships';
+        g_VehicleL: Label 'Vehicles';
 
     /// <summary>
     /// Get the enum of the SW resource type based on the specified text.
@@ -44,17 +44,17 @@ codeunit 50105 "SW Resource Type Helper"
     begin
         case p_Resource of
             "SW Resource Types"::films:
-                l_PageNo := Page::"SW Films List";
+                l_PageNo := Page::"SW Film List";
             "SW Resource Types"::people:
-                l_PageNo := Page::"SW People List";
+                l_PageNo := Page::"SW Character List";
             "SW Resource Types"::planets:
-                l_PageNo := Page::"SW Planets List";
+                l_PageNo := Page::"SW Planet List";
             "SW Resource Types"::species:
                 l_PageNo := Page::"SW Species List";
             "SW Resource Types"::starships:
-                l_PageNo := Page::"SW Starships List";
+                l_PageNo := Page::"SW Starship List";
             "SW Resource Types"::vehicles:
-                l_PageNo := Page::"SW Vehicles List";
+                l_PageNo := Page::"SW Vehicle List";
             else
                 Error('No ListPage for %1.', p_Resource);
         end;
@@ -69,17 +69,17 @@ codeunit 50105 "SW Resource Type Helper"
     begin
         case p_Resource of
             "SW Resource Types"::films:
-                exit(Database::"SW Films");
+                exit(Database::"SW Film");
             "SW Resource Types"::people:
-                exit(Database::"SW People");
+                exit(Database::"SW Character");
             "SW Resource Types"::planets:
-                exit(Database::"SW Planets");
+                exit(Database::"SW Planet");
             "SW Resource Types"::species:
                 exit(Database::"SW Species");
             "SW Resource Types"::starships:
-                exit(Database::"SW Starships");
+                exit(Database::"SW Starship");
             "SW Resource Types"::vehicles:
-                exit(Database::"SW Vehicles");
+                exit(Database::"SW Vehicle");
             else
                 Error('No table for %1.', p_Resource);
         end;
@@ -113,20 +113,36 @@ codeunit 50105 "SW Resource Type Helper"
     begin
         case p_Resource of
             "SW Resource Types"::films:
-                exit(g_FilmsL);
+                exit(g_FilmL);
             "SW Resource Types"::people:
-                exit(g_PeopleL);
+                exit(g_CharacterL);
             "SW Resource Types"::planets:
-                exit(g_PlanetsL);
+                exit(g_PlanetL);
             "SW Resource Types"::species:
                 exit(g_SpeciesL);
             "SW Resource Types"::starships:
-                exit(g_StarshipsL);
+                exit(g_StarshipL);
             "SW Resource Types"::vehicles:
-                exit(g_VehiclesL);
+                exit(g_VehicleL);
             else
                 Error('No label for %1.', p_Resource);
         end;
+    end;
+
+    /// <summary>
+    /// Get the table name corresponding to the specified SW resource type.
+    /// </summary>
+    procedure GetTableNameFromResourceEnum(p_Resource: Enum "SW Resource Types"): Text
+    var
+        l_RecRef: RecordRef;
+        l_TableNo: Integer;
+        l_TableName: Text;
+    begin
+        l_TableNo := GetRecRefTableNoFromResourceEnum(p_Resource);
+        l_RecRef.Open(l_TableNo);
+        l_TableName := l_RecRef.Name();
+        l_RecRef.Close();
+        exit(l_TableName);
     end;
 
     /// <summary>

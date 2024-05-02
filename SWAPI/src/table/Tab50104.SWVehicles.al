@@ -1,6 +1,6 @@
-table 50104 "SW Vehicles"
+table 50104 "SW Vehicle"
 {
-    Caption = 'SW Vehicles';
+    Caption = 'SW Vehicle';
     DataClassification = ToBeClassified;
 
     fields
@@ -104,7 +104,7 @@ table 50104 "SW Vehicles"
             Caption = 'Pilots';
             Editable = false;
             FieldClass = FlowField;
-            ToolTip = 'The number of films that this people has been piloted by';
+            ToolTip = 'The number of people that this vehicle has been piloted by';
         }
     }
     keys
