@@ -59,21 +59,26 @@ table 50101 "SW People"
             BlankZero = true;
             Caption = 'Homeworld ID';
             TableRelation = "SW Planets".ID;
-            ToolTip = 'The name of a planet resource, a planet that this person was born on or inhabits.';
         }
-        field(11; Url; Text[100])
+        field(11; SpeciesID; Integer)
+        {
+            BlankZero = true;
+            Caption = 'Species ID';
+            TableRelation = "SW Species".ID;
+        }
+        field(12; Url; Text[100])
         {
             Caption = 'Url';
             Editable = false;
             ToolTip = 'The hypermedia URL of this resource.';
         }
-        field(12; Created; DateTime)
+        field(13; Created; DateTime)
         {
             Caption = 'Created';
             Editable = false;
             ToolTip = 'The ISO 8601 date format of the time that this resource was created.';
         }
-        field(13; Edited; DateTime)
+        field(14; Edited; DateTime)
         {
             Caption = 'Edited';
             Editable = false;
@@ -85,14 +90,15 @@ table 50101 "SW People"
             Caption = 'Homeworld';
             Editable = false;
             FieldClass = FlowField;
+            ToolTip = 'he homeworld this person comes from.';
         }
-        field(101; Species; Text[100])
+        field(101; SpeciesName; Text[100])
         {
-            CalcFormula = lookup("SW Resource Association".AssResourceName where(ResourceType = const(people), ResourceID = field(ID), AssociatedResourceType = const(species)));
+            CalcFormula = lookup("SW Species".Name where(ID = field(SpeciesID)));
             Caption = 'Species';
             Editable = false;
             FieldClass = FlowField;
-            ToolTip = 'The number of species resources that this person belongs to.';
+            ToolTip = 'The species this person belongs to.';
         }
         field(102; Films; Integer)
         {

@@ -109,13 +109,13 @@ codeunit 50103 "SWAPI Data Import Mng"
             l_People.Mass := g_JMng.GetJsonIntegerField(p_JObject, 'mass');
             l_People.SkinColor := g_JMng.GetJsonTextField(p_JObject, 'skin_color');
             l_People.HomeworldID := GetAssIDFromAssUrl(g_JMng.GetJsonTextField(p_JObject, 'homeworld'), "SW Resource Types"::planets);
+            l_People.SpeciesID := GetSpeciesID(p_JObject);
             l_People.Url := g_JMng.GetJsonTextField(p_JObject, 'url');
             l_People.Created := g_JMng.GetJsonDateTimeField(p_JObject, 'created');
             l_People.Edited := g_JMng.GetJsonDateTimeField(p_JObject, 'edited');
             l_People.Insert();
         end;
         FillResourceAssociation(p_JObject, 'films', "SW Resource Types"::people, p_ID);
-        FillResourceAssociation(p_JObject, 'species', "SW Resource Types"::people, p_ID);
         FillResourceAssociation(p_JObject, 'starships', "SW Resource Types"::people, p_ID);
         FillResourceAssociation(p_JObject, 'vehicles', "SW Resource Types"::people, p_ID);
         Commit();
@@ -280,6 +280,21 @@ codeunit 50103 "SWAPI Data Import Mng"
             exit(l_AssResourceID)
         else
             exit(0);
+    end;
+
+    local procedure GetSpeciesID(p_JObject: JsonObject): Integer
+    var
+        l_SpeciesID: Integer;
+        l_InnerJsonToken: JsonToken;
+        l_JToken: JsonToken;
+        l_UrlSpecies: Text;
+    begin
+        l_InnerJsonToken := g_JMng.GetInnerJsonToken(p_JObject, 'species');
+        if not l_InnerJsonToken.AsArray().Get(0, l_JToken) then
+            exit(0);
+        l_UrlSpecies := l_JToken.AsValue().AsText();
+        l_SpeciesID := GetAssIDFromAssUrl(l_UrlSpecies, "SW Resource Types"::species);
+        exit(l_SpeciesID);
     end;
 
     local procedure ResourceWithCurrentIDExist(p_Resource: Enum "SW Resource Types"; l_CurrID: Integer): Boolean

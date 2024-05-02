@@ -59,18 +59,27 @@ page 50103 "SW People List"
                         end;
                     end;
                 }
+                field(SpeciesID; Rec.SpeciesID)
+                {
+                    Visible = false;
+                }
+                field(SpeciesName; Rec.SpeciesName)
+                {
+                    trigger OnDrillDown()
+                    var
+                        l_Species: Record "SW Species";
+                    begin
+                        if l_Species.Get(Rec.SpeciesID) then begin
+                            l_Species.SetRecFilter();
+                            Page.Run(Page::"SW Species List", l_Species);
+                        end;
+                    end;
+                }
                 field(Films; Rec.Films)
                 {
                     trigger OnDrillDown()
                     begin
                         g_PageMng.DrillDownPage("SW Resource Types"::people, Rec.ID, "SW Resource Types"::films);
-                    end;
-                }
-                field(Species; Rec.Species)
-                {
-                    trigger OnDrillDown()
-                    begin
-                        g_PageMng.DrillDownPage("SW Resource Types"::people, Rec.ID, "SW Resource Types"::species);
                     end;
                 }
                 field(Starships; Rec.Starships)

@@ -64,7 +64,6 @@ table 50105 "SW Species"
             BlankZero = true;
             Caption = 'Homeworld ID';
             TableRelation = "SW Planets".ID;
-            ToolTip = 'The name of a planet resource, a planet that this person was born on or inhabits.';
         }
         field(12; Url; Text[100])
         {
@@ -90,6 +89,7 @@ table 50105 "SW Species"
             Caption = 'Homeworld';
             Editable = false;
             FieldClass = FlowField;
+            ToolTip = 'The homeworld this person comes from.';
         }
         field(101; People; Integer)
         {

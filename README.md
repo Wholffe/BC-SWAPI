@@ -17,8 +17,9 @@ erDiagram
     }
     People {
         Integer ID PK
+        Integer HomeworldID FK
+        Integer SpeciesID FK
         Integer Films
-        Integer Species
         Integer Starships
         Integer Vehicles
     }
@@ -29,7 +30,7 @@ erDiagram
     }
     Species {
         Integer ID PK
-        Integer Homeworld
+        Integer HomeworldID FK
         Integer People
         Integer Films
     }
@@ -52,9 +53,11 @@ erDiagram
     
     Films }|--|{ "Resource Assosiation" : has
     People }|--|{ "Resource Assosiation" : has
+    People }|--|| Planets : originatesFrom
+    People }|--|| Species : belongsTo
     Planets }|--|{ "Resource Assosiation" : has
     Species }|--|{ "Resource Assosiation" : has
-    Species }|--|| Planets : Homeworld
+    Species }|--|| Planets : originatesFrom
     Starships }|--|{ "Resource Assosiation" : has
     Vehicles }|--|{ "Resource Assosiation" : has
 ```

@@ -65,9 +65,20 @@ page 50115 "SW People Card"
                         end;
                     end;
                 }
-                field(Species; Rec.Species)
+                field(SpeciesID; Rec.SpeciesID)
                 {
-                    Editable = false;
+                }
+                field(SpeciesName; Rec.SpeciesName)
+                {
+                    trigger OnDrillDown()
+                    var
+                        l_Species: Record "SW Species";
+                    begin
+                        if l_Species.Get(Rec.SpeciesID) then begin
+                            l_Species.SetRecFilter();
+                            Page.Run(Page::"SW Species List", l_Species);
+                        end;
+                    end;
                 }
             }
             part(FilmsResourceAssPart; SWResourceAssListPart)
