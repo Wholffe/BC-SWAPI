@@ -1,8 +1,11 @@
 {
-    "folders": [
-        {
-            "path": "SWAPI"
-        }
-    ],
-    "settings": {}
+  "folders": [
+    {
+      "path": "SWAPI"
+    },
+    {
+      "path": "SWAPI.Test"
+    }
+  ],
+  "settings": {}
 }
