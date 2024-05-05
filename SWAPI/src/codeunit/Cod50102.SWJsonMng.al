@@ -37,10 +37,7 @@ codeunit 50102 "SW Json Mng"
         l_ResponseTxt: Text;
         l_Url: Text;
     begin
-        if not l_Client.Get(p_Url, l_Response) then
-            Error('Connection failed, %1', l_Response.HttpStatusCode);
-
-        if not l_Response.IsSuccessStatusCode then
+        if not (l_Client.Get(p_Url, l_Response) and l_Response.IsSuccessStatusCode) then
             exit;
 
         l_Content := l_Response.Content;

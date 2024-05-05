@@ -51,15 +51,15 @@ erDiagram
         Integer AssID PK,FK
     }
     
-    Film }|--|{ "Resource Assosiation" : has
-    Character }|--|{ "Resource Assosiation" : has
+    Film ||--|{ "Resource Assosiation" : has
+    Character ||--|{ "Resource Assosiation" : has
     Character }|--|| Planet : originatesFrom
     Character }|--|| Species : belongsTo
-    Planet }|--|{ "Resource Assosiation" : has
-    Species }|--|{ "Resource Assosiation" : has
+    Planet ||--|{ "Resource Assosiation" : has
+    Species ||--|{ "Resource Assosiation" : has
     Species }|--|| Planet : originatesFrom
-    Starship }|--|{ "Resource Assosiation" : has
-    Vehicle }|--|{ "Resource Assosiation" : has
+    Starship ||--|{ "Resource Assosiation" : has
+    Vehicle ||--|{ "Resource Assosiation" : has
 ```
 
 This ER diagram outlines the database structure implemented for managing the utilized data. It includes entities like Film, Character, Planet, Species, Starship, and Vehicle, each with their corresponding attributes. Additionally, there's a 'Resource Association' table facilitating the many-to-many relationship between Film and other resources such as Character, Planet, Species, Starship, and Vehicle.
