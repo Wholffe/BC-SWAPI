@@ -1,4 +1,4 @@
-codeunit 50000 "SWJsonMngTest"
+codeunit 50000 SWJsonMngTest
 {
     Subtype = Test;
 
@@ -7,7 +7,7 @@ codeunit 50000 "SWJsonMngTest"
         g_JsonMng: Codeunit "SW Json Mng";
 
     [Test]
-    procedure GetInnerJsonTokenTestInvalidJObject()
+    procedure TestGetInnerJsonTokenWithInvalidJObject()
     var
         l_JObject: JsonObject;
         l_JToken: JsonToken;
@@ -23,7 +23,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetInnerJsonTokenTestValidJObject()
+    procedure TestGetInnerJsonTokenWithValidJObject()
     var
         l_JObject: JsonObject;
         l_JToken: JsonToken;
@@ -41,7 +41,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonDateFieldTestInValidJObject()
+    procedure TestGetJsonDateFieldWithInvalidJObject()
     var
         l_Date: Date;
         l_ExpectedDate: Date;
@@ -57,7 +57,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonDateFieldTestValidJObject()
+    procedure TestGetJsonDateFieldWithValidJObject()
     var
         l_Date: Date;
         l_ExpectedDate: Date;
@@ -75,7 +75,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonDateTimeFieldTestTestInvalidJObject()
+    procedure TestGetJsonDateTimeFieldWithInvalidJObject()
     var
         l_DateTime: DateTime;
         l_ExpectedDateTime: DateTime;
@@ -91,7 +91,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonDateTimeFieldTestTestValidJObject()
+    procedure TestGetJsonDateTimeFieldWithValidJObject()
     var
         l_DateTime: DateTime;
         l_ExpectedDateTime: DateTime;
@@ -109,7 +109,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonDecimalFieldTestInvalidJObject()
+    procedure TestGetJsonDecimalFieldWithInvalidJObject()
     var
         l_Decimal: Decimal;
         l_ExpectedDecimal: Decimal;
@@ -124,7 +124,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonDecimalFieldTestValidJObject()
+    procedure TestGetJsonDecimalFieldWithValidJObject()
     var
         l_Decimal: Decimal;
         l_ExpectedDecimal: Decimal;
@@ -142,7 +142,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonIntegerFieldTestInvalidJObject()
+    procedure TestGetJsonIntegerFieldWithInvalidJObject()
     var
         l_ExpectedInteger: Integer;
         l_Integer: Integer;
@@ -157,7 +157,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonIntegerFieldTestValidJObject()
+    procedure TestGetJsonIntegerFieldWithValidJObject()
     var
         l_ExpectedInteger: Integer;
         l_Integer: Integer;
@@ -175,7 +175,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonTextFieldTestInvalidJObject()
+    procedure TestGetJsonTextFieldWithInvalidJObject()
     var
         l_JObject: JsonObject;
         l_ExpectedText: Text;
@@ -190,7 +190,7 @@ codeunit 50000 "SWJsonMngTest"
     end;
 
     [Test]
-    procedure GetJsonTextFieldTestValidJObject()
+    procedure TestGetJsonTextFieldWithValidJObject()
     var
         l_JObject: JsonObject;
         l_ActualText: Text;
